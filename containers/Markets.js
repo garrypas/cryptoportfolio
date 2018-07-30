@@ -1,4 +1,4 @@
-import getMarkets from './../Actions/getMarkets';
+import getMarkets from './../actions/getMarkets';
 import { connect } from 'react-redux';
 import Dashboard from '../components/Dashboard'
 
