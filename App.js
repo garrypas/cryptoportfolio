@@ -1,11 +1,21 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Dashboard from './Dashboard/index';
+import Markets from './containers/Markets';
 
-export default class App extends React.Component {
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import rootReducer from './reducers/rootReducer';
+
+const store = createStore(rootReducer);
+
+const component = class App extends React.Component {
   render() {
     return (
-      <Dashboard />
+      <Provider store={store}>
+        <Markets />
+      </Provider>
     );
   }
 }
+
+export default component;
