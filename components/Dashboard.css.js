@@ -1,10 +1,9 @@
-export default {
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
+"use strict";
+
+import styles from './styles.css';
+
+const css = {
+    ...styles,
     flatListStyle: {
         width: '100%',
         flex: 1,
@@ -17,22 +16,6 @@ export default {
         borderBottomWidth: 1,
         flexDirection:"row"
     },
-
-    headerStyle: {
-        padding: 20,
-        paddingTop: 50,
-        height: 100,
-        borderWidth: 1,
-        width: '100%',
-        backgroundColor: '#9999cc'
-    },
-
-    headerTextStyle: {
-        fontWeight: 'bold',
-        fontSize: 24,
-        textAlign:'center'
-    },
-
     itemName: {
         width:'50%',
         flex: 1,
@@ -52,3 +35,5 @@ export default {
         justifyContent: 'flex-end',
     }
 };
+
+export default css;
