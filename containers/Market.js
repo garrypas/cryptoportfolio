@@ -8,7 +8,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        getMarket: market => dispatch(getMarket({ market }))
+        getMarket: market => getMarket({ market }, dispatch)
     };
 };
 

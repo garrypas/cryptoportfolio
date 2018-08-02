@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = class Ticker {
-    constructor(props) {
+    constructor(props, state) {
         this.props = props;
     }
 

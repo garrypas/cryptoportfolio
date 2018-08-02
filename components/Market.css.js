@@ -16,8 +16,6 @@ const css = {
         flex: 1,
         marginBottom: 20,
         alignSelf: 'stretch',
-        borderColor:'red',
-        borderWidth: 2,
     },
 
     icon: {

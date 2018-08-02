@@ -10,6 +10,7 @@ import Ticker from './Ticker';
 
 const component = class Dashboard extends React.Component {
     constructor(props) {
+        console.log("STARTED Dashboard!");
         super(props);
         this.renderRow = this.renderRow.bind(this);
         this.state = null;
