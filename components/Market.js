@@ -21,7 +21,7 @@ export default class Market extends React.Component {
   }
 
   render() {
-    const icon = images[this.props.baseCurrency];
+    const icon = images[this.props.quoteCurrency];
     let view = (<Text>Loading...</Text>);
     if(this.props.latestPrice) {
       view = (

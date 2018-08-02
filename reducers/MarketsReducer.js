@@ -38,8 +38,8 @@ module.exports = (state = [], action) => {
 		return {
 			key: market.MarketName,
 			title: market.MarketName,
-			price: ((market.Ask + market.Bid) * 0.5).toFixed(8),
-			baseCurrency: market.MarketName.replace('BTC-', ''), 
+			price: parseFloat( ((market.Ask + market.Bid) * 0.5).toFixed(8) ),
+			quoteCurrency: market.MarketName.replace('BTC-', ''), 
 		}
 	});
 	return { markets: markets };

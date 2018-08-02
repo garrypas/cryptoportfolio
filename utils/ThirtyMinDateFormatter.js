@@ -1,10 +1,7 @@
 "use strict";
 
-const moment = require('moment');
+import minuteDateFormatter from './MinuteDateFormatter';
 
 module.exports = {
-    format: (tick) => {
-        const formatted = moment(tick).format('HH:mm');
-        return formatted;
-    },
+    format: (tick) => minuteDateFormatter(tick, 'HH:mm')
 };
