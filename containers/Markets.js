@@ -7,7 +7,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        getMarkets: () => getMarkets({}, dispatch),
+        getMarkets: data => getMarkets(data, dispatch),
     };
 };
 

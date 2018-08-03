@@ -1,18 +1,22 @@
 "use strict";
 
 const debug = require('debug')('app');
+import MarketString from '../utils/MarketString';
 
-module.exports = (state = [], action) => {
-	let markets = action.data;
-	markets = markets.map(market => {
-		const price = (market.Ask + market.Bid) * 0.5;
+function mapMarketItems(data, previous) {
+	return data.map(market => {
+		const price = market.Last;
 		return {
 			key: market.MarketName,
 			title: market.MarketName,
 			price: price,
-			quoteCurrency: market.MarketName.replace('BTC-', ''), 
-			previousPrice: action.previous ? action.previous.find(item => item.key === market.marketName).price : price
+			quoteCurrency: MarketString.getQuoteCurrency(market.MarketName),
+			previousPrice: previous ? previous.find(item => item.key === market.MarketName).price : price
 		}
-	});
+	})
+}
+
+module.exports = (state = [], action) => {
+	let markets = mapMarketItems(action.data, action.previous);
 	return { markets: markets };
 }
