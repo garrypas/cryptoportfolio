@@ -4,6 +4,7 @@ Below you'll find information about performing common tasks. The most recent ver
 
 ## Table of Contents
 
+* [Introduction](#introduction)
 * [Updating to New Releases](#updating-to-new-releases)
 * [Available Scripts](#available-scripts)
   * [npm start](#npm-start)
@@ -25,6 +26,15 @@ Below you'll find information about performing common tasks. The most recent ver
   * [Networking](#networking)
   * [iOS Simulator won't open](#ios-simulator-wont-open)
   * [QR Code does not scan](#qr-code-does-not-scan)
+
+## Introduction
+
+This is a project I created to learn how to build mobile apps using React Native.
+
+It is a basic cryptocurrency ticker. It lists all the cryptocurrencies available on the Bittrex exchange and allows you to drill in to see the daily summary.
+
+![Dashboard screenshot](./docs/images/dashboard.png "Dashboard screenshot")
+![Market screenshot](./docs/images/market.png "Market screenshot")
 
 ## Updating to New Releases
 
