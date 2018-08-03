@@ -1,6 +1,7 @@
 "use strict";
 
 const _ = require('lodash');
+import MarketString from '../utils/MarketString';
 
 function formatTick(interval, tick) {
 	const formatted = Date.parse(tick);
@@ -13,14 +14,8 @@ function formatTick(interval, tick) {
 }
 
 module.exports = (state = [], action) => {
-	// let history = [
-	// 	{ "O": 0.00081301, "H": 0.00088399, "L": 0.00088000, "C": 0.00081010, "V": 193.51270056, "T": "2018-07-11T08:50:00", "BV": 0.15749896 },
-	// 	{ "O": 0.00081400, "H": 0.00081400, "L": 0.00081400, "C": 0.00081400, "V": 151.75668371, "T": "2018-07-11T08:55:00", "BV": 0.12352992 },
-	// 	{ "O": 0.00081010, "H": 0.00081432, "L": 0.00080669, "C": 0.00081432, "V": 34.73354278, "T": "2018-07-11T09:00:00", "BV": 0.02805982 },
-	// 	{ "O": 0.00081432, "H": 0.00083432, "L": 0.00083432, "C": 0.00081432, "V": 2.36221330, "T": "2018-07-11T09:10:00", "BV": 0.00192359 },
-	// ];
 	let history = action.data.slice(action.data.length - 48, action.data.length);
-	history.forEach(item => item.P = parseFloat(((item.H + item.L) / 2).toFixed(8)));
+	history.forEach(item => item.P = (item.H + item.L) / 2);
 	const latestItem = _.maxBy(history, item =>  Date.parse(item.T));
 	const latestPrice = latestItem ? latestItem.P : "N/A";
 
@@ -28,7 +23,7 @@ module.exports = (state = [], action) => {
 		historyData: history.map((item, i) => { return { x: item.T, y: item.P } }),
 		history: history,
 		key: action.market,
-		quoteCurrency: action.market.replace('BTC-', ''), 
+		quoteCurrency: MarketString.getQuoteCurrency(action.market),
 		latestPrice: latestPrice, 
 		units: 'Sats',
 	};

@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react';
-import { StyleSheet, Text, View, List, ListView, FlatList, ListItem, StatusBar, Card, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import styles from './Dashboard.css.js';
@@ -30,7 +30,7 @@ const component = class Dashboard extends React.Component {
         return (
             <TouchableOpacity style={styles.flatListItemStyle} onPress={() => this.viewMarket(rowData.item)}>
                 <View style={styles.itemName}><Text style={styles.itemNameText}>{rowData.item.title}</Text></View>
-                <View style={styles.itemPrice}><Text style={styles.itemPriceText}>{rowData.item.price}</Text></View>
+                <View style={styles.itemPrice}><Text style={styles.itemPriceText}>{rowData.item.price.toFixed(8)}</Text></View>
             </TouchableOpacity>
         );
     }
@@ -38,10 +38,12 @@ const component = class Dashboard extends React.Component {
     render() {
         let markets = this.props.markets;
         const items = markets
-            ? (<FlatList style={styles.flatListStyle}
-                data={markets}
-                renderItem={this.renderRow}
-            />)
+
+            ? (
+                <FlatList style={styles.flatListStyle}
+                    data={markets}
+                    renderItem={this.renderRow}
+                />)
             : <Text>Loading...</Text>;
 
         return (

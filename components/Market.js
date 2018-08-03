@@ -30,11 +30,11 @@ export default class Market extends React.Component {
             <Text style={ styles.icon }>
               <Image source={ icon } style={ styles.iconImage } />
             </Text>
-            <Text style={ styles.itemPrice }>{this.props.latestPrice} {this.props.units}</Text>
+            <Text style={ styles.itemPrice }>{this.props.latestPrice.toFixed(8)} {this.props.units}</Text>
           </View>
           <View style={styles.body}>
             <VictoryChart>
-              <VictoryAxis tickFormat={ tick => DateFormatter('thirtyMin', tick) } />
+              <VictoryAxis tickFormat={ tick => DateFormatter('thirtyMin', tick) } fixLabelOverlap={true} />
               <VictoryAxis dependentAxis tickFormat={ (tick) => '' }/>
               <VictoryLine
                 style={{

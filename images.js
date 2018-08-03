@@ -114,7 +114,6 @@ images['AXIOM'] = require('./images/AXIOM.png');
 images['AXP'] = require('./images/AXP.png');
 images['B2B'] = require('./images/B2B.png');
 images['B2X'] = require('./images/B2X.png');
-images['B@'] = require('./images/B@.png');
 images['BANCA'] = require('./images/BANCA.png');
 images['BANK'] = require('./images/BANK.png');
 images['BAS'] = require('./images/BAS.png');

@@ -11,7 +11,7 @@
     "sinon": "^6.1.4"
   },
   "scripts": {
-    "images": "echo \"var images = {};\" > ./images.js; find ./images/*.png -type f -maxdepth 1 | sed -e 's,^\\./images/,,' | sed -e 's,\\.png,,' | while read f; do \n IMGKEY=`echo $f | tr 'a-z' 'A-Z'` \n echo \"images['$IMGKEY'] = require('./images/$f.png');\"; done >> ./images.js; echo \"module.exports = images;\" >> ./images.js",
+    "images": "echo \"var images = {};\" > ./images.js; find ./images/*.png -not -name '*@*' -type f -maxdepth 1 | sed -e 's,^\\./images/,,' | sed -e 's,\\.png,,' | while read f; do \n IMGKEY=`echo $f | tr 'a-z' 'A-Z'` \n echo \"images['$IMGKEY'] = require('./images/$f.png');\"; done >> ./images.js; echo \"module.exports = images;\" >> ./images.js",
     "start": "react-native start",
     "start-debug": "DEBUG=app npm start",
     "android": "react-native run-android",
@@ -39,6 +39,7 @@
     "react-native-svg": "^6.5.1",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
+    "string-format": "^2.0.0",
     "victory-native": "^30.1.0"
   }
 }

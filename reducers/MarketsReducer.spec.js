@@ -4,10 +4,13 @@ import React from 'react';
 import marketsReducer from './MarketsReducer';
 import getMarkets from './../actions/getMarkets'
 import renderer from 'react-test-renderer';
+const summaryMock = require('../mocks/summaryMock');
 
 describe('MarketsReducer', () => {
 	function getData() {
-		return marketsReducer({}, getMarkets());
+		return marketsReducer({}, {
+			data: summaryMock.result
+		});
 	}
 
 	it('Adds a key to each market summary', () => {
