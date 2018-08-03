@@ -16,7 +16,7 @@ export default class Market extends React.Component {
 
     this.ticker = new Ticker({
       tick: () => this.props.getMarket(this.props.market),
-      interval: 2000,
+      interval: 10000,
     });
   }
 

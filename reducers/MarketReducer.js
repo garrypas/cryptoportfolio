@@ -24,7 +24,7 @@ module.exports = (state = [], action) => {
 		history: history,
 		key: action.market,
 		quoteCurrency: MarketString.getQuoteCurrency(action.market),
-		latestPrice: latestPrice, 
+		latestPrice: latestPrice,
 		units: 'Sats',
 	};
 }

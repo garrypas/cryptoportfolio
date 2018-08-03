@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Dashboard from '../components/Dashboard'
 
 const mapStateToProps = state => {
-    return { markets: state.markets, id: 'home' };
+    return { ...state, id: 'home' };
 }
 const mapDispatchToProps = dispatch => {
     return {

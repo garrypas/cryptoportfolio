@@ -8,16 +8,26 @@ import styles from './Dashboard.css.js';
 import { Actions } from 'react-native-router-flux';
 import Ticker from './Ticker';
 
+function getPreviousPrice(previousPrices, key) {
+    const match = previousPrices && previousPrices.find(item => item.key === key);
+    return match && match.price;
+}
+
 const component = class Dashboard extends React.Component {
     constructor(props) {
-        console.log("STARTED Dashboard!");
         super(props);
         this.renderRow = this.renderRow.bind(this);
-        this.state = null;
+        this.state = { };
 
         this.ticker = new Ticker({
-            tick: this.props.getMarkets,
-            interval: 2000,
+            tick: () => {
+                let previousMarkets = this.state.markets;
+                this.setState((prevState, currProps) => {
+                    return { markets: this.props.markets, previousMarkets: prevState.markets };
+                });                
+                return this.props.getMarkets();
+            },
+            interval: 10000,
         });
     }
 
@@ -27,18 +37,30 @@ const component = class Dashboard extends React.Component {
     }
 
     renderRow(rowData, sectionID) {
+        const previousPrice = getPreviousPrice(this.state.previousMarkets, rowData.item.key);
+        const currentPrice = rowData.item.price;
+        const priceStyle = [ styles.itemPriceText ];
+        let direction = '';
+        if(previousPrice > currentPrice) {
+            direction = 'down';
+        }
+        if(currentPrice > previousPrice) {
+            direction = 'up';
+        }
         return (
             <TouchableOpacity style={styles.flatListItemStyle} onPress={() => this.viewMarket(rowData.item)}>
                 <View style={styles.itemName}><Text style={styles.itemNameText}>{rowData.item.title}</Text></View>
-                <View style={styles.itemPrice}><Text style={styles.itemPriceText}>{rowData.item.price.toFixed(8)}</Text></View>
+                <View style={styles.itemPrice}><Text style={ [ priceStyle, (direction === 'up' ? styles.itemPriceTextUp : direction === 'down' ? styles.itemPriceTextDown : '') ] } >{currentPrice.toFixed(8)}</Text></View>
             </TouchableOpacity>
         );
     }
 
     render() {
-        let markets = this.props.markets;
+        console.log('rendering...');
+        console.log(this.state.markets);
+        
+        let markets = this.state.markets;
         const items = markets
-
             ? (
                 <FlatList style={styles.flatListStyle}
                     data={markets}
@@ -47,7 +69,7 @@ const component = class Dashboard extends React.Component {
             : <Text>Loading...</Text>;
 
         return (
-            <View style={styles.container} onEnter={this.tick}>
+            <View style={styles.container}>
                 {items}
             </View>
         );
