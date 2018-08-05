@@ -10,6 +10,7 @@ const css = {
         flexDirection:"row",
         borderBottomWidth: 1,
         borderColor:'#999999',
+        display:'flex',
     },
 
     body: {
@@ -29,13 +30,25 @@ const css = {
         height: 64,
     },
 
-    itemPrice: {
+    itemPriceContainer: {
         justifyContent: 'flex-end',
         width: '100%',
         height: 80,
         flex: 1,
+        flexDirection: 'column',
+        alignItems: 'stretch',
+    },
+
+    itemPrice: {
         fontSize: 24,
         textAlign: 'right',
+        flex: 1,
+    },
+
+    itemOtherInfo: {
+        textAlign: 'right',
+        flex: 1,
+        fontSize: 10,
     },
 
     chart: {
