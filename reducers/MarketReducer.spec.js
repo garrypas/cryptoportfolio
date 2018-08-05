@@ -18,12 +18,12 @@ describe('MarketReducer', () => {
 		const data = getData();
 		expect(data.historyData).toHaveLength(4);
 		expect(data.historyData[0].x).toEqual(data.history[0].T);
-		expect(data.historyData[0].y).toEqual(data.history[0].P);
+		expect(data.historyData[0].y).toEqual(data.history[0].C);
 	});
 
 	it('Latest price is the price with the newest timestamp', () => {
 		const data = getData();
-		const expected = data.history[data.history.length - 1].P;
+		const expected = data.history[data.history.length - 1].C;
 		expect(data.latestPrice).toEqual(expected);
 	});
 

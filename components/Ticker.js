@@ -6,12 +6,16 @@ module.exports = class Ticker {
     }
 
     tick() {
+        console.log("start ticker, " + this.props.interval);
         const tickCallback = this.props.tick;
         this.timer = setInterval(tickCallback, this.props.interval);
         tickCallback();
     }
 
     stopTick() {
-        clearInterval(this.timer);
+        if(this.timer) {
+            console.log('stop ticker, ' + this.props.interval);
+            clearInterval(this.timer);
+        }
     }
 };

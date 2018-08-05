@@ -9,7 +9,7 @@ module.exports = (args = {}, dispatch) => {
     };
 
     const route = getRoute('SUMMARY');
-    const previousMarkets = args.markets && args.markets.slice();
+    const previousMarkets = args.previous && args.previous.slice();
     axios.get(route).then(resp => {
         actionArgs.data = resp.data.result;
         actionArgs.previous = previousMarkets;

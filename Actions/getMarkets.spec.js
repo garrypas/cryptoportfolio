@@ -15,7 +15,7 @@ describe('getMarkets', () => {
     afterEach(() => axiosStub.restore());
 
     it('Dispatches result', done => {
-        getMarkets(null, () => done());
+        getMarkets(undefined, () => done());
     });
 
     it('Returns summary data as an array', done => {
@@ -23,6 +23,6 @@ describe('getMarkets', () => {
             expect(Array.isArray(data.data)).toBeTruthy();
             done();
         }
-        getMarkets(null, dispatch);
+        getMarkets(undefined, dispatch);
     });
 });

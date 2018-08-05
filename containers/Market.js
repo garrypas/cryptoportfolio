@@ -3,12 +3,11 @@ import { connect } from 'react-redux';
 import Market from '../components/Market'
 
 const mapStateToProps = state => {
-    state.id = 'market';
-    return state;
+    return { ...state, id: 'market' };
 }
 const mapDispatchToProps = dispatch => {
     return {
-        getMarket: market => getMarket({ market }, dispatch)
+        getMarket: data => getMarket({ ...data }, dispatch)
     };
 };
 

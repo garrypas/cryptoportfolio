@@ -15,12 +15,11 @@ function formatTick(interval, tick) {
 
 module.exports = (state = [], action) => {
 	let history = action.data.slice(action.data.length - 48, action.data.length);
-	history.forEach(item => item.P = (item.H + item.L) / 2);
 	const latestItem = _.maxBy(history, item =>  Date.parse(item.T));
-	const latestPrice = latestItem ? latestItem.P : "N/A";
+	const latestPrice = latestItem ? latestItem.C : "N/A"; // item.C = close price
 
 	return {
-		historyData: history.map((item, i) => { return { x: item.T, y: item.P } }),
+		historyData: history.map((item, i) => { return { x: item.T, y: item.C } }),
 		history: history,
 		key: action.market,
 		quoteCurrency: MarketString.getQuoteCurrency(action.market),

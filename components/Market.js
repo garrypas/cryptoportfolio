@@ -13,11 +13,17 @@ import DateFormatter from './../utils/DateFormatter';
 export default class Market extends React.Component {
   constructor(props) {
     super(props);
-
+    this.state = {};
+    console.log('Market constructor...');
     this.ticker = new Ticker({
-      tick: () => this.props.getMarket(this.props.market),
-      interval: 10000,
+      tick: () => this.tick(),
+      interval: 2000,
     });
+  }
+
+  tick() {
+    console.log('tick');
+    this.props.getMarket({ market: this.props.market });
   }
 
   render() {
@@ -57,7 +63,7 @@ export default class Market extends React.Component {
     );
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.ticker.tick();
   }
 

@@ -11,22 +11,25 @@ import Ticker from './Ticker';
 const component = class Dashboard extends React.Component {
     constructor(props) {
         super(props);
+        console.log('Creating dashboard');
         this.renderRow = this.renderRow.bind(this);
         this.state = {};
 
         this.ticker = new Ticker({
             tick: () => this.tick(),
-            interval: 10000,
+            interval: 5000,
         });
     }
 
     tick() {
-        this.props.getMarkets(this.props);
+        if(Actions.currentScene === 'home') {
+            this.props.getMarkets({ previous: this.props.markets });
+        }
     }
 
     viewMarket(market) {
-        Actions.market({ market: market.key, title: market.key });
         this.ticker.stopTick();
+        Actions.market({ market: market.key, title: market.key });
     }
 
     renderRow(rowData, sectionID) {
@@ -66,11 +69,12 @@ const component = class Dashboard extends React.Component {
     }
 
     componentDidMount() {
-        this.tick();
+        console.log('starting dashboard ticker');
         this.ticker.tick();
     }
 
     componentWillUnmount() {
+        console.log('stopping dashboard ticker');
         this.ticker.stopTick();
     }
 }
