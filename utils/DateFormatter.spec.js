@@ -16,8 +16,8 @@ describe('DateFormatter', () => {
   afterEach(() => 
     sandbox.restore());
 
-	it('Calls correct formatter - thirtyMin', () => {
-		dateFormatter('thirtyMin', '2018-07-11T08:50:00"');
+	it('Calls correct formatter - 1Day', () => {
+		dateFormatter('1Day', '2018-07-11T08:50:00"');
 		sinon.assert.calledOnce(tickSpy);
 	});
 });

@@ -5,18 +5,23 @@ import styles from './styles.css';
 const css = {
     ...styles,
     header: {
-        padding: 20,
-        height: 100,
         flexDirection:"row",
+        borderColor:'#000000',
         borderBottomWidth: 1,
-        borderColor:'#999999',
         display:'flex',
+        height: 100,
     },
 
+
     body: {
+        flexDirection:"column",
         flex: 1,
-        marginBottom: 20,
-        alignSelf: 'stretch',
+    },
+
+    buttons: {
+        flexDirection:"row",
+        flex: 1,
+        marginTop: 100,
     },
 
     icon: {
@@ -49,13 +54,6 @@ const css = {
         textAlign: 'right',
         flex: 1,
         fontSize: 10,
-    },
-
-    chart: {
-        borderColor:'red',
-        borderWidth: 1,
-        width: '100%',
-        height: '50%',
     },
 }
 

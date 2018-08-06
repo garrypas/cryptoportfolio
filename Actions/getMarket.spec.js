@@ -15,7 +15,7 @@ describe('getMarket', () => {
     afterEach(() => axiosStub.restore());
 
     it('Dispatches result', done => {
-        getMarket({ market: 'BTC-ARK' }, () => done());
+        getMarket({ market: 'BTC-ARK', interval: '1Day' }, () => done());
     });
 
     it('Returns tick data as an array', done => {
@@ -23,6 +23,6 @@ describe('getMarket', () => {
             expect(Array.isArray(data.data)).toBeTruthy();
             done();
         }
-        getMarket({ market: 'BTC-ARK' }, dispatch);
+        getMarket({ market: 'BTC-ARK', interval: '1Day' }, dispatch);
     });
 });

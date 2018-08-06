@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View, Image, Button } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import styles from './Market.css.js';
@@ -11,26 +11,29 @@ import Ticker from './Ticker';
 import DateFormatter from './../utils/DateFormatter';
 import Intervals from '../utils/Intervals'
 
+function renderIntervalButton(key, interval) {
+  return (<Button title={interval.title} onPress={() => this.changeInterval(key) } />);
+}
+
 export default class Market extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
     this.latestPriceTicker = new Ticker({
       tick: () => this.latestPriceTick(),
       interval: 5000,
     });
     this.ticker = new Ticker({
       tick: () => this.tick(),
-      interval: Intervals.thirtyMin * 60 * 1000,
+      interval: Intervals["1Day"].interval * 60 * 1000,
     });
   }
 
   tick() {
-    this.props.getMarket({ ...this.props, interval: 'thirtyMin' });
+    this.props.getMarket({ ...this.props, interval: this.props.interval });
   }
 
   latestPriceTick() {
-    this.props.getMarketTick({ ...this.props, interval: 'thirtyMin' });
+    this.props.getMarketTick({ ...this.props, interval: this.props.interval });
   }
 
   render() {
@@ -58,13 +61,14 @@ export default class Market extends React.Component {
         <View style={styles.container}>
 
           <View style={styles.body}>
-            <VictoryChart>
-              <VictoryAxis tickFormat={ tick => DateFormatter('thirtyMin', tick) } fixLabelOverlap={true} />
+            <VictoryChart padding={ { left: 0, right: 0, top: 0, bottom: 50 }}>
+              <VictoryAxis tickLabelComponent={<VictoryLabel dx={20} />} tickFormat={ tick => DateFormatter(this.props.interval, tick) } fixLabelOverlap={true} />
               <VictoryAxis dependentAxis tickFormat={ (tick) => '' }/>
               <VictoryLine
                 style={{
                   data: { stroke: "#999999" },
                   parent: { border: "1px solid #ccc" },
+                  backgroundColor:'yellow',
                 }}
                 animate={{
                   onLoad: { duration: 500 },
@@ -76,10 +80,24 @@ export default class Market extends React.Component {
         </View>
       );
     }
+
+    let intervals = (<View style={styles.buttons}>
+      Intervals
+      { renderIntervalButton.bind(this)('1Day', Intervals['1Day']) }
+      { renderIntervalButton.bind(this)('5Days', Intervals['5Days']) }
+      { renderIntervalButton.bind(this)('30Days', Intervals['30Days']) }
+    </View>)
     
     return (
-      <View style={styles.container}>{ viewTop } { view }</View>
+      <View style={styles.container}>{ viewTop } { view } { intervals } </View>
     );
+  }
+
+  changeInterval(newInterval) {
+    if(this.props.interval === newInterval) {
+      return;
+    }
+    this.props.changeInterval({ ...this.props, interval: newInterval });
   }
 
   componentWillMount() {

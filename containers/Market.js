@@ -1,16 +1,20 @@
 import getMarket from './../actions/getMarket';
 import getMarketTick from './../actions/getMarketTick';
+import changeInterval from './../actions/changeInterval';
 import { connect } from 'react-redux';
 import Market from '../components/Market'
-import Intervals from '../utils/Intervals';
 
 const mapStateToProps = state => {
-    return { ...state, id: 'market' };
+    let result = { ...state, id: 'market' };
+    result.interval = result.interval || "1Day";
+    console.log(result);
+    return result;
 }
 const mapDispatchToProps = dispatch => {
     return {
         getMarket: data => getMarket({ ...data }, dispatch),
         getMarketTick: data => getMarketTick({ ...data }, dispatch),
+        changeInterval: data => changeInterval({ ...data }, dispatch)
     };
 };
 

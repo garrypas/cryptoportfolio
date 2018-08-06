@@ -14,4 +14,10 @@ describe('FillHoles', () => {
         expect(filled.length).toEqual(5);
         expect(filled[3].T).toEqual("2018-07-11T09:05:00");
     });
+
+    it('Filled item volumes are zero', () => {
+        let filled = fillHoles(data, 5);
+        expect(filled.length).toEqual(5);
+        expect(filled[3].V).toEqual(0);
+    });
 });

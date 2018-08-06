@@ -5,7 +5,7 @@ import getRoute from '../routes/getRoute';
 import fillHoles from './../utils/FillHoles';
 import _ from 'lodash';
 
-function getTickData(actionArgs, dispatch, state) {
+function getTickData(actionArgs, dispatch) {
     console.log('getting last');
     const route = getRoute('TICK', actionArgs.market);
     axios.get(route).then(resp => {
@@ -22,7 +22,7 @@ module.exports = (state = {}, dispatch) => {
         market: state && state.market
     };
 
-    getTickData(actionArgs, dispatch, state);
+    getTickData(actionArgs, dispatch);
 
     return actionArgs;
 }

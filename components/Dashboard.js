@@ -5,13 +5,12 @@ import { Text, View, TouchableOpacity, ScrollView, FlatList } from 'react-native
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import styles from './Dashboard.css.js';
-import { Actions } from 'react-native-router-flux';
+import RouteWrapper from '../routes/RouteWrapper';
 import Ticker from './Ticker';
 
 const component = class Dashboard extends React.Component {
     constructor(props) {
         super(props);
-        console.log('Creating dashboard');
         this.renderRow = this.renderRow.bind(this);
         this.state = {};
 
@@ -22,14 +21,14 @@ const component = class Dashboard extends React.Component {
     }
 
     tick() {
-        if(Actions.currentScene === 'home') {
+        if(RouteWrapper.current() === 'home') {
             this.props.getMarkets({ previous: this.props.markets });
         }
     }
 
     viewMarket(market) {
         this.ticker.stopTick();
-        Actions.market({ market: market.key, title: market.key });
+        RouteWrapper.navigate("market", { market: market.key, title: market.key });
     }
 
     renderRow(rowData, sectionID) {
@@ -69,13 +68,17 @@ const component = class Dashboard extends React.Component {
     }
 
     componentDidMount() {
-        console.log('starting dashboard ticker');
-        this.ticker.tick();
+        if(RouteWrapper.current() === 'home') {
+            console.log('starting dashboard ticker');
+            this.ticker.tick();
+        }
     }
 
     componentWillUnmount() {
-        console.log('stopping dashboard ticker');
-        this.ticker.stopTick();
+        if(RouteWrapper.current() === 'home') {
+            console.log('stopping dashboard ticker');
+            this.ticker.stopTick();
+        }
     }
 }
 
