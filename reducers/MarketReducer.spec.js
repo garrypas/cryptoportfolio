@@ -22,12 +22,6 @@ describe('MarketReducer', () => {
 		expect(data.historyData[0].y).toEqual(data.history[0].C);
 	});
 
-	it('Latest price is the price with the newest timestamp', () => {
-		const data = getData();
-		const expected = data.history[data.history.length - 1].C;
-		expect(data.latestPrice).toEqual(expected);
-	});
-
 	it('Data points are floats', () => {
 		const data = getData();
 		data.historyData.forEach(item => expect(typeof item.y).toEqual('number'));
@@ -40,7 +34,7 @@ describe('MarketReducer', () => {
 
 	it('Low is lowest price', () => {
 		const data = getData();
-		expect(data.low).toEqual(0.00088000);
+		expect(data.low).toEqual(0.00080669);
 	});
 
 	it("Volume is total volume for period expressed in BTC",  () => {

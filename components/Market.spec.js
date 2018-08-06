@@ -28,6 +28,6 @@ describe('Market', () => {
 
   it('Starts ticker once component is mounted', () => {
     render();
-    sinon.assert.calledOnce(tickSpy);
+    sinon.assert.calledTwice(tickSpy);
   });
 });

@@ -3,6 +3,7 @@
 const reducers = {
 	'GET_MARKETS': require('./MarketsReducer'),
 	'GET_MARKET': require('./MarketReducer'),
+	'GET_MARKET_TICK': require('./MarketTickReducer'),
 };
 
 export default (state = [], action) => 
