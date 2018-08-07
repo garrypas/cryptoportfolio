@@ -16,16 +16,19 @@ export default class Customize extends React.Component {
 
   getSwipeoutButtons(market) {
     return [
-      <TouchableHighlight onPress={() => this.props.removeMyCurrency({ market }) } style={{ height: '100%', width: 75, justifyContent: 'center', alignItems: 'center', backgroundColor: 'red' }}><Text style={{ color:'white' }}>Remove</Text></TouchableHighlight>
+      <TouchableHighlight onPress={() => this.props.removeMyCurrency({ market }) } style={{ height: '100%', width: 75, justifyContent: 'center', alignItems: 'center', backgroundColor: 'red' }}>
+        <Text style={{ color:'white' }}>Remove</Text>
+      </TouchableHighlight>
     ];
   }
 
   renderRow(rowData) {
+    console.log(rowData);
     return (
       <Swipeable rightButtons={this.getSwipeoutButtons(rowData.item.key)}>
         <TouchableOpacity style={ styles.flatListItemStyle } onPress={() => { }}>
           <View style={styles.itemName}>
-            <Text style={ styles.itemNameText }>{rowData.item.title}</Text>
+            <Text style={ [styles.itemNameText, { zIndex: 999 }] }>{rowData.item.title}</Text>
           </View>
         </TouchableOpacity>
       </Swipeable>

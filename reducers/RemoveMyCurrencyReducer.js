@@ -8,7 +8,7 @@ module.exports = (state = [], action) => {
 		myCurrencies: action.myCurrencies.map(market => {
 			return {
 				key: market,
-				tite: market,
+				title: market,
 			};
 		}),
 	};
