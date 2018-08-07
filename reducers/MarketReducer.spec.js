@@ -1,9 +1,6 @@
 "use strict";
 
-import React from 'react';
 import marketReducer from './MarketReducer';
-import getMarket from './../actions/getMarket'
-import renderer from 'react-test-renderer';
 const ticksMock = require('../mocks/ticksMock');
 const _ = require('lodash');
 

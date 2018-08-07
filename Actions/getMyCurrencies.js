@@ -1,8 +1,8 @@
 "use strict";
-import { AsyncStorage } from 'react-native';
+import AsyncStorageArrayWrapper from '../utils/AsyncStorageArrayWrapper';
 
 module.exports = (state = {}, dispatch) => {
-    const myCurrencies = AsyncStorage.getItem('myCurrencies').then(val => {
+    const myCurrencies = AsyncStorageArrayWrapper.getItem('myCurrencies').then(val => {
         dispatch({
             type: 'GET_MY_CURRENCIES',
             myCurrencies: val || [],

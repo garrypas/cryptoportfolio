@@ -5,12 +5,31 @@ import { AsyncStorage } from 'react-native';
 
 export default class {
     constructor(data) {
-        this.data = data;
+        const _data = { ...data };
+        // We need to do this because our array would be stored like this
+        // in the real code as we use the AsyncStorageArrayWrapper
+        for(var p in _data) {
+            if(_data.hasOwnProperty(p)) {
+                if(_data[p] instanceof Array) {
+                    _data[p] = JSON.stringify({ array: _data[p] });
+                }
+            }
+        }
+        
+        this.data = _data;
         this.sandbox = sinon.createSandbox();        
     }
 
     stub() {
-        this.sandbox.stub(AsyncStorage, 'getItem').callsFake(key => Promise.resolve(this.data[key]));
+        this.sandbox.stub(AsyncStorage, 'getItem').callsFake(key => {
+            let ret = this.data[key];
+            return Promise.resolve(ret);
+        });
+        this.sandbox.stub(AsyncStorage, 'setItem').callsFake((key, value) => new Promise(resolve => {
+            this.data[key] = value;
+            return resolve();
+        }));
+
     }
 
     restore() {

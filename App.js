@@ -19,7 +19,7 @@ const component = class App extends React.Component {
           <Scene key="root">
             <Scene key="home" component={Markets} initial title="Markets" renderLeftButton={() => <Button title="Customize" onPress={() => Actions.replace('customize') } />} />
             <Scene back onBack={() => Actions.replace('home') } key="market" component={Market} title="Market" />
-            <Scene back onBack={() => Actions.replace('home') } key="customize" component={Customize} title="Customize" />
+            <Scene back onBack={() => Actions.replace('home', store.getState()) } key="customize" component={Customize} title="Customize" />
           </Scene>
         </Router>
       </Provider>

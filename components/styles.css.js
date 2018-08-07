@@ -11,7 +11,6 @@ export default {
 
     flatListStyle: {
         width: '100%',
-        flex: 1,
     },
 
     flatListItemStyle: {
@@ -19,6 +18,6 @@ export default {
         flex: 1,
         borderBottomColor: '#999',
         borderBottomWidth: 1,
-        flexDirection:"row"
+        flexDirection:"row",
     },
 };

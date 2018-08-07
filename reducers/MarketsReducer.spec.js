@@ -1,9 +1,6 @@
 "use strict";
 
-import React from 'react';
 import marketsReducer from './MarketsReducer';
-import getMarkets from './../actions/getMarkets'
-import renderer from 'react-test-renderer';
 const summaryMock = require('../mocks/summaryMock');
 
 describe('MarketsReducer', () => {

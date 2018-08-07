@@ -68,7 +68,6 @@ export default class Market extends React.Component {
                 style={{
                   data: { stroke: "#999999" },
                   parent: { border: "1px solid #ccc" },
-                  backgroundColor:'yellow',
                 }}
                 animate={{
                   onLoad: { duration: 500 },

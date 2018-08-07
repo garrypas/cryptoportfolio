@@ -9,7 +9,7 @@
     "jest-react-native": "^18.0.0",
     "react-test-renderer": "16.3.1",
     "sinon": "^6.1.4",
-    "react-dom": "^16.4.2"    
+    "react-dom": "^16.4.2"
   },
   "scripts": {
     "images": "echo \"var images = {};\" > ./images.js; find ./images/*.png -not -name '*@*' -type f -maxdepth 1 | sed -e 's,^\\./images/,,' | sed -e 's,\\.png,,' | while read f; do \n IMGKEY=`echo $f | tr 'a-z' 'A-Z'` \n echo \"images['$IMGKEY'] = require('./images/$f.png');\"; done >> ./images.js; echo \"module.exports = images;\" >> ./images.js",
@@ -23,6 +23,9 @@
     "preset": "react-native",
     "transformIgnorePatterns": [
       "<root_folder>/node_modules/(?!react-native|victory-native|victory-animation)"
+    ],
+    "setupFiles": [
+      "./globalSetup.js"
     ]
   },
   "dependencies": {
@@ -36,8 +39,10 @@
     "moment": "^2.22.2",
     "react": "16.3.1",
     "react-native": "~0.55.2",
+    "react-native-autocomplete-input": "^3.5.0",
     "react-native-router-flux": "^4.0.0-beta.31",
     "react-native-svg": "^6.5.1",
+    "react-native-swipeable": "^0.6.0",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "string-format": "^2.0.0",
