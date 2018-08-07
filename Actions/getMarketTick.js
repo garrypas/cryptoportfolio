@@ -6,7 +6,6 @@ import fillHoles from './../utils/FillHoles';
 import _ from 'lodash';
 
 function getTickData(actionArgs, dispatch) {
-    console.log('getting last');
     const route = getRoute('TICK', actionArgs.market);
     axios.get(route).then(resp => {
         const last = resp.data.result.Last;
