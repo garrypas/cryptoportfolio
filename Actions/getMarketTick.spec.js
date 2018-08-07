@@ -18,7 +18,7 @@ describe('getMarketTick', () => {
         getMarketTick({ market: 'BTC-ARK', interval: '1Day' }, () => done());
     });
 
-    it('Returns tick data as an array', done => {
+    it('Returns tick data', done => {
         const dispatch = data => {
             expect(typeof data.data).toEqual('object');
             done();

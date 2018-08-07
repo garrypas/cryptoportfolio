@@ -8,4 +8,17 @@ export default {
         justifyContent: 'flex-start',
         flexDirection: 'column',
     },
+
+    flatListStyle: {
+        width: '100%',
+        flex: 1,
+    },
+
+    flatListItemStyle: {
+        padding: 20,
+        flex: 1,
+        borderBottomColor: '#999',
+        borderBottomWidth: 1,
+        flexDirection:"row"
+    },
 };

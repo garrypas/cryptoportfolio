@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import Markets from './containers/Markets';
 import Market from './containers/Market';
+import Customize from './containers/Customize';
 
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
@@ -16,8 +17,9 @@ const component = class App extends React.Component {
       <Provider store={store}>
         <Router>
           <Scene key="root">
-            <Scene key="home" component={Markets} initial title="Cryptocurrency Markets" />
+            <Scene key="home" component={Markets} initial title="Markets" renderLeftButton={() => <Button title="Customize" onPress={() => Actions.replace('customize') } />} />
             <Scene back onBack={() => Actions.replace('home') } key="market" component={Market} title="Market" />
+            <Scene back onBack={() => Actions.replace('home') } key="customize" component={Customize} title="Customize" />
           </Scene>
         </Router>
       </Provider>

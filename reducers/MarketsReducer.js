@@ -18,5 +18,5 @@ function mapMarketItems(data, previous) {
 
 module.exports = (state = [], action) => {
 	let markets = mapMarketItems(action.data, action.previous);
-	return { markets: markets };
+	return { markets };
 }

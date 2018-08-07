@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react';
-import { Text, View, TouchableOpacity, ScrollView, FlatList } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, FlatList, Picker } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import styles from './Dashboard.css.js';
