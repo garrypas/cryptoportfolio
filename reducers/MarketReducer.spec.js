@@ -8,7 +8,7 @@ describe('MarketReducer', () => {
 	function getData() {
 		return marketReducer({}, {
 			data: ticksMock.result,
-			market: 'BTC-ARK'
+			market: 'BTC-ARK',
 		});
 	}
 

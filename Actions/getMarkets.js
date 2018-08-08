@@ -2,6 +2,7 @@
 
 import getRoute from '../routes/getRoute';
 import axios from 'axios';
+// import getMyCurrencies from './getMyCurrencies';
 
 module.exports = (args = {}, dispatch) => {
     let actionArgs = {

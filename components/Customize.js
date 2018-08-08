@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react';
-import { Text, View, Button, FlatList, TouchableOpacity, TouchableHighlight, TextInput } from 'react-native';
+import { Text, View, Button, FlatList, TouchableOpacity, TouchableHighlight, TextInput, Keyboard } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import styles from './Customize.css.js';
@@ -38,7 +38,6 @@ export default class Customize extends React.Component {
   render() {
     const myCurrencies = this.props.myCurrencies;
     let view = (<Text>Loading...</Text>);
-    console.log(this.props.myCurrencies)
     if (myCurrencies && this.props.markets) {
       view = (
         <View>
@@ -47,9 +46,12 @@ export default class Customize extends React.Component {
               placeholder="Enter market name..."
               style={styles.searchInput}
               data={this.props.suggestions}
-              onChangeText={searchText => this.props.filterMarkets({ searchText, items: this.props.markets.map(i => i.key) })}
+              onChangeText={searchText => this.props.filterMarkets({ searchText, items: this.props.allMarkets.map(i => i.key) })}
               renderItem={item => (
-                <TouchableOpacity onPress={() => this.props.addToMyCurrencies({ market: item })} style={ styles.flatListItemStyle }>
+                <TouchableOpacity onPress={() => {
+                  this.props.addToMyCurrencies({ market: item });
+                  Keyboard.dismiss;
+                  }} style={ styles.flatListItemStyle }>
                   <Text>{ item }</Text>
                 </TouchableOpacity>
               )}

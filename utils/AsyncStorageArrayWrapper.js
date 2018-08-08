@@ -4,7 +4,7 @@ module.exports = {
     getItem : (key, callback) => {
         return AsyncStorage.getItem(key, callback).then(val => {
             const json = JSON.parse(val);
-            return json.array;
+            return json && json.array;
         })
     },
     setItem : (key, value, callback) => {

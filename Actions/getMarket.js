@@ -8,7 +8,6 @@ import Intervals from '../utils/Intervals';
 function getHistoryData(actionArgs, dispatch) {
     const interval = Intervals[actionArgs.interval];
     const route = getRoute('TICKS', actionArgs.market, interval.intervalKey);
-    console.log(route);
     axios.get(route).then(resp => {
         actionArgs.data = fillHoles(resp.data.result, interval.interval);
         dispatch(actionArgs);

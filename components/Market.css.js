@@ -8,20 +8,16 @@ const css = {
         flexDirection:"row",
         borderColor:'#000000',
         borderBottomWidth: 1,
-        display:'flex',
         height: 100,
     },
 
 
     body: {
         flexDirection:"column",
-        flex: 1,
     },
 
     buttons: {
         flexDirection:"row",
-        flex: 1,
-        marginTop: 100,
     },
 
     icon: {

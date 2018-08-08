@@ -11,12 +11,18 @@ function mapMarketItems(data, previous) {
 			title: market.MarketName,
 			price: price,
 			quoteCurrency: MarketString.getQuoteCurrency(market.MarketName),
-			previousPrice: previous ? previous.find(item => item.key === market.MarketName).price : price
+			previousPrice: previous ? (previous.find(item => item.key === market.MarketName) || {}).price : price
 		}
 	})
 }
 
 module.exports = (state = [], action) => {
-	let markets = mapMarketItems(action.data, action.previous);
-	return { markets };
+	const myCurrencies = action.myCurrencies;
+	let allMarkets = mapMarketItems(action.data, action.previous);
+	
+	const myMarkets = allMarkets.filter(market => {
+		return myCurrencies.includes(market.key);
+	});
+
+	return { markets: myMarkets, allMarkets };
 }

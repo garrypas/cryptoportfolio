@@ -12,6 +12,6 @@ function mapMyCurrencies(data) {
 }
 
 module.exports = (state = [], action) => {
-	let myCurrencies = mapMyCurrencies(action.myCurrencies);
+	let myCurrencies = mapMyCurrencies(action.myCurrencies || []);
 	return { ...state, myCurrencies };
 }

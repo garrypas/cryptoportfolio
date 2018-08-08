@@ -4,7 +4,11 @@ import sinon from 'sinon';
 import { AsyncStorage } from 'react-native';
 
 export default class {
-    constructor(data) {
+    constructor() {
+        this.sandbox = sinon.createSandbox();        
+    }
+
+    stub(data) {
         const _data = { ...data };
         // We need to do this because our array would be stored like this
         // in the real code as we use the AsyncStorageArrayWrapper
@@ -17,10 +21,7 @@ export default class {
         }
         
         this.data = _data;
-        this.sandbox = sinon.createSandbox();        
-    }
 
-    stub() {
         this.sandbox.stub(AsyncStorage, 'getItem').callsFake(key => {
             let ret = this.data[key];
             return Promise.resolve(ret);

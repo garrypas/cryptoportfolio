@@ -12,8 +12,8 @@ describe('removeMyCurrency', () => {
         const data = {
             myCurrencies: myCurrencies
         };
-        asyncStorageStub = new AsyncStorageStub(data);
-        asyncStorageStub.stub();
+        asyncStorageStub = new AsyncStorageStub();
+        asyncStorageStub.stub(data);
     });
 
     afterEach(() => asyncStorageStub.restore());

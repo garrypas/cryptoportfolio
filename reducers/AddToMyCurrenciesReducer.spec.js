@@ -5,7 +5,8 @@ import addToMyCurrenciesReducer from './AddToMyCurrenciesReducer';
 describe('AddToMyCurrenciesReducer', () => {
 	function getData() {
 		return addToMyCurrenciesReducer({
-			myCurrencies: []
+			myCurrencies: [],
+			suggestions: [ 'BTC-ARK']
 		},
 		{
 			myCurrencies: [ 'BTC-ARK' ],
@@ -25,5 +26,10 @@ describe('AddToMyCurrenciesReducer', () => {
 	it('Maps market to key', () => {
 		const data = getData();
 		expect(data.myCurrencies[0].key).toEqual('BTC-ARK');
+	});
+
+	it('Removes suggestions', () => {
+		const data = getData();
+		expect(data.suggestions).toHaveLength(0);
 	});
 });
