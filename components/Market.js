@@ -9,10 +9,10 @@ const images = require('./../images');
 import { VictoryTheme, VictoryChart, VictoryLine, VictoryAxis, VictoryLabel } from 'victory-native';
 import Ticker from './Ticker';
 import DateFormatter from './../utils/DateFormatter';
-import Intervals from '../utils/Intervals'
+import Intervals from '../constants/Intervals'
 
 function renderIntervalButton(key, interval) {
-  return (<Button title={interval.title} onPress={() => this.changeInterval(key)} />);
+  return (<Button title={interval.title} onPress={() => this.changeInterval(key)} key={"btn" + key} />);
 }
 
 export default class Market extends React.Component {
@@ -77,11 +77,16 @@ export default class Market extends React.Component {
       );
     }
 
-    let intervals = (<View style={styles.buttons}>
-      Intervals
-      {renderIntervalButton.bind(this)('1Day', Intervals['1Day'])}
-      {renderIntervalButton.bind(this)('5Days', Intervals['5Days'])}
-      {renderIntervalButton.bind(this)('30Days', Intervals['30Days'])}
+    let buttons = [];
+    for(let b in Intervals) {
+        console.log(Intervals[b])
+      
+      buttons.push(
+          renderIntervalButton.bind(this)(b, Intervals[b])
+      );
+    }
+
+    let intervals = (<View style={styles.buttons}>{buttons}
     </View>)
 
     return (

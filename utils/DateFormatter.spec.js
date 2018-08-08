@@ -3,6 +3,7 @@
 import sinon from 'sinon';
 import thirtyMinDateFormatter from './ThirtyMinDateFormatter';
 import dateFormatter from './DateFormatter';
+import IntervalKeys from '../constants/IntervalKeys';
 
 describe('DateFormatter', () => {
   let tickSpy;
@@ -17,7 +18,7 @@ describe('DateFormatter', () => {
     sandbox.restore());
 
 	it('Calls correct formatter - 1Day', () => {
-		dateFormatter('1Day', '2018-07-11T08:50:00"');
+		dateFormatter(IntervalKeys.ONE_DAY, '2018-07-11T08:50:00"');
 		sinon.assert.calledOnce(tickSpy);
 	});
 });

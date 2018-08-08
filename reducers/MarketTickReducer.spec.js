@@ -4,6 +4,7 @@ import React from 'react';
 import marketTickReducer from './MarketTickReducer';
 import getMarkets from './../actions/getMarkets'
 import renderer from 'react-test-renderer';
+import IntervalKeys from '../constants/IntervalKeys';
 
 describe('MarketTickReducer', () => {
 	const currentHigh = 0.00090000;
@@ -15,7 +16,7 @@ describe('MarketTickReducer', () => {
 			high: currentHigh,
 			low: currentLow,
 			latestPrice: 0.00080000,
-			interval: 'thirtyMin',
+			interval: IntervalKeys.THIRTY_MINS,
 		}, { data: { last: last } });
 	}
 
@@ -51,6 +52,6 @@ describe('MarketTickReducer', () => {
 
 	it('Copies existing state', () => {
 		const data = getData();
-		expect(data.interval).toEqual('thirtyMin');
+		expect(data.interval).toEqual(IntervalKeys.THIRTY_MINS);
 	});
 });

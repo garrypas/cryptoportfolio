@@ -3,6 +3,7 @@
 import getRoute from  './getRoute';
 import stringFormat from 'string-format';
 import Routes from './Routes';
+import IntervalKeys from '../constants/IntervalKeys';
 
 describe(' getRoute', () => {
     const TICKS = 'TICKS';
@@ -10,8 +11,8 @@ describe(' getRoute', () => {
     const TICK = 'TICK';
 
     it(`Gets route for ${TICKS}`, () => {
-        const route = getRoute(TICKS, 'BTC-LSK', 'thirtyMin');
-        const expectedRoute = stringFormat(Routes[TICKS], 'BTC-LSK', 'thirtyMin');
+        const route = getRoute(TICKS, 'BTC-LSK', IntervalKeys.THIRTY_MINS);
+        const expectedRoute = stringFormat(Routes[TICKS], 'BTC-LSK', IntervalKeys.THIRTY_MINS);
         expect(route).toEqual(expectedRoute);
     });
 

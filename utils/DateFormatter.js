@@ -3,15 +3,18 @@
 import thirtyMinDateFormatter from './ThirtyMinDateFormatter';
 import hourDateFormatter from './HourDateFormatter';
 import dayDateFormatter from './DayDateFormatter';
+import IntervalKeys from '../constants/IntervalKeys';
 
 module.exports = (interval, tick) => {
 	const formatted = typeof tick == 'string' ? Date.parse(tick) : tick;
 	switch(interval) {
-		case '1Day':
+		case IntervalKeys.ONE_DAY:
             	return thirtyMinDateFormatter.format(tick);
-		case '5Days':
+		case IntervalKeys.FIVE_DAYS:
             	return thirtyMinDateFormatter.format(tick);
-		case '30Days':
+		case IntervalKeys.THIRTY_DAYS:
+            	return dayDateFormatter.format(tick);
+		case IntervalKeys.NINETY_DAYS:
             	return dayDateFormatter.format(tick);
 		default:
 			throw `Interval '${interval}' not found.`;

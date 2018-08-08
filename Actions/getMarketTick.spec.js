@@ -4,6 +4,7 @@ import getMarketTick from './getMarketTick'
 const tickMock = require('../mocks/tickMock.json')
 import sinon from 'sinon';
 import AxiosStub from '../stubs/AxiosStub';
+import IntervalKeys from '../constants/IntervalKeys';
 
 describe('getMarketTick', () => {
     let axiosStub;
@@ -15,7 +16,7 @@ describe('getMarketTick', () => {
     afterEach(() => axiosStub.restore());
 
     it('Dispatches result', done => {
-        getMarketTick({ market: 'BTC-ARK', interval: '1Day' }, () => done());
+        getMarketTick({ market: 'BTC-ARK', interval: IntervalKeys.ONE_DAY }, () => done());
     });
 
     it('Returns tick data', done => {
@@ -23,6 +24,6 @@ describe('getMarketTick', () => {
             expect(typeof data.data).toEqual('object');
             done();
         }
-        getMarketTick({ market: 'BTC-ARK', interval: '1Day' }, dispatch);
+        getMarketTick({ market: 'BTC-ARK', interval: IntervalKeys.ONE_DAY }, dispatch);
     });
 });

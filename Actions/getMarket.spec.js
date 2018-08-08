@@ -4,6 +4,8 @@ import getMarket from './getMarket'
 const ticksMock = require('../mocks/ticksMock.json')
 import AxiosStub from '../stubs/AxiosStub';
 import sinon from 'sinon';
+import Intervals from '../constants/Intervals';
+import IntervalKeys from '../constants/IntervalKeys';
 
 describe('getMarket', () => {
     let axiosStub;
@@ -15,7 +17,7 @@ describe('getMarket', () => {
     afterEach(() => axiosStub.restore());
 
     it('Dispatches result', done => {
-        getMarket({ market: 'BTC-ARK', interval: '1Day' }, () => done());
+        getMarket({ market: 'BTC-ARK', interval: IntervalKeys.ONE_DAY }, () => done());
     });
 
     it('Returns tick data as an array', done => {
@@ -23,6 +25,15 @@ describe('getMarket', () => {
             expect(Array.isArray(data.data)).toBeTruthy();
             done();
         }
-        getMarket({ market: 'BTC-ARK', interval: '1Day' }, dispatch);
+        getMarket({ market: 'BTC-ARK', interval: IntervalKeys.ONE_DAY }, dispatch);
+    });
+
+    it('Maps range from Intervals', done => {
+        const expected = Intervals[IntervalKeys.ONE_DAY].range;
+        const dispatch = data => {
+            expect(data.range).toEqual(expected);
+            done();
+        }
+        getMarket({ market: 'BTC-ARK', interval: IntervalKeys.ONE_DAY }, dispatch);
     });
 });
