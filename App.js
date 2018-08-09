@@ -8,6 +8,12 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import rootReducer from './reducers/RootReducer';
 import { Router, Scene, Actions } from 'react-native-router-flux';
+import FilterErrors from './utils/FilterErrors'
+
+FilterErrors.filter([
+  // Filters out deprecated warning from react-navigation  
+  'Warning: isMounted(...)'
+]);
 
 const store = createStore(rootReducer);
 
