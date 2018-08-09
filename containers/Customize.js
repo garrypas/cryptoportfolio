@@ -6,6 +6,7 @@ import getMyCurrencies from './../actions/getMyCurrencies';
 import filterMarkets from './../actions/filterMarkets';
 import addToMyCurrencies from './../actions/addToMyCurrencies';
 import removeMyCurrency from './../actions/removeMyCurrency';
+import moveMyCurrency from './../actions/moveMyCurrency';
 
 const mapStateToProps = state => {
     let result = { ...state, id: 'customize' };
@@ -16,7 +17,8 @@ const mapDispatchToProps = dispatch => {
         getMyCurrencies: data => getMyCurrencies(data, dispatch),
         filterMarkets: data => filterMarkets(data, dispatch),
         addToMyCurrencies: data => addToMyCurrencies(data, dispatch),
-        removeMyCurrency: data => removeMyCurrency(data, dispatch)
+        removeMyCurrency: data => removeMyCurrency(data, dispatch),
+        moveMyCurrency: data => moveMyCurrency(data, dispatch),
     };
 };
 

@@ -8,18 +8,13 @@ import getMyCurrencies from './getMyCurrencies';
 
 describe('getMarkets', () => {
     let axiosStub;
-    let getMyCurrenciesStub;
     beforeEach(() => {
-        getMyCurrenciesStub = sinon.stub(getMyCurrencies, '_getMyCurrencies').callsFake((args, dispatch) => {
-            dispatch([]);
-        })
         axiosStub = new AxiosStub();
         axiosStub.stub(summaryMock);
     });
 
     afterEach(() => {
         axiosStub.restore();
-        getMyCurrenciesStub.restore();
     });
 
     it('Dispatches result', done => {

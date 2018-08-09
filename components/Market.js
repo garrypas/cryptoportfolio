@@ -92,8 +92,6 @@ export default class Market extends React.Component {
 
     let buttons = [];
     for(let b in Intervals) {
-        console.log(Intervals[b])
-      
       buttons.push(
           renderIntervalButton.bind(this)(b, Intervals[b])
       );

@@ -1,3 +1,5 @@
+"use strict";
+
 import styles from './ListRows.css';
 import React from 'react';
 import { TouchableHighlight, TouchableOpacity, View, Text } from 'react-native';
@@ -26,12 +28,12 @@ class ClickableListRow extends ListRowBase {
   render() {
       const body = super.render();
       return (
-        <TouchableOpacity style={styles.flatListItemStyle} onPress={ this.props.onPress }>{body}</TouchableOpacity>
+        <TouchableHighlight style={styles.flatListItemStyle} onPress={ this.props.onPress }>{body}</TouchableHighlight>
       );
   }
 }
 
-class BasicListRow extends ListRowBase {
+class SortableListRow extends ListRowBase {
   constructor(props) {
     super(props)
   }
@@ -39,11 +41,9 @@ class BasicListRow extends ListRowBase {
   render() {
     const body = super.render();
     return(
-      <TouchableHighlight style={styles.flatListItemStyle}>
-        {body}
-        </TouchableHighlight>
+      <TouchableOpacity style={styles.flatListItemStyle} {...this.props.sortHandlers}>{body}</TouchableOpacity>
     );
   }
 }
 
-export { BasicListRow, ClickableListRow };
+export { SortableListRow, ClickableListRow };

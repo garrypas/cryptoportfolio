@@ -18,7 +18,7 @@ function getHistoryData(actionArgs, dispatch) {
 
 module.exports = (state = {}, dispatch) => {
     let actionArgs = {
-        type: 'GET_MARKET',
+        type: 'Market',
         market: state && state.market,
         interval: state.interval || "1Day"
     };

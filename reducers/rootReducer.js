@@ -1,14 +1,15 @@
 "use strict";
 
 const reducers = {
-	'GET_MARKETS': require('./MarketsReducer'),
-	'GET_MARKET': require('./MarketReducer'),
-	'GET_MARKET_TICK': require('./MarketTickReducer'),
-	'CHANGE_INTERVAL': require('./ChangeIntervalReducer'),
-	'GET_MY_CURRENCIES': require('./MyCurrenciesReducer'),
-	'FILTER_MARKETS': require('./FilterMarketsReducer'),
-	'ADD_TO_MY_CURRENCIES': require('./AddToMyCurrenciesReducer'),
-	'REMOVE_MY_CURRENCY': require('./RemoveMyCurrencyReducer'),
+	'Markets': require('./MarketsReducer'),
+	'Market': require('./MarketReducer'),
+	'MarketTick': require('./MarketTickReducer'),
+	'ChangeInterval': require('./ChangeIntervalReducer'),
+	'MyCurrencies': require('./MyCurrenciesReducer'),
+	'FilterMarkets': require('./FilterMarketsReducer'),
+	'AddToMyCurrencies': require('./AddToMyCurrenciesReducer'),
+	'RemoveMyCurrency': require('./RemoveMyCurrencyReducer'),
+	'MoveMyCurrency': require('./MoveMyCurrencyReducer'),
 };
 
 export default (state = [], action) => 

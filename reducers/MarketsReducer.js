@@ -22,6 +22,12 @@ module.exports = (state = [], action) => {
 	
 	const myMarkets = allMarkets.filter(market => {
 		return myCurrencies.includes(market.key);
+	}).sort((a, b) => {
+		let indexA = myCurrencies.indexOf(a.key);
+		let indexB = myCurrencies.indexOf(b.key);
+		if(indexA > indexB) return 1;
+		if(indexA < indexB) return -1;
+		return 0;
 	});
 
 	return { markets: myMarkets, allMarkets };

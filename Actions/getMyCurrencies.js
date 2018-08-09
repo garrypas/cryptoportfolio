@@ -2,15 +2,11 @@
 
 import AsyncStorageArrayWrapper from '../utils/AsyncStorageArrayWrapper';
 
-const functionInterface = (state = {}, dispatch) => functionInterface._getMyCurrencies(state, dispatch);
-
-functionInterface._getMyCurrencies = (state = {}, dispatch) => {
-    const myCurrencies = AsyncStorageArrayWrapper.getItem('myCurrencies').then(val => {
+export default (state = {}, dispatch) => {
+    return AsyncStorageArrayWrapper.getItem('myCurrencies').then(val => {
         dispatch({
-            type: 'GET_MY_CURRENCIES',
+            type: 'MyCurrencies',
             myCurrencies: val,
         });
     });
 };
-
-export default functionInterface;

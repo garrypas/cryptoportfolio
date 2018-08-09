@@ -1,7 +1,7 @@
 export default function (args = {}, dispatch) {
     console.log(args.interval);
     let actionArgs = {
-        type: 'CHANGE_INTERVAL',
+        type: 'ChangeInterval',
         interval: args.interval
     };
 

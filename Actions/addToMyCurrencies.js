@@ -7,11 +7,11 @@ export default function (args = {}, dispatch) {
     const market = args.market;
 
     const actionArgs = { 
-        type: 'ADD_TO_MY_CURRENCIES',
+        type: 'AddToMyCurrencies',
         market,
     };
 
-    AsyncStorageArrayWrapper.getItem('myCurrencies').then(myCurrencies => {
+    return AsyncStorageArrayWrapper.getItem('myCurrencies').then(myCurrencies => {
         if(!(myCurrencies instanceof Array)) {
             myCurrencies = new Array();
         }
@@ -24,6 +24,4 @@ export default function (args = {}, dispatch) {
         actionArgs.myCurrencies = myCurrencies;
         dispatch(actionArgs);
     }).catch(console.error);
-
-    return actionArgs;
 };

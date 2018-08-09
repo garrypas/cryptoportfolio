@@ -17,11 +17,9 @@ function getTickData(actionArgs, dispatch) {
 
 module.exports = (state = {}, dispatch) => {
     let actionArgs = {
-        type: 'GET_MARKET_TICK',
+        type: 'MarketTick',
         market: state && state.market
     };
 
-    getTickData(actionArgs, dispatch);
-
-    return actionArgs;
+    return getTickData(actionArgs, dispatch);
 }

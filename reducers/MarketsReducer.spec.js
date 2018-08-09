@@ -6,7 +6,7 @@ const summaryMock = require('../mocks/summaryMock');
 describe('MarketsReducer', () => {
 	let myCurrencies;
 	beforeEach(() => {
-		myCurrencies = ['BTC-ARK', 'BTC-LSK'];
+		myCurrencies = [ 'BTC-LSK', 'BTC-ARK' ];
 	});
 
 	function getData() {
@@ -36,6 +36,14 @@ describe('MarketsReducer', () => {
 		const data = getData();
 		expect(data.markets).toHaveLength(1);
 		expect(data.markets[0].quoteCurrency).toEqual('ARK');
+	});
+
+	it("Sorts markets based on myCurrencies", () => {
+		myCurrencies = ['BTC-ARK', 'BTC-LSK'];
+		const data = getData();
+		expect(data.markets).toHaveLength(2);
+		expect(data.markets[0].quoteCurrency).toEqual('ARK');
+		expect(data.markets[1].quoteCurrency).toEqual('LSK');
 	});
 
 	it("All markets contains unfiltered list of markets", () => {

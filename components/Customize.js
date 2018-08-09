@@ -1,35 +1,24 @@
 "use strict";
 
 import React from 'react';
-import { Text, View, Button, FlatList, TouchableOpacity, TouchableHighlight, TextInput, Keyboard, PureComponent } from 'react-native';
+import { Text, View, Button, FlatList, TouchableOpacity, TouchableHighlight, TextInput, Keyboard, PureComponent, NativeComponent } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import styles from './Customize.css.js';
 import RouteWrapper from '../routes/RouteWrapper';
 import Autocomplete from 'react-native-autocomplete-input';
-// import Swipeable from 'react-native-swipeable';
 import SortableListView from 'react-native-sortable-listview';
-import { BasicListRow } from './common/ListRows';
+import { SortableListRow } from './common/ListRows.js';
 
 export default class Customize extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
-  }
-
-  getSwipeoutButtons(market) {
-    return [
-      <TouchableHighlight onPress={() => this.props.removeMyCurrency({ market }) } style={{ height: '100%', width: 75, justifyContent: 'center', alignItems: 'center', backgroundColor: 'red' }}>
-        <Text style={{ color:'white' }}>Remove</Text>
-      </TouchableHighlight>
-    ];
   }
 
   renderRow(rowData) {
     return (
-      <BasicListRow title={ rowData.title } right={
+      <SortableListRow title={ rowData.title } right={
           <Button 
-          backgroundColor="red"
             title="Remove" 
             onPress={() => this.props.removeMyCurrency({ market: rowData.key }) } 
             style={ [{justifyContent: 'flex-end', flex: 1, backgroundColor: 'red' }, styles.textButton ] } />
@@ -41,6 +30,7 @@ export default class Customize extends React.Component {
     const myCurrencies = this.props.myCurrencies;
     let view = (<Text>Loading...</Text>);
     if (myCurrencies && this.props.markets) {
+      const order = Object.keys(myCurrencies);
       view = (
         <View style={styles.container}>
           <View style={ styles.searchForm }>
@@ -59,18 +49,13 @@ export default class Customize extends React.Component {
               )}
             />
           </View>
-            <SortableListView style={styles.flatListStyle}
+            <SortableListView style={[styles.flatListStyle, { flex: 1 }]}
               data={myCurrencies}
-              onRowMoved={e => {
-
-              }}
-              order={ Object.keys(myCurrencies) }
-              renderRow={row => 
-                this.renderRow(row)
+              onRowMoved={e => 
+                this.props.moveMyCurrency({ myCurrencies: this.props.myCurrencies, to: e.to, from: e.from })
               }
-              style={{flex: 1}}
-              onMoveStart={() => { console.log('start'); this.setState({ sorting: true }); }}
-              onMoveEnd={() => this.setState({ sorting: false })}
+              order={order}
+              renderRow={ this.renderRow.bind(this) }
             />
         </View>
       );
@@ -79,6 +64,7 @@ export default class Customize extends React.Component {
   }
 
   componentWillMount() {
+    console.log("componentRemount");
     if (RouteWrapper.current() === 'customize') {
       this.props.getMyCurrencies({ ...this.props });
     }
