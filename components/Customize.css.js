@@ -1,6 +1,6 @@
 "use strict";
 
-import styles from './styles.css';
+import styles from './common/styles.css';
 
 let css = {
     ...styles,

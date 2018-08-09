@@ -1,17 +1,20 @@
 "use strict";
 
 import React from 'react';
-import { Text, View, Button, FlatList, TouchableOpacity, TouchableHighlight, TextInput, Keyboard } from 'react-native';
+import { Text, View, Button, FlatList, TouchableOpacity, TouchableHighlight, TextInput, Keyboard, PureComponent } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import styles from './Customize.css.js';
 import RouteWrapper from '../routes/RouteWrapper';
 import Autocomplete from 'react-native-autocomplete-input';
-import Swipeable from 'react-native-swipeable';
+// import Swipeable from 'react-native-swipeable';
+import SortableListView from 'react-native-sortable-listview';
+import { BasicListRow } from './common/ListRows';
 
 export default class Customize extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {};
   }
 
   getSwipeoutButtons(market) {
@@ -23,16 +26,15 @@ export default class Customize extends React.Component {
   }
 
   renderRow(rowData) {
-    console.log(rowData);
     return (
-      <Swipeable rightButtons={this.getSwipeoutButtons(rowData.item.key)}>
-        <TouchableOpacity style={ styles.flatListItemStyle } onPress={() => { }}>
-          <View style={styles.itemName}>
-            <Text style={ [styles.itemNameText, { zIndex: 999 }] }>{rowData.item.title}</Text>
-          </View>
-        </TouchableOpacity>
-      </Swipeable>
-    )
+      <BasicListRow title={ rowData.title } right={
+          <Button 
+          backgroundColor="red"
+            title="Remove" 
+            onPress={() => this.props.removeMyCurrency({ market: rowData.key }) } 
+            style={ [{justifyContent: 'flex-end', flex: 1, backgroundColor: 'red' }, styles.textButton ] } />
+        } />
+    );
   }
 
   render() {
@@ -40,9 +42,9 @@ export default class Customize extends React.Component {
     let view = (<Text>Loading...</Text>);
     if (myCurrencies && this.props.markets) {
       view = (
-        <View>
+        <View style={styles.container}>
           <View style={ styles.searchForm }>
-            {<Autocomplete
+            <Autocomplete
               placeholder="Enter market name..."
               style={styles.searchInput}
               data={this.props.suggestions}
@@ -55,14 +57,21 @@ export default class Customize extends React.Component {
                   <Text>{ item }</Text>
                 </TouchableOpacity>
               )}
-            />}
-          </View>
-          <View>
-            <FlatList style={styles.flatListStyle}
-              data={myCurrencies}
-              renderItem={this.renderRow.bind(this)}
             />
           </View>
+            <SortableListView style={styles.flatListStyle}
+              data={myCurrencies}
+              onRowMoved={e => {
+
+              }}
+              order={ Object.keys(myCurrencies) }
+              renderRow={row => 
+                this.renderRow(row)
+              }
+              style={{flex: 1}}
+              onMoveStart={() => { console.log('start'); this.setState({ sorting: true }); }}
+              onMoveEnd={() => this.setState({ sorting: false })}
+            />
         </View>
       );
     }

@@ -1,14 +1,13 @@
 "use strict";
 
-import styles from './styles.css';
+import styles from './common/styles.css';
 
 const css = {
     ...styles,
     header: {
         flexDirection:"row",
         borderColor:'#000000',
-        borderBottomWidth: 1,
-        height: 100,
+        padding: 10,
     },
 
 
@@ -18,6 +17,8 @@ const css = {
 
     buttons: {
         flexDirection:"row",
+        alignItems:"center",
+        justifyContent: 'center',
     },
 
     icon: {
@@ -34,7 +35,6 @@ const css = {
     itemPriceContainer: {
         justifyContent: 'flex-end',
         width: '100%',
-        height: 80,
         flex: 1,
         flexDirection: 'column',
         alignItems: 'stretch',

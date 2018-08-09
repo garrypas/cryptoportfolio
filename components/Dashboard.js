@@ -7,6 +7,7 @@ import { createStore } from 'redux';
 import styles from './Dashboard.css.js';
 import RouteWrapper from '../routes/RouteWrapper';
 import Ticker from './Ticker';
+import { ClickableListRow } from './common/ListRows';
 
 const component = class Dashboard extends React.Component {
     constructor(props) {
@@ -43,10 +44,11 @@ const component = class Dashboard extends React.Component {
             direction = 'up';
         }
         return (
-            <TouchableOpacity style={styles.flatListItemStyle} onPress={() => this.viewMarket(rowData.item)}>
-                <View style={styles.itemName}><Text style={styles.itemNameText}>{rowData.item.title}</Text></View>
+            <ClickableListRow title={ rowData.item.title } right={
                 <View style={styles.itemPrice}><Text style={[priceStyle, (direction === 'up' ? styles.itemPriceTextUp : direction === 'down' ? styles.itemPriceTextDown : '')]} >{currentPrice.toFixed(8)}</Text></View>
-            </TouchableOpacity>
+            }
+            onPress={() => this.viewMarket(rowData.item)}
+             />
         );
     }
 

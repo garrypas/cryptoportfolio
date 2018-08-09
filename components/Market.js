@@ -57,11 +57,24 @@ export default class Market extends React.Component {
       );
     }
     if (this.props.history) {
+      const historyData = this.props.historyData;
       view = (
         <View style={styles.body}>
           <VictoryChart padding={{ left: 0, right: 0, top: 0, bottom: 50 }}>
-            <VictoryAxis tickLabelComponent={<VictoryLabel dx={20} />} tickFormat={tick => DateFormatter(this.props.interval, tick)} fixLabelOverlap={true} />
-            <VictoryAxis dependentAxis tickFormat={(tick) => ''} />
+            <VictoryAxis 
+              tickLabelComponent={<VictoryLabel dx={20} />} 
+              tickFormat={tick => DateFormatter(this.props.interval, tick)}
+              fixLabelOverlap={true} 
+            />
+            <VictoryAxis 
+              dependentAxis 
+              //tickFormat={(tick, index, allTicks) => index === 0 || index === allTicks.length - 1 ? tick : "" } 
+              orientation="right"
+              style={ { borderWidth: 0, axis: { stroke: 'white', strokeWidth: 0 } } }
+              
+              tickLabelComponent={<VictoryLabel textAnchor="end" dx={ -20 }  />}
+              
+            />
             <VictoryLine
               style={{
                 data: { stroke: "#999999" },
@@ -70,7 +83,7 @@ export default class Market extends React.Component {
               animate={{
                 onLoad: { duration: 500 },
               }}
-              data={this.props.historyData}
+              data={historyData}
             />
           </VictoryChart>
         </View>
@@ -86,8 +99,7 @@ export default class Market extends React.Component {
       );
     }
 
-    let intervals = (<View style={styles.buttons}>{buttons}
-    </View>)
+    let intervals = (<View style={styles.buttons}>{buttons}</View>)
 
     return (
       <View style={styles.container}>{viewTop} {view} {intervals} </View>

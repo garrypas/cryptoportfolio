@@ -1,6 +1,6 @@
 "use strict";
 
-import styles from './styles.css';
+import styles from './common/styles.css';
 
 let css = {
     ...styles,
@@ -9,12 +9,6 @@ let css = {
         flex: 1,
         justifyContent: 'flex-start',
     },
-
-    itemNameText: {
-        justifyContent: 'flex-start',
-        fontWeight:'bold'
-    },
-
     itemPrice: {
         width:'50%',
         flex: 1,
