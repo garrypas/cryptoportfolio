@@ -2,9 +2,21 @@
 import MarketString from './MarketString';
 
 describe('MarketString', () => {
-	it('Gets quote currency', () => {
+    it('Gets quote currency', () => {
         const market = 'XYZ-LSK';
         const expected = 'LSK';
         expect(MarketString.getQuoteCurrency(market)).toEqual(expected);
-	});
+    });
+
+    it('Gets base currency', () => {
+        const market = 'XYZ-LSK';
+        const expected = 'LSK';
+        expect(MarketString.getBaseCurrency(market)).toEqual('XYZ');
+    });
+
+    it('Gets base currency - BTC = Sats', () => {
+        const market = 'BTC-LSK';
+        const expected = 'LSK';
+        expect(MarketString.getBaseCurrency(market)).toEqual('Sats');
+    });
 });

@@ -22,7 +22,7 @@ module.exports = (state = [], action) => {
 		high,
 		low,
 		volume,
-		units: 'Sats',
+		units: MarketString.getBaseCurrency(action.market),
 	};
 	return result;
 }

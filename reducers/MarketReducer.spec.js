@@ -5,10 +5,15 @@ const ticksMock = require('../mocks/ticksMock');
 const _ = require('lodash');
 
 describe('MarketReducer', () => {
+	let market;
+	beforeEach(() => {
+		market = "BTC-ARK";
+	})
+
 	function getData() {
 		return marketReducer({}, {
 			data: ticksMock.result,
-			market: 'BTC-ARK',
+			market: market,
 		});
 	}
 
@@ -38,5 +43,16 @@ describe('MarketReducer', () => {
 		const data = getData();
 		const expected = data.history.map(i => i.V).reduce((a, b) => a + b, 0) * _.last(data.history).C;
 		expect(data.volume).toEqual(expected);
+	});
+
+	it('Units is base currency', () => {
+		const data = getData();
+		expect(data.units).toEqual('Sats');
+	});
+
+	it('Units is base currency - sats when BTC', () => {
+		market = "ETH-ARK";
+		const data = getData();
+		expect(data.units).toEqual('ETH');
 	});
 });
