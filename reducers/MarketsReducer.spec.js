@@ -52,4 +52,9 @@ describe('MarketsReducer', () => {
 		expect(data.allMarkets).toHaveLength(2);
 		expect(data.allMarkets[0].quoteCurrency).toEqual('LSK');
 	});
+
+    it('First item exchange is AGGREGATE', () => {
+		const data = getData();
+        expect(data.markets[0].exchange).toEqual('AGGREGATE');
+    });
 });

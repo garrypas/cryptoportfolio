@@ -9,9 +9,10 @@ function getHistoryData(actionArgs, dispatch) {
     const interval = Intervals[actionArgs.interval];
     const getRoute = RouteFactory.create();
     const route = getRoute[0]('TICKS', actionArgs.market, interval.intervalKey);
-    axios.get(route).then(resp => {
+    axios.get(route.url).then(resp => {
         actionArgs.data = fillHoles(resp.data.result, interval.interval);
         actionArgs.range = interval.range;
+        actionArgs.exchange = route.exchange;
         dispatch(actionArgs);
         return actionArgs;
     });

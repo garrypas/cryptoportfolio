@@ -36,4 +36,12 @@ describe('getMarkets', () => {
         }
         getMarkets(undefined, dispatch).catch(console.error);
     });
+
+    it('Maps exchange name', done => {
+        const dispatch = data => {
+            expect(data[0].exchange).toEqual('Bittrex');
+            done();
+        }
+        getMarkets(undefined, dispatch).catch(console.error);
+    });
 });

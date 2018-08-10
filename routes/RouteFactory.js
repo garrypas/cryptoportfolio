@@ -19,7 +19,8 @@ function createRouteDelegate(routes) {
         const routeKey = _args[0];
         let urlTemplate = getUrlTemplate(routeKey, routes);
         _args[0] = urlTemplate;
-        return stringFormat( ..._args );
+        const url = stringFormat( ..._args );
+        return { url, exchange: routes.EXCHANGE };
     };
 };
 
@@ -29,5 +30,5 @@ module.exports = {
             // BinanceRoutes,
             createRouteDelegate(BittrexRoutes),
         ]
-    }
+    },
 }

@@ -10,10 +10,12 @@ module.exports = (args = {}, dispatch) => {
     routeCreators.forEach(routeCreator => {
         const route = routeCreator('SUMMARY');
         const previousMarkets = args.previous && args.previous.slice();
+        const exchange = route.exchange;
         promises.push(
-            axios.get(route).then(resp => {
+            axios.get(route.url).then(resp => {
                 let actionArgs = {
-                    type: 'Markets'
+                    type: 'Markets',
+                    exchange
                 };
                 actionArgs.data = resp.data.result;
                 actionArgs.previous = previousMarkets;

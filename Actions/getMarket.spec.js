@@ -36,4 +36,13 @@ describe('getMarket', () => {
         }
         getMarket({ market: 'BTC-ARK', interval: IntervalKeys.ONE_DAY }, dispatch);
     });
+
+    it('Maps exchange name', done => {
+        const expected = Intervals[IntervalKeys.ONE_DAY].range;
+        const dispatch = data => {
+            expect(data.exchange).toEqual('Bittrex');
+            done();
+        }
+        getMarket({ market: 'BTC-ARK', interval: IntervalKeys.ONE_DAY }, dispatch);
+    });
 });

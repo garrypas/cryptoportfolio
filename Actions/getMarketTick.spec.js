@@ -16,7 +16,7 @@ describe('getMarketTick', () => {
     afterEach(() => axiosStub.restore());
 
     it('Dispatches result', done => {
-        getMarketTick({ market: 'BTC-ARK', interval: IntervalKeys.ONE_DAY }, () => done());
+        getMarketTick({ market: 'BTC-ARK', interval: IntervalKeys.ONE_DAY }, () => done()).catch(console.error);
     });
 
     it('Returns tick data', done => {
@@ -24,6 +24,14 @@ describe('getMarketTick', () => {
             expect(typeof data.data).toEqual('object');
             done();
         }
-        getMarketTick({ market: 'BTC-ARK', interval: IntervalKeys.ONE_DAY }, dispatch);
+        getMarketTick({ market: 'BTC-ARK', interval: IntervalKeys.ONE_DAY }, dispatch).catch(console.error);
+    });
+
+    it('Maps exchange name', done => {
+        const dispatch = data => {
+            expect(data.data.exchange).toEqual('Bittrex');
+            done();
+        }
+        getMarketTick({ market: 'BTC-ARK', interval: IntervalKeys.ONE_DAY }, dispatch).catch(console.error);
     });
 });

@@ -34,6 +34,8 @@ function mapExchangeData (myCurrencies, thisExchangeData) {
 
 module.exports = (state = [], action) => {
 	const exchangeData = action.data.map(thisExchangeData => mapExchangeData(action.myCurrencies, thisExchangeData));
+	//ToDo - this will be assigned to the aggregate summary when implemented
+	exchangeData[0].markets[0].exchange = 'AGGREGATE';
 	return {
 		exchangeData: exchangeData,
 		markets: exchangeData[0].markets,

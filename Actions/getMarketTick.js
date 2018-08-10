@@ -8,9 +8,10 @@ import _ from 'lodash';
 function getTickData(actionArgs, dispatch) {
     const getRoute = RouteFactory.create();
     const route = getRoute[0]('TICK', actionArgs.market);
-    axios.get(route).then(resp => {
+    const exchange = route.exchange;
+    return axios.get(route.url).then(resp => {
         const last = resp.data.result.Last;
-        actionArgs.data = { last };
+        actionArgs.data = { last, exchange };
         dispatch(actionArgs);
         return actionArgs;
     });
@@ -19,7 +20,7 @@ function getTickData(actionArgs, dispatch) {
 module.exports = (state = {}, dispatch) => {
     let actionArgs = {
         type: 'MarketTick',
-        market: state && state.market
+        market: state && state.market,
     };
 
     return getTickData(actionArgs, dispatch);
