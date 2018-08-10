@@ -47,12 +47,6 @@ describe('MarketReducer', () => {
 
 	it('Units is base currency', () => {
 		const data = getData();
-		expect(data.units).toEqual('Sats');
-	});
-
-	it('Units is base currency - sats when BTC', () => {
-		market = "ETH-ARK";
-		const data = getData();
-		expect(data.units).toEqual('ETH');
+		expect(data.units).toEqual('BTC');
 	});
 });

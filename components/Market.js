@@ -47,7 +47,7 @@ export default class Market extends React.Component {
             <Image source={icon} style={styles.iconImage} />
           </Text>
           <View style={styles.itemPriceContainer}>
-            <Text style={styles.itemPrice}>{this.props.latestPrice.toFixed(8)} {this.props.units}</Text>
+            <Text style={styles.itemPrice}>{this.props.latestPrice.toFixed(8)} {this.props.units === 'BTC' ? 'Sats' : 'BTC'}</Text>
             <Text style={styles.itemOtherInfo}>
               High: {typeof this.props.high === 'number' && this.props.high.toFixed(8)} Low: {typeof this.props.low === 'number' && this.props.low.toFixed(8)} {"\n"}
               Volume: {typeof this.props.volume === 'number' && this.props.volume.toFixed(8)}
@@ -68,7 +68,6 @@ export default class Market extends React.Component {
             />
             <VictoryAxis 
               dependentAxis 
-              //tickFormat={(tick, index, allTicks) => index === 0 || index === allTicks.length - 1 ? tick : "" } 
               orientation="right"
               style={ { borderWidth: 0, axis: { stroke: 'white', strokeWidth: 0 } } }
               

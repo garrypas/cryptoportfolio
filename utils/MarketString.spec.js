@@ -13,10 +13,4 @@ describe('MarketString', () => {
         const expected = 'LSK';
         expect(MarketString.getBaseCurrency(market)).toEqual('XYZ');
     });
-
-    it('Gets base currency - BTC = Sats', () => {
-        const market = 'BTC-LSK';
-        const expected = 'LSK';
-        expect(MarketString.getBaseCurrency(market)).toEqual('Sats');
-    });
 });

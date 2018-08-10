@@ -19,9 +19,14 @@ describe('BittrexMarketsMapper', () => {
 		expect(data[0].key).toEqual('BTC-LSK');
 	});
 
-	it('Extracts base currency from market name', () => {
+	it('Extracts quote currency from market name', () => {
 		const data = getData();
 		expect(data[0].quoteCurrency).toEqual('LSK');
+	});
+
+	it('Extracts base currency from market name', () => {
+		const data = getData();
+		expect(data[0].baseCurrency).toEqual('BTC');
 	});
 
 	it('Maps previous price', () => {

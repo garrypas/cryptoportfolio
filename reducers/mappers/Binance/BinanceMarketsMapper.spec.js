@@ -23,9 +23,14 @@ describe('BinanceMarketsMapper', () => {
 		expect(typeof data[0].price).toEqual('number');
 	});
 
-	it('Extracts base currency from market name', () => {
+	it('Extracts quote currency from market name', () => {
 		const data = getData();
 		expect(data[0].quoteCurrency).toEqual('ETH');
+	});
+
+	it('Extracts base currency from market name', () => {
+		const data = getData();
+		expect(data[0].baseCurrency).toEqual('BTC');
 	});
 
 	it('Maps previous price', () => {

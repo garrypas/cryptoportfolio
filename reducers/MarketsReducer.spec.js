@@ -20,12 +20,15 @@ describe('MarketsReducer', () => {
 					price: 0.9,
 					previousPrice: previous && previous[0].price,
 					quoteCurrency: 'LSK',
+					baseCurrency: 'BTC',
 				},
 				{
 					key: 'BTC-ARK',
 					title: 'BTC-ARK',
-					price: previous && previous[1].price,
+					price: 0.8,
+					previousPrice: previous && previous[1].price,
 					quoteCurrency: 'ARK',
+					baseCurrency: 'BTC',
 				}
 			];
 		});
@@ -55,6 +58,7 @@ describe('MarketsReducer', () => {
 	it("Sorts markets based on myCurrencies", () => {
 		myCurrencies = ['ARK', 'LSK'];
 		const data = getData();
+		console.log(data);
 		expect(data.markets).toHaveLength(2);
 		expect(data.markets[0].quoteCurrency).toEqual('ARK');
 		expect(data.markets[1].quoteCurrency).toEqual('LSK');
@@ -67,9 +71,9 @@ describe('MarketsReducer', () => {
 		expect(data.allMarkets[0].quoteCurrency).toEqual('LSK');
 	});
 
-    it('First item exchange is AGGREGATE', () => {
+    it('First item exchange is AGGREGATED', () => {
 		const data = getData();
-        expect(data.markets[0].exchange).toEqual('AGGREGATE');
+        expect(data.exchange).toEqual('AGGREGATED');
     });
 
 	it('Maps previous price', () => {

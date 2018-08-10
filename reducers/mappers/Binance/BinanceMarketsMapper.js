@@ -10,6 +10,7 @@ export default function(markets, previous) {
 			title: market.symbol,
 			price: price,
 			quoteCurrency: BinanceMarketString.getQuoteCurrency(market.symbol),
+			baseCurrency: BinanceMarketString.getBaseCurrency(market.symbol),
 			previousPrice: previous ? (previous.find(item => item.exchangeKey === market.symbol) || {}).price : price,
 			timestamp: new Date().toISOString()
 		}

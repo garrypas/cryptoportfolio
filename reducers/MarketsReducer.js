@@ -4,6 +4,7 @@ const debug = require('debug')('app');
 import MarketString from '../utils/MarketString';
 import _ from 'lodash';
 import MarketsMapperFactory from './mappers/MarketsMapperFactory';
+import MarketsAggregator from './MarketsAggregator';
 
 function mapMarketItems(exchange, data, previous) {
 	const mapper = MarketsMapperFactory.create(exchange);
@@ -12,7 +13,7 @@ function mapMarketItems(exchange, data, previous) {
 
 function mapExchangeData (myCurrencies, thisExchangeData, previous) {
 	let allMarkets = mapMarketItems(thisExchangeData.exchange, thisExchangeData.data, previous);
-	
+
 	const myMarkets = allMarkets.filter(market => {
 		return myCurrencies.includes(market.quoteCurrency);
 	}).sort((a, b) => {
@@ -39,13 +40,11 @@ function getExchangeData(exchangeData, exchange) {
 
 module.exports = (state = {}, action) => {
 	const exchangeData = action.data.map(thisExchangeData => mapExchangeData(action.myCurrencies, thisExchangeData, getExchangeData(state.exchangeData, thisExchangeData.exchange)));
-	//ToDo - this will be assigned to the aggregate summary when implemented
-	if(exchangeData) {
-		exchangeData[0].markets[0].exchange = 'AGGREGATE';
-	}
+	const aggregated = MarketsAggregator.aggregate(exchangeData);
 	return {
 		exchangeData: exchangeData,
-		markets: exchangeData[0].markets,
+		//ToDo: this is only needed for customization, so it could just be market names...
 		allMarkets: exchangeData[0].allMarkets,
-	}
+		...aggregated,
+	};
 }
