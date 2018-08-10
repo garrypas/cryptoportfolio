@@ -2,15 +2,18 @@
 
 import marketsReducer from './MarketsReducer';
 const summaryMock = require('../mocks/summaryMock');
+import _ from 'lodash';
 
 describe('MarketsReducer', () => {
 	let myCurrencies;
+	let state;
 	beforeEach(() => {
+		state = {};
 		myCurrencies = [ 'BTC-LSK', 'BTC-ARK' ];
 	});
 
 	function getData() {
-		return marketsReducer({ }, {
+		return marketsReducer(state, {
 			data: [ { data: summaryMock.result } ],
 			myCurrencies
 		});
@@ -57,4 +60,15 @@ describe('MarketsReducer', () => {
 		const data = getData();
         expect(data.markets[0].exchange).toEqual('AGGREGATE');
     });
+
+	it('Maps previous price', () => {
+		const currentPrice = summaryMock.result[0].Last;
+		const previousPrice = currentPrice - 0.1;
+		// Simulate a previous state 
+		state = _.cloneDeep(getData());
+		state.exchangeData[0].markets[0].price -= 0.1;
+		const data = getData();
+        expect(data.markets[0].price).toEqual(currentPrice);
+        expect(data.markets[0].previousPrice).toEqual(previousPrice);
+	});
 });

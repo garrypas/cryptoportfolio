@@ -9,7 +9,6 @@ module.exports = (args = {}, dispatch) => {
     const results = [];
     routeCreators.forEach(routeCreator => {
         const route = routeCreator('SUMMARY');
-        const previousMarkets = args.previous && args.previous.slice();
         const exchange = route.exchange;
         promises.push(
             axios.get(route.url).then(resp => {
@@ -18,7 +17,6 @@ module.exports = (args = {}, dispatch) => {
                     exchange
                 };
                 actionArgs.data = resp.data.result;
-                actionArgs.previous = previousMarkets;
                 results.push(actionArgs);
                 return actionArgs;
             })

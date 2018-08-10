@@ -23,7 +23,7 @@ const component = class Dashboard extends React.Component {
 
     tick() {
         if(RouterWrapper.current() === 'home') {
-            this.props.getMarkets({ previous: this.props.markets });
+            this.props.getMarkets();
         }
     }
 
