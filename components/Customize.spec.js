@@ -3,7 +3,7 @@
 import React from 'react';
 import Customize from './Customize';
 import renderer from 'react-test-renderer';
-import RouteWrapper from '../routes/RouteWrapper';
+import RouterWrapper from '../routes/RouterWrapper';
 import sinon from 'sinon';
 
 describe('Customize', () => {
@@ -19,7 +19,7 @@ describe('Customize', () => {
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
-    sandbox.stub(RouteWrapper, 'current').returns('customize');
+    sandbox.stub(RouterWrapper, 'current').returns('customize');
     getMyCurrencies = sandbox.spy();
   });
 

@@ -5,7 +5,7 @@ import Dashboard from './Dashboard';
 import renderer from 'react-test-renderer';
 import sinon from 'sinon';
 import Ticker from './Ticker';
-import RouteWrapper from '../routes/RouteWrapper';
+import RouterWrapper from '../routes/RouterWrapper';
 
 describe('Dashboard', () => {
   let tickSpy;
@@ -13,7 +13,7 @@ describe('Dashboard', () => {
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
-    sandbox.stub(RouteWrapper, 'current').returns('home');
+    sandbox.stub(RouterWrapper, 'current').returns('home');
     tickSpy = sandbox.stub(Ticker.prototype, 'tick').returns(undefined);
   });
 

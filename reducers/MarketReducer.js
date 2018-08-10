@@ -16,7 +16,6 @@ module.exports = (state = [], action) => {
 	state.low = low;
 	const result = { ...state,
 		historyData: history.map((item, i) => { return { x: item.T, y: item.C } }),
-		history,
 		key: action.market,
 		quoteCurrency: MarketString.getQuoteCurrency(action.market),
 		high,

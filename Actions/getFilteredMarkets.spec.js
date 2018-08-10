@@ -33,10 +33,10 @@ describe('getMarkets', () => {
 
     it('Includes market data in results', done => {
         const dispatch = data => {
-            expect(Array.isArray(data.data)).toBeTruthy();
+            expect(Array.isArray(data.data[0].data)).toBeTruthy();
             done();
         }
-        getFilteredMarkets(undefined, dispatch);
+        getFilteredMarkets(undefined, dispatch).catch(console.error);;
     });
 
     it('Includes myCurrencies in results', done => {
@@ -44,6 +44,14 @@ describe('getMarkets', () => {
             expect(Array.isArray(data.myCurrencies)).toBeTruthy();
             done();
         }
-        getFilteredMarkets(undefined, dispatch);
+        getFilteredMarkets(undefined, dispatch).catch(console.error);
+    });
+
+    it('Action type is "Markets"', done => {
+        const dispatch = data => {
+            expect(data.type).toEqual("Markets");
+            done();
+        }
+        getFilteredMarkets(undefined, dispatch).catch(console.error);
     });
 });

@@ -1,20 +1,28 @@
 "use strict";
 
-import getRoute from '../routes/getRoute';
+import RouteFactory from '../routes/RouteFactory';
 import axios from 'axios';
-// import getMyCurrencies from './getMyCurrencies';
 
 module.exports = (args = {}, dispatch) => {
-    let actionArgs = {
-        type: 'Markets'
-    };
-
-    const route = getRoute('SUMMARY');
-    const previousMarkets = args.previous && args.previous.slice();
-    return axios.get(route).then(resp => {
-        actionArgs.data = resp.data.result;
-        actionArgs.previous = previousMarkets;
-        dispatch(actionArgs);
-        return actionArgs;
+    const routeCreators = RouteFactory.create();
+    const promises = [];
+    const results = [];
+    routeCreators.forEach(routeCreator => {
+        const route = routeCreator('SUMMARY');
+        const previousMarkets = args.previous && args.previous.slice();
+        promises.push(
+            axios.get(route).then(resp => {
+                let actionArgs = {
+                    type: 'Markets'
+                };
+                actionArgs.data = resp.data.result;
+                actionArgs.previous = previousMarkets;
+                results.push(actionArgs);
+                return actionArgs;
+            })
+        );
+    });
+    return Promise.all(promises).then(() => {
+        dispatch(results);
     });
 }

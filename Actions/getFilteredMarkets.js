@@ -1,17 +1,18 @@
 "use strict";
 
-import getRoute from '../routes/getRoute';
 import axios from 'axios';
 import getMyCurrencies from './getMyCurrencies';
 import getMarkets from './getMarkets';
 
 module.exports = (args = {}, dispatch) => {
-    getMarkets(args, markets => {
-        getMyCurrencies(args, myCurrencies => {
-            dispatch({
+    return getMarkets(args, exchangesData => {
+        return getMyCurrencies(args, myCurrencies => {
+            const dispatchPayload = {
                 ...myCurrencies,
-                ...markets,
-            })
+                type: 'Markets',
+                data: exchangesData.map(market => { return { ...market } }),
+            };
+            dispatch(dispatchPayload)
         });
     });
 }

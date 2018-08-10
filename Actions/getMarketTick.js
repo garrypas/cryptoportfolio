@@ -1,12 +1,13 @@
 "use strict";
 
 import axios from 'axios';
-import getRoute from '../routes/getRoute';
+import RouteFactory from '../routes/RouteFactory';
 import fillHoles from './../utils/FillHoles';
 import _ from 'lodash';
 
 function getTickData(actionArgs, dispatch) {
-    const route = getRoute('TICK', actionArgs.market);
+    const getRoute = RouteFactory.create();
+    const route = getRoute[0]('TICK', actionArgs.market);
     axios.get(route).then(resp => {
         const last = resp.data.result.Last;
         actionArgs.data = { last };

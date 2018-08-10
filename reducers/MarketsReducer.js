@@ -16,9 +16,8 @@ function mapMarketItems(data, previous) {
 	})
 }
 
-module.exports = (state = [], action) => {
-	const myCurrencies = action.myCurrencies;
-	let allMarkets = mapMarketItems(action.data, action.previous);
+function mapExchangeData (myCurrencies, thisExchangeData) {
+	let allMarkets = mapMarketItems(thisExchangeData.data, thisExchangeData.previous);
 	
 	const myMarkets = allMarkets.filter(market => {
 		return myCurrencies.includes(market.key);
@@ -31,4 +30,13 @@ module.exports = (state = [], action) => {
 	});
 
 	return { markets: myMarkets, allMarkets };
+}
+
+module.exports = (state = [], action) => {
+	const exchangeData = action.data.map(thisExchangeData => mapExchangeData(action.myCurrencies, thisExchangeData));
+	return {
+		exchangeData: exchangeData,
+		markets: exchangeData[0].markets,
+		allMarkets: exchangeData[0].allMarkets,
+	}
 }

@@ -5,7 +5,7 @@ import { Text, View, Button, FlatList, TouchableOpacity, TouchableHighlight, Tex
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import styles from './Customize.css.js';
-import RouteWrapper from '../routes/RouteWrapper';
+import RouterWrapper from '../routes/RouterWrapper';
 import Autocomplete from 'react-native-autocomplete-input';
 import SortableListView from 'react-native-sortable-listview';
 import { SortableListRow } from './common/ListRows.js';
@@ -65,7 +65,7 @@ export default class Customize extends React.Component {
 
   componentWillMount() {
     console.log("componentRemount");
-    if (RouteWrapper.current() === 'customize') {
+    if (RouterWrapper.current() === 'customize') {
       this.props.getMyCurrencies({ ...this.props });
     }
   }

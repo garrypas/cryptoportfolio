@@ -1,30 +1,35 @@
 "use strict";
 
-import getRoute from  './getRoute';
+import RouteFactory from  './RouteFactory';
 import stringFormat from 'string-format';
-import Routes from './Routes';
 import IntervalKeys from '../constants/IntervalKeys';
+import BittrexRoutes from './exchanges/BittrexRoutes';
 
-describe(' getRoute', () => {
+describe('RouteFactory', () => {
     const TICKS = 'TICKS';
     const SUMMARY = 'SUMMARY';
     const TICK = 'TICK';
+    let getRoute;
+
+    beforeEach(() => {
+        getRoute = RouteFactory.create()[0];
+    })
 
     it(`Gets route for ${TICKS}`, () => {
         const route = getRoute(TICKS, 'BTC-LSK', IntervalKeys.THIRTY_MINS);
-        const expectedRoute = stringFormat(Routes[TICKS], 'BTC-LSK', IntervalKeys.THIRTY_MINS);
+        const expectedRoute = stringFormat(BittrexRoutes[TICKS], 'BTC-LSK', IntervalKeys.THIRTY_MINS);
         expect(route).toEqual(expectedRoute);
     });
 
     it(`Gets route for ${SUMMARY}`, () => {
         const route = getRoute(SUMMARY);
-        const expectedRoute = Routes[SUMMARY];
+        const expectedRoute = BittrexRoutes[SUMMARY];
         expect(route).toEqual(expectedRoute);
     });
 
     it(`Gets route for ${TICK}`, () => {
         const route = getRoute(TICK, 'BTC-LSK');
-        const expectedRoute = stringFormat(Routes[TICK], 'BTC-LSK');
+        const expectedRoute = stringFormat(BittrexRoutes[TICK], 'BTC-LSK');
         expect(route).toEqual(expectedRoute);
     });
 });

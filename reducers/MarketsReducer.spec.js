@@ -11,7 +11,7 @@ describe('MarketsReducer', () => {
 
 	function getData() {
 		return marketsReducer({ }, {
-			data: summaryMock.result,
+			data: [ { data: summaryMock.result } ],
 			myCurrencies
 		});
 	}

@@ -20,8 +20,8 @@ describe('MarketReducer', () => {
 	it('Reduces market history down to data points', () => {
 		const data = getData();
 		expect(data.historyData).toHaveLength(4);
-		expect(data.historyData[0].x).toEqual(data.history[0].T);
-		expect(data.historyData[0].y).toEqual(data.history[0].C);
+		expect(data.historyData[0].x).toEqual(ticksMock.result[0].T);
+		expect(data.historyData[0].y).toEqual(ticksMock.result[0].C);
 	});
 
 	it('Data points are floats', () => {
@@ -41,7 +41,7 @@ describe('MarketReducer', () => {
 
 	it("Volume is total volume for period expressed in BTC",  () => {
 		const data = getData();
-		const expected = data.history.map(i => i.V).reduce((a, b) => a + b, 0) * _.last(data.history).C;
+		const expected = ticksMock.result.map(i => i.V).reduce((a, b) => a + b, 0) * _.last(ticksMock.result).C;
 		expect(data.volume).toEqual(expected);
 	});
 

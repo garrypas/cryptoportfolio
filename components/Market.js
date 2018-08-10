@@ -56,7 +56,7 @@ export default class Market extends React.Component {
         </View>
       );
     }
-    if (this.props.history) {
+    if (this.props.historyData) {
       const historyData = this.props.historyData;
       view = (
         <View style={styles.body}>

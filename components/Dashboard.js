@@ -5,7 +5,7 @@ import { Text, View, TouchableOpacity, ScrollView, FlatList, Picker } from 'reac
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import styles from './Dashboard.css.js';
-import RouteWrapper from '../routes/RouteWrapper';
+import RouterWrapper from '../routes/RouterWrapper';
 import Ticker from './Ticker';
 import { ClickableListRow } from './common/ListRows';
 
@@ -22,14 +22,14 @@ const component = class Dashboard extends React.Component {
     }
 
     tick() {
-        if(RouteWrapper.current() === 'home') {
+        if(RouterWrapper.current() === 'home') {
             this.props.getMarkets({ previous: this.props.markets });
         }
     }
 
     viewMarket(market) {
         this.ticker.stopTick();
-        RouteWrapper.navigate("market", { market: market.key, title: market.key });
+        RouterWrapper.navigate("market", { market: market.key, title: market.key });
     }
 
     renderRow(rowData, sectionID) {
@@ -70,14 +70,14 @@ const component = class Dashboard extends React.Component {
     }
 
     componentDidMount() {
-        if(RouteWrapper.current() === 'home') {
+        if(RouterWrapper.current() === 'home') {
             console.log('starting dashboard ticker');
             this.ticker.tick();
         }
     }
 
     componentWillUnmount() {
-        if(RouteWrapper.current() === 'home') {
+        if(RouterWrapper.current() === 'home') {
             console.log('stopping dashboard ticker');
             this.ticker.stopTick();
         }
