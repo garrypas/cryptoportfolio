@@ -10,7 +10,7 @@ export default function(markets, previous) {
 			title: market.MarketName,
 			price: price,
 			quoteCurrency: MarketString.getQuoteCurrency(market.MarketName),
-			previousPrice: previous ? (previous.find(item => item.key === market.MarketName) || {}).price : price,
+			previousPrice: previous ? (previous.find(item => item.exchangeKey === market.MarketName) || {}).price : price,
 			timestamp: new Date().toISOString()
 		}
 	})

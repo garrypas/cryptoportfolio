@@ -6,7 +6,7 @@ import AsyncStorageStub from '../stubs/AsyncStorageStub';
 import sinon from 'sinon';
 import getFilteredMarkets from './getFilteredMarkets';
 
-describe('getMarkets', () => {
+describe('getFilteredMarkets', () => {
     let axiosStub;
     let asyncStorageStub;
     const myCurrencies = [];
@@ -33,7 +33,7 @@ describe('getMarkets', () => {
 
     it('Includes market data in results', done => {
         const dispatch = data => {
-            expect(Array.isArray(data.data[0].data)).toBeTruthy();
+            expect(Array.isArray(data.data)).toBeTruthy();
             done();
         }
         getFilteredMarkets(undefined, dispatch).catch(console.error);;

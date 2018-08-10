@@ -24,5 +24,5 @@ module.exports = (args = {}, dispatch) => {
     });
     return Promise.all(promises).then(() => {
         dispatch(results);
-    });
+    }).catch(console.error);
 }

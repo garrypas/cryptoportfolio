@@ -5,10 +5,10 @@ const debug = require('debug')('app');
 module.exports = (state = [], action) => {
 	return {
 		...state,
-		myCurrencies: action.myCurrencies.map(market => {
+		myCurrencies: action.myCurrencies.map(currency => {
 			return {
-				key: market,
-				title: market,
+				key: currency,
+				title: currency,
 			};
 		}),
 		suggestions: [],

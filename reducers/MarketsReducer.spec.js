@@ -30,7 +30,7 @@ describe('MarketsReducer', () => {
 			];
 		});
 		state = {};
-		myCurrencies = [ 'BTC-LSK', 'BTC-ARK' ];
+		myCurrencies = [ 'LSK', 'ARK' ];
 	});
 
 	afterEach(() => {
@@ -46,14 +46,14 @@ describe('MarketsReducer', () => {
 	}
 
 	it("Filters based on myCurrencies", () => {
-		myCurrencies = ['BTC-ARK'];
+		myCurrencies = ['ARK'];
 		const data = getData();
 		expect(data.markets).toHaveLength(1);
 		expect(data.markets[0].quoteCurrency).toEqual('ARK');
 	});
 
 	it("Sorts markets based on myCurrencies", () => {
-		myCurrencies = ['BTC-ARK', 'BTC-LSK'];
+		myCurrencies = ['ARK', 'LSK'];
 		const data = getData();
 		expect(data.markets).toHaveLength(2);
 		expect(data.markets[0].quoteCurrency).toEqual('ARK');
@@ -61,7 +61,7 @@ describe('MarketsReducer', () => {
 	});
 
 	it("All markets contains unfiltered list of markets", () => {
-		myCurrencies = ['BTC-ARK'];
+		myCurrencies = ['ARK'];
 		const data = getData();
 		expect(data.allMarkets).toHaveLength(2);
 		expect(data.allMarkets[0].quoteCurrency).toEqual('LSK');

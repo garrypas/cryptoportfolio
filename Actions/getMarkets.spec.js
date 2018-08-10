@@ -21,9 +21,9 @@ describe('getMarkets', () => {
         getMarkets(undefined, () => done());
     });
 
-    it('Result data from exchanges', done => {
+    it('Returns data from exchanges', done => {
         const dispatch = data => {
-            expect(data.data).toBeTruthy();
+            expect(data[0].data).toBeTruthy();
             done();
         }
         getMarkets(undefined, dispatch).catch(console.error);

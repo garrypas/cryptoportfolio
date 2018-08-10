@@ -3,10 +3,10 @@
 const debug = require('debug')('app');
 
 function mapMyCurrencies(data) {
-	return data.map(market => {
+	return data.map(currency => {
 		return {
-			key: market,
-			title: market,
+			key: currency,
+			title: currency,
 		}
 	})
 }

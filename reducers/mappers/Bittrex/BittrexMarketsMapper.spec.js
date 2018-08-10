@@ -26,7 +26,7 @@ describe('BittrexMarketsMapper', () => {
 
 	it('Maps previous price', () => {
 		previous = [
-			{ exchangeSymbol: "BTC-LSK", price: 0.0009 }
+			{ exchangeKey: "BTC-LSK", price: 0.0009 }
 		];
 		const data = getData();		
 		expect(data[0].previousPrice).toEqual(0.0009);

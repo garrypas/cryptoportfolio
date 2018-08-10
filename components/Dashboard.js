@@ -17,7 +17,7 @@ const component = class Dashboard extends React.Component {
 
         this.ticker = new Ticker({
             tick: () => this.tick(),
-            interval: 5000,
+            interval: 20000,
         });
     }
 

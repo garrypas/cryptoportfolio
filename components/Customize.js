@@ -38,7 +38,7 @@ export default class Customize extends React.Component {
               placeholder="Enter market name..."
               style={styles.searchInput}
               data={this.props.suggestions}
-              onChangeText={searchText => this.props.filterMarkets({ searchText, items: this.props.allMarkets.map(i => i.key) })}
+              onChangeText={searchText => this.props.filterMarkets({ searchText, items: this.props.allMarkets.map(i => i.quoteCurrency) })}
               renderItem={item => (
                 <TouchableOpacity onPress={() => {
                   this.props.addToMyCurrencies({ market: item });

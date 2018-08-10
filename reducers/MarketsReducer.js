@@ -14,10 +14,10 @@ function mapExchangeData (myCurrencies, thisExchangeData, previous) {
 	let allMarkets = mapMarketItems(thisExchangeData.exchange, thisExchangeData.data, previous);
 	
 	const myMarkets = allMarkets.filter(market => {
-		return myCurrencies.includes(market.key);
+		return myCurrencies.includes(market.quoteCurrency);
 	}).sort((a, b) => {
-		let indexA = myCurrencies.indexOf(a.key);
-		let indexB = myCurrencies.indexOf(b.key);
+		let indexA = myCurrencies.indexOf(a.quoteCurrency);
+		let indexB = myCurrencies.indexOf(b.quoteCurrency);
 		if(indexA > indexB) return 1;
 		if(indexA < indexB) return -1;
 		return 0;
