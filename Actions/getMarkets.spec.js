@@ -21,17 +21,9 @@ describe('getMarkets', () => {
         getMarkets(undefined, () => done());
     });
 
-    it('Result is an array of data from exchanges', done => {
+    it('Result data from exchanges', done => {
         const dispatch = data => {
-            expect(Array.isArray(data)).toBeTruthy();
-            done();
-        }
-        getMarkets(undefined, dispatch).catch(console.error);
-    });
-
-    it('Returns exchange summary data as an array', done => {
-        const dispatch = data => {
-            expect(Array.isArray(data[0].data)).toBeTruthy();
+            expect(data.data).toBeTruthy();
             done();
         }
         getMarkets(undefined, dispatch).catch(console.error);

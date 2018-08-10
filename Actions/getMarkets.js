@@ -16,7 +16,7 @@ module.exports = (args = {}, dispatch) => {
                     type: 'Markets',
                     exchange
                 };
-                actionArgs.data = resp.data.result;
+                actionArgs.data = resp.data;
                 results.push(actionArgs);
                 return actionArgs;
             })

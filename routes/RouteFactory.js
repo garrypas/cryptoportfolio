@@ -27,8 +27,8 @@ function createRouteDelegate(routes) {
 module.exports = {
     create: () => {
         return [
-            // BinanceRoutes,
             createRouteDelegate(BittrexRoutes),
+            createRouteDelegate(BinanceRoutes),
         ]
     },
 }

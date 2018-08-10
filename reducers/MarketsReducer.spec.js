@@ -1,38 +1,49 @@
 "use strict";
 
 import marketsReducer from './MarketsReducer';
-const summaryMock = require('../mocks/summaryMock');
 import _ from 'lodash';
+import MarketsMapperFactory from './mappers/MarketsMapperFactory';
+import sinon from 'sinon';
 
 describe('MarketsReducer', () => {
 	let myCurrencies;
 	let state;
+	let sandbox;
 	beforeEach(() => {
+		sandbox = sinon.createSandbox();
+		// Stub the mapper:
+		sandbox.stub(MarketsMapperFactory, 'create').returns((market, previous) => {
+			return [
+				{
+					key: 'BTC-LSK',
+					title: 'BTC-LSK',
+					price: 0.9,
+					previousPrice: previous && previous[0].price,
+					quoteCurrency: 'LSK',
+				},
+				{
+					key: 'BTC-ARK',
+					title: 'BTC-ARK',
+					price: previous && previous[1].price,
+					quoteCurrency: 'ARK',
+				}
+			];
+		});
 		state = {};
 		myCurrencies = [ 'BTC-LSK', 'BTC-ARK' ];
 	});
 
+	afterEach(() => {
+		sandbox.restore();
+	});
+
 	function getData() {
 		return marketsReducer(state, {
-			data: [ { data: summaryMock.result } ],
-			myCurrencies
+			data: [ { data : [ { price: 111 }, { price: 222 } ], exchange: 'EX' } ],
+			myCurrencies,
+			exchange: 'Bittrex'
 		});
 	}
-
-	it('Adds a key to each market summary', () => {
-		const data = getData();
-		expect(data.markets[0].key).toEqual('BTC-LSK');
-	});
-
-	it('Prices are floats', () => {
-		const data = getData();
-		expect(typeof data.markets[0].price).toEqual('number');
-	});
-
-	it('Extracts base currency from market name', () => {
-		const data = getData();
-		expect(data.markets[0].quoteCurrency).toEqual('LSK');
-	});
 
 	it("Filters based on myCurrencies", () => {
 		myCurrencies = ['BTC-ARK'];
@@ -62,7 +73,7 @@ describe('MarketsReducer', () => {
     });
 
 	it('Maps previous price', () => {
-		const currentPrice = summaryMock.result[0].Last;
+		const currentPrice = 0.9;
 		const previousPrice = currentPrice - 0.1;
 		// Simulate a previous state 
 		state = _.cloneDeep(getData());
