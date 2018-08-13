@@ -10,7 +10,6 @@ module.exports = {
                 .flatten()
                 .groupBy(item => `${item.baseCurrency}-${item.quoteCurrency}`)
                 .map((item) => {
-                    console.log(item);
                     let quoteCurrency = _.first(item).quoteCurrency;
                     let baseCurrency = _.first(item).baseCurrency;
                     let key = `${baseCurrency}-${quoteCurrency}`;
@@ -21,11 +20,11 @@ module.exports = {
                         title: key,
                         quoteCurrency: quoteCurrency,
                         baseCurrency: baseCurrency,
+                        exchanges: _.flatten(item.map(i => i.exchanges))
                     };
                 })
                 .value()
         };
-        result.exchange = "AGGREGATED";
         return result;
     }
 };

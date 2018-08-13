@@ -29,7 +29,7 @@ const component = class Dashboard extends React.Component {
 
     viewMarket(market) {
         this.ticker.stopTick();
-        RouterWrapper.navigate("market", { market: market.key, title: market.key });
+        RouterWrapper.navigate("market", { market: market.key, title: market.key, exchanges: market.exchanges });
     }
 
     renderRow(rowData, sectionID) {

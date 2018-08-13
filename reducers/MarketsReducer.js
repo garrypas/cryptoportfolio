@@ -13,7 +13,7 @@ function mapMarketItems(exchange, data, previous) {
 
 function mapExchangeData (myCurrencies, thisExchangeData, previous) {
 	let allMarkets = mapMarketItems(thisExchangeData.exchange, thisExchangeData.data, previous);
-
+	allMarkets.forEach(m => m.exchanges = [ thisExchangeData.exchange ]);
 	const myMarkets = allMarkets.filter(market => {
 		return myCurrencies.includes(market.quoteCurrency);
 	}).sort((a, b) => {

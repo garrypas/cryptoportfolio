@@ -9,32 +9,35 @@ describe('MarketsAggregator', () => {
 	beforeEach(() => {
 		exchangesData = [
             {
-                exchange: 'E1',
                 markets: [
                     { 
                         key: "BTC-LSK", exchangeKey: "BTC-LSK", title: "BTC-LSK",
 			            price: 0.9, quoteCurrency: "LSK", baseCurrency: "BTC", previousPrice: 0.89,
+                        exchanges: ['E1'],
                     },
                     { 
                         key: "BTC-ARK", exchangeKey: "BTC-ARK", title: "BTC-ARK",
 			            price: 0.8, quoteCurrency: "ARK", baseCurrency: "BTC", previousPrice: 0.79,
+                        exchanges: ['E1'],
                     },
                     { 
                         key: "ETH-STRAT", exchangeKey: "STRATETH", title: "ETH-STRAT",
 			            price: 1.2, quoteCurrency: "STRAT", baseCurrency: "ETH", previousPrice: 1.24,
+                        exchanges: ['E1'],
                     },
                 ],
             },
             {
-                exchange: 'E2',
                 markets: [
                     { 
                         key: "LSKBTC", exchangeKey: "LSKBTC", title: "BTC-LSK",
 			            price: 0.8, quoteCurrency: "LSK", baseCurrency: "BTC", previousPrice: 0.79,
+                        exchanges: ['E2'],
                     },
                     { 
                         key: "STRATBTC", exchangeKey: "STRATBTC", title: "BTC-STRAT",
 			            price: 0.7, quoteCurrency: "STRAT", baseCurrency: "BTC", previousPrice: 0.69,
+                        exchanges: ['E2'],
                     },
                 ],
             },
@@ -48,9 +51,11 @@ describe('MarketsAggregator', () => {
         expect(aggregated.markets[1] instanceof Array).toBeFalsy();
 	});
 
-	it('Sets the name of the exchange to "AGGREGATED"', () => {
+	it('Exchanges that contributed to aggregate stored in array', () => {
         const aggregated = MarketsAggregator.aggregate(exchangesData);
-        expect(aggregated.exchange).toEqual('AGGREGATED');
+        expect(aggregated.markets[0].exchanges).toHaveLength(2);
+        expect(aggregated.markets[0].exchanges).toContain('E1');
+        expect(aggregated.markets[0].exchanges).toContain('E2');
 	});
 
     it('Maps keys', () => {

@@ -44,7 +44,6 @@ describe('MarketsReducer', () => {
 		return marketsReducer(state, {
 			data: [ { data : [ { price: 111 }, { price: 222 } ], exchange: 'EX' } ],
 			myCurrencies,
-			exchange: 'Bittrex'
 		});
 	}
 
@@ -58,7 +57,6 @@ describe('MarketsReducer', () => {
 	it("Sorts markets based on myCurrencies", () => {
 		myCurrencies = ['ARK', 'LSK'];
 		const data = getData();
-		console.log(data);
 		expect(data.markets).toHaveLength(2);
 		expect(data.markets[0].quoteCurrency).toEqual('ARK');
 		expect(data.markets[1].quoteCurrency).toEqual('LSK');
@@ -71,11 +69,6 @@ describe('MarketsReducer', () => {
 		expect(data.allMarkets[0].quoteCurrency).toEqual('LSK');
 	});
 
-    it('First item exchange is AGGREGATED', () => {
-		const data = getData();
-        expect(data.exchange).toEqual('AGGREGATED');
-    });
-
 	it('Maps previous price', () => {
 		const currentPrice = 0.9;
 		const previousPrice = currentPrice - 0.1;
@@ -85,5 +78,15 @@ describe('MarketsReducer', () => {
 		const data = getData();
         expect(data.markets[0].price).toEqual(currentPrice);
         expect(data.markets[0].previousPrice).toEqual(previousPrice);
+	});
+
+	it("Maps exchange to markets when AGGREGATED", () => {
+		const data = getData();		
+		expect(data.markets[0].exchanges).toContain('EX')
+	});
+
+	it("Maps exchange to markets when it's a particular exchange", () => {
+		const data = getData();		
+		expect(data.exchangeData[0].markets[0].exchanges).toContain('EX')
 	});
 });
