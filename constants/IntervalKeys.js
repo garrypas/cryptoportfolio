@@ -1,4 +1,6 @@
 "use strict";
+import BittrexIntervalKeys from './BittrexIntervalKeys';
+import BinanceIntervalKeys from './BinanceIntervalKeys';
 
 module.exports = Object.freeze({
     ONE_DAY: '1Day',
@@ -7,7 +9,6 @@ module.exports = Object.freeze({
     NINETY_DAYS: '90Days',
     SIX_MONTHS: '6Months',
     ONE_YEAR: '1Year',
-    HOUR: 'hour',
-    THIRTY_MINS: 'thirtyMin',
-    DAY: 'day',
+    Bittrex: BittrexIntervalKeys,
+    Binance: BinanceIntervalKeys,
 });

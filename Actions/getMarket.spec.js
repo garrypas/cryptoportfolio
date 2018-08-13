@@ -17,32 +17,40 @@ describe('getMarket', () => {
     afterEach(() => axiosStub.restore());
 
     it('Dispatches result', done => {
-        getMarket({ market: 'BTC-ARK', interval: IntervalKeys.ONE_DAY }, () => done());
+        getMarket({ baseCurrency: 'BTC', quoteCurrency: 'ARK', intervalKey: 'ONE_DAY', exchanges: ['Bittrex'] }, () => done()).catch(console.error);
     });
 
-    it('Returns tick data as an array', done => {
-        const dispatch = data => {
-            expect(Array.isArray(data.data)).toBeTruthy();
+    it('Returns response unchanged', done => {
+        const dispatch = resp => {
+            expect(Array.isArray(resp.data[0].data.result)).toBeTruthy();
             done();
         }
-        getMarket({ market: 'BTC-ARK', interval: IntervalKeys.ONE_DAY }, dispatch);
+        getMarket({ baseCurrency: 'BTC', quoteCurrency: 'ARK', intervalKey: 'ONE_DAY', exchanges: ['Bittrex'] }, dispatch).catch(console.error);
     });
 
     it('Maps range from Intervals', done => {
         const expected = Intervals[IntervalKeys.ONE_DAY].range;
-        const dispatch = data => {
-            expect(data.range).toEqual(expected);
+        const dispatch = resp => {
+            expect(resp.data[0].range).toEqual(expected);
             done();
         }
-        getMarket({ market: 'BTC-ARK', interval: IntervalKeys.ONE_DAY }, dispatch);
+        getMarket({ baseCurrency: 'BTC', quoteCurrency: 'ARK', intervalKey: IntervalKeys.ONE_DAY, exchanges: ['Bittrex'] }, dispatch).catch(console.error);
     });
 
     it('Maps exchange name', done => {
         const expected = Intervals[IntervalKeys.ONE_DAY].range;
-        const dispatch = data => {
-            expect(data.exchange).toEqual('Bittrex');
+        const dispatch = resp => {
+            expect(resp.data[0].exchange).toEqual('Bittrex');
             done();
         }
-        getMarket({ market: 'BTC-ARK', interval: IntervalKeys.ONE_DAY }, dispatch);
+        getMarket({ baseCurrency: 'BTC', quoteCurrency: 'ARK', intervalKey: IntervalKeys.ONE_DAY, exchanges: ['Bittrex'] }, dispatch).catch(console.error);
+    });
+
+    it('Sets type to "Market"', done => {
+        const dispatch = result => {
+            expect(result.type).toEqual('Market');
+            done();
+        }
+        getMarket({ baseCurrency: 'BTC', quoteCurrency: 'ARK', intervalKey: IntervalKeys.ONE_DAY, exchanges: ['Bittrex'] }, dispatch).catch(console.error);
     });
 });

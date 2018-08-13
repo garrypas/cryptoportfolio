@@ -1,7 +1,11 @@
 "use strict";
 
-import BittrexRoutes from './exchanges/BittrexRoutes';
-import BinanceRoutes from './exchanges/BinanceRoutes';
+import IntervalKeys from '../constants/IntervalKeys';
+
+const exchangeRouteTemplates = {
+    Bittrex: require('./exchanges/BittrexRoutes'),
+    Binance: require('./exchanges/BinanceRoutes'),
+};
 
 const stringFormat = require('string-format');
 
@@ -13,22 +17,26 @@ function getUrlTemplate(key, routes) {
     return route;
 }
 
-function createRouteDelegate(routes) {
-    return function(...args) {
-        const _args = args.slice();
-        const routeKey = _args[0];
-        let urlTemplate = getUrlTemplate(routeKey, routes);
-        _args[0] = urlTemplate;
-        const url = stringFormat( ..._args );
-        return { url, exchange: routes.EXCHANGE };
+function createRouteDelegate(exchange, routeTemplates) {
+    return function(routeKey, args) {
+        let formatArgs = { ...args };
+        if(args && args.intervalKey) {
+            formatArgs.intervalKey = IntervalKeys[exchange][args.intervalKey];
+            if(!formatArgs.intervalKey) {
+                throw `Interval ${args.intervalKey} for IntervalKey."${exchange}" was not found.`;
+            }
+        }
+        const template = routeTemplates[routeKey];
+        if(template === undefined) {
+            throw `Template ${routeKey} was not found.`
+        }
+        const url = stringFormat( template, formatArgs );
+        return url;
     };
 };
 
 module.exports = {
-    create: () => {
-        return [
-            createRouteDelegate(BittrexRoutes),
-            createRouteDelegate(BinanceRoutes),
-        ]
+    create: (exchange) => {
+        return createRouteDelegate(exchange, exchangeRouteTemplates[exchange]);
     },
 }

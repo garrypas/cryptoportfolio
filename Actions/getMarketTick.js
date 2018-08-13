@@ -6,10 +6,12 @@ import fillHoles from './../utils/FillHoles';
 import _ from 'lodash';
 
 function getTickData(actionArgs, dispatch) {
-    const getRoute = RouteFactory.create();
-    const route = getRoute[0]('TICK', actionArgs.market);
-    const exchange = route.exchange;
-    return axios.get(route.url).then(resp => {
+    const exchange = 'Bittrex';
+    const route = RouteFactory.create(exchange)('TICK', { 
+        baseCurrency: actionArgs.baseCurrency,
+        quoteCurrency: actionArgs.quoteCurrency,
+    });
+    return axios.get(route).then(resp => {
         const last = resp.data.result.Last;
         actionArgs.data = { last, exchange };
         dispatch(actionArgs);

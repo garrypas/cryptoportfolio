@@ -2,26 +2,21 @@
 
 const _ = require('lodash');
 import MarketString from '../utils/MarketString';
+import MarketMapperFactory from './mappers/MarketMapperFactory';
+import MarketAggregator from './MarketAggregator';
 
 module.exports = (state = [], action) => {
-	const start = action.data.length - action.range;
-	const history = action.data.slice(start < 0 ? 0 : start, action.data.length);
-	const latestItem = _.maxBy(history, item =>  Date.parse(item.T));
-	const latestPrice = latestItem ? latestItem.C : "N/A";
-	const highItem = _.maxBy(history, item => item.H);
-	const high = highItem && highItem.H;
-	const lowItem = _.minBy(history, item => item.L);
-	const low = lowItem && lowItem.L;
-	const volume = _.sum(history.map(i => i.V)) * latestPrice;
-	state.low = low;
-	const result = { ...state,
-		historyData: history.map((item, i) => { return { x: item.T, y: item.C } }),
-		key: action.market,
-		quoteCurrency: MarketString.getQuoteCurrency(action.market),
-		high,
-		low,
-		volume,
-		units: MarketString.getBaseCurrency(action.market),
+	const mapped = action.data.map(data => {
+		const exchange = data.exchange;
+		const mapper = MarketMapperFactory.create(exchange);
+		return mapper(data);
+	});
+	
+	const aggregated = MarketAggregator.aggregate(mapped);
+
+	return {
+		...aggregated,
+		quoteCurrency: action.quoteCurrency,
+		baseCurrency: action.baseCurrency,
 	};
-	return result;
 }

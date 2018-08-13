@@ -7,7 +7,6 @@ import Market from '../components/Market'
 const mapStateToProps = state => {
     let result = { ...state, id: 'market' };
     result.interval = result.interval || "1Day";
-    console.log(result);
     return result;
 }
 const mapDispatchToProps = dispatch => {

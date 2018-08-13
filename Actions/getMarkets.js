@@ -4,14 +4,12 @@ import RouteFactory from '../routes/RouteFactory';
 import axios from 'axios';
 
 module.exports = (args = {}, dispatch) => {
-    const routeCreators = RouteFactory.create();
     const promises = [];
     const results = [];
-    routeCreators.forEach(routeCreator => {
-        const route = routeCreator('SUMMARY');
-        const exchange = route.exchange;
+    [ "Bittrex", "Binance" ].forEach(exchange => {
+        const route = RouteFactory.create(exchange)('SUMMARY');
         promises.push(
-            axios.get(route.url).then(resp => {
+            axios.get(route).then(resp => {
                 let actionArgs = {
                     type: 'Markets',
                     exchange

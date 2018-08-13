@@ -12,14 +12,14 @@ import IntervalKeys from './IntervalKeys';
 
 const intervals = {};
 intervals[IntervalKeys.ONE_DAY] = {
-    intervalKey: IntervalKeys.THIRTY_MINS,
+    intervalKey: 'THIRTY_MINS',
     interval: 30,
     range: 48,
     title: '1 Day',
 };
 
 intervals[IntervalKeys.FIVE_DAYS] = {
-    intervalKey: IntervalKeys.HOUR,
+    intervalKey: 'HOUR',
     interval: 60,
     range: 120,
     title: '5 Day',
@@ -27,28 +27,28 @@ intervals[IntervalKeys.FIVE_DAYS] = {
 };
 
 intervals[IntervalKeys.THIRTY_DAYS] = {
-    intervalKey: IntervalKeys.DAY,
+    intervalKey: 'DAY',
     interval: 1440,
     range: 30,
     title: '1M',    
 };
 
 intervals[IntervalKeys.NINETY_DAYS] = {
-    intervalKey: IntervalKeys.DAY,
+    intervalKey: 'DAY',
     interval: 1440,
     range: 90,
     title: '3M',
 };
 
 intervals[IntervalKeys.SIX_MONTHS] = {
-    intervalKey: IntervalKeys.DAY,
+    intervalKey: 'DAY',
     interval: 1440,
     range: 180,
     title: '6M',
 };
 
 intervals[IntervalKeys.ONE_YEAR] = {
-    intervalKey: IntervalKeys.DAY,
+    intervalKey: 'DAY',
     interval: 1440,
     range: 365,
     title: '1Y',
