@@ -1,8 +1,9 @@
 "use strict";
 
-const _ = require('lodash');
-import MarketString from '../utils/MarketString';
+import MarketReducer from './MarketReducer';
 
 module.exports = (state = [], action) => {
-	return { interval: action.interval };
+	return MarketReducer(state, {
+		...action
+	});
 }

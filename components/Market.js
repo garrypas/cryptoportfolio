@@ -18,45 +18,42 @@ function renderIntervalButton(key, interval) {
 export default class Market extends React.Component {
   constructor(props) {
     super(props);
-    this.latestPriceTicker = new Ticker({
-      tick: () => this.latestPriceTick(),
-      interval: 5000,
-    });
     this.ticker = new Ticker({
       tick: () => this.tick(),
       interval: Intervals["1Day"].interval * 60 * 1000,
     });
+    this.latestPriceTicker = new Ticker({
+      tick: () => this.latestPriceTick(),
+      interval: 5000,
+    });
   }
 
   tick() {
-    this.props.getMarket({ ...this.props, interval: this.props.interval });
+    this.props.getMarket({ ...this.props, intervalIndex: this.props.intervalIndex });
   }
 
   latestPriceTick() {
-    this.props.getMarketTick({ ...this.props, interval: this.props.interval });
+    this.props.getMarketTick({ ...this.props, intervalIndex: this.props.intervalIndex });
   }
 
   render() {
-    let view = (<Text>Loading...</Text>);
-    let viewTop = (<Text></Text>)
-    console.log(this.props);
-    if (this.props.latestPrice && this.props.quoteCurrency) {
-      const icon = images[this.props.quoteCurrency];
-      viewTop = (
-        <View style={styles.header}>
-          <Text style={styles.icon}>
-            <Image source={icon} style={styles.iconImage} />
+  let view = (<Text>Loading...</Text>);
+  let viewTop = (<Text></Text>)
+    const icon = images[this.props.quoteCurrency];
+    viewTop = (
+      <View style={styles.header}>
+        <Text style={styles.icon}>
+          <Image source={icon} style={styles.iconImage} />
+        </Text>
+        <View style={styles.itemPriceContainer}>
+          <Text style={styles.itemPrice}>{this.props.latestPrice ? `${this.props.latestPrice.toFixed(8)} ${this.props.units === 'BTC' ? 'Sats' : 'BTC'}` : '---'}</Text>
+          <Text style={styles.itemOtherInfo}>
+            High: {this.props.high ? this.props.high.toFixed(8) : '---' } Low: { this.props.low ? this.props.low.toFixed(8) : '---' } {"\n"}
+            Volume: { this.props.volume ? this.props.volume.toFixed(8) : '---' }
           </Text>
-          <View style={styles.itemPriceContainer}>
-            <Text style={styles.itemPrice}>{this.props.latestPrice.toFixed(8)} {this.props.units === 'BTC' ? 'Sats' : 'BTC'}</Text>
-            <Text style={styles.itemOtherInfo}>
-              High: {typeof this.props.high === 'number' && this.props.high.toFixed(8)} Low: {typeof this.props.low === 'number' && this.props.low.toFixed(8)} {"\n"}
-              Volume: {typeof this.props.volume === 'number' && this.props.volume.toFixed(8)}
-            </Text>
-          </View>
         </View>
-      );
-    }
+      </View>
+    );
     if (this.props.historyData) {
       const historyData = this.props.historyData;
       view = (
@@ -64,7 +61,7 @@ export default class Market extends React.Component {
           <VictoryChart padding={{ left: 0, right: 0, top: 0, bottom: 50 }}>
             <VictoryAxis 
               tickLabelComponent={<VictoryLabel dx={20} />} 
-              tickFormat={tick => DateFormatter(this.props.interval, tick)}
+              tickFormat={tick => DateFormatter(this.props.intervalIndex || "1Day", tick)}
               fixLabelOverlap={true} 
             />
             <VictoryAxis 
@@ -105,10 +102,10 @@ export default class Market extends React.Component {
   }
 
   changeInterval(newInterval) {
-    if (this.props.interval === newInterval) {
+    if (this.props.intervalIndex === newInterval) {
       return;
     }
-    this.props.changeInterval({ ...this.props, interval: newInterval });
+    this.props.changeInterval({ ...this.props, intervalIndex: newInterval });
   }
 
   componentWillMount() {

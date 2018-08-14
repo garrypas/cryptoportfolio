@@ -5,7 +5,7 @@ import MarketString from '../../../utils/MarketString';
 import fillHoles from './../../../utils/FillHoles';
 
 module.exports = (toMap) => {
-	const data = fillHoles(toMap.data.result, toMap.interval);
+	const data = fillHoles(toMap.data.result, toMap.intervalIndex);
 	const start = data.length - toMap.range;
 	const history = data.slice(start < 0 ? 0 : start, data.length);
 	const latestItem = _.maxBy(history, item =>  Date.parse(item.T));

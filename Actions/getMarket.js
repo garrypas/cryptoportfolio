@@ -5,8 +5,13 @@ import _ from 'lodash';
 import Intervals from '../constants/Intervals';
 
 module.exports = (args = {}, dispatch) => {
-    const interval = Intervals[args.interval || "1Day"];
-    const intervalKey = interval.intervalKey;
+    console.log(args);
+    const intervalIndex = args.intervalIndex || "1Day";
+    const intervalObj = Intervals[intervalIndex];
+    if(!intervalObj) {
+        throw `Interval for key ${interval} was not found`;
+    }
+    const intervalKey = intervalObj.intervalKey;
     const results = [];
     const promises = args.exchanges.map(exchange => {
         const url = RouteFactory.create(exchange)('TICKS', { 
@@ -17,14 +22,14 @@ module.exports = (args = {}, dispatch) => {
         return axios.get(url).then(resp => {
             const actionArgs = {
                 data: resp.data,
-                range: interval.range,
+                range: intervalObj.range,
                 exchange,
-                interval: interval.interval,
+                intervalIndex
             };
             results.push(actionArgs);
             return actionArgs;
         });
-    })    
+    });
     return Promise.all(promises).then(() => {
         dispatch({
             type: 'Market',

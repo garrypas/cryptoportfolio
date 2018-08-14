@@ -15,6 +15,8 @@ module.exports = (state = [], action) => {
 	const aggregated = MarketAggregator.aggregate(mapped);
 
 	return {
+		...state,
+		intervalIndex: action.intervalIndex,
 		...aggregated,
 		quoteCurrency: action.quoteCurrency,
 		baseCurrency: action.baseCurrency,
