@@ -5,7 +5,6 @@ import _ from 'lodash';
 import Intervals from '../constants/Intervals';
 
 module.exports = (args = {}, dispatch) => {
-    console.log(args);
     const intervalIndex = args.intervalIndex || "1Day";
     const intervalObj = Intervals[intervalIndex];
     if(!intervalObj) {

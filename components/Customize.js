@@ -64,7 +64,6 @@ export default class Customize extends React.Component {
   }
 
   componentWillMount() {
-    console.log("componentRemount");
     if (RouterWrapper.current() === 'customize') {
       this.props.getMyCurrencies({ ...this.props });
     }

@@ -15,7 +15,6 @@ describe('BittrexMarketsMapper', () => {
 
 	it('Adds a key to each market summary', () => {
 		const data = getData();
-		console.log(data);
 		expect(data[0].key).toEqual('BTC-LSK');
 	});
 

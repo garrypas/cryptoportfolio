@@ -16,7 +16,6 @@ module.exports = class Ticker {
 
     stopTick() {
         if(this.timer) {
-            console.log('stop ticker, ' + this.props.interval);
             clearInterval(this.timer);
         }
     }

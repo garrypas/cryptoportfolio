@@ -10,7 +10,6 @@ const CLOSE_TIME = 6;
 
 module.exports = (toMap) => {
 	const start = toMap.data.length - toMap.range;
-	console.log(start);
 	let history = toMap.data.slice(start < 0 ? 0 : start, toMap.data.length);
 	history = history.map(item => {
 		const price = parseFloat(item[CLOSE_PRICE]);

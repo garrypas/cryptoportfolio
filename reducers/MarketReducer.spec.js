@@ -13,7 +13,6 @@ describe('MarketReducer', () => {
 		market = "BTC-ARK";
 		sandbox = sinon.createSandbox();
 		sandbox.stub(MarketAggregator, 'aggregate').callsFake(dataSets => {
-			console.log('fake');
 			return dataSets[0];
 		})
 	})
