@@ -18,10 +18,10 @@ function renderIntervalButton(key, interval) {
 export default class Market extends React.Component {
   constructor(props) {
     super(props);
-    // this.latestPriceTicker = new Ticker({
-    //   tick: () => this.latestPriceTick(),
-    //   interval: 5000,
-    // });
+    this.latestPriceTicker = new Ticker({
+      tick: () => this.latestPriceTick(),
+      interval: 5000,
+    });
     this.ticker = new Ticker({
       tick: () => this.tick(),
       interval: Intervals["1Day"].interval * 60 * 1000,
@@ -113,11 +113,11 @@ export default class Market extends React.Component {
 
   componentWillMount() {
     this.ticker.tick();
-    // this.latestPriceTicker.tick();
+    this.latestPriceTicker.tick();
   }
 
   componentWillUnmount() {
     this.ticker.stopTick();
-    // this.latestPriceTicker.stopTick();
+    this.latestPriceTicker.stopTick();
   }
 }

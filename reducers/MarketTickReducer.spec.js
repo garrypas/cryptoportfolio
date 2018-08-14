@@ -2,13 +2,25 @@
 
 import React from 'react';
 import marketTickReducer from './MarketTickReducer';
-import getMarkets from './../actions/getMarkets'
-import renderer from 'react-test-renderer';
+import MarketTickAggregator from './MarketTickAggregator';
+import sinon from 'sinon';
 
 describe('MarketTickReducer', () => {
 	const currentHigh = 0.00090000;
 	const currentLow = 0.00070000;
 	let last = 0.00090000;
+	let sandbox;
+
+	beforeEach(() => {
+		sandbox = sinon.createSandbox();
+		sandbox.stub(MarketTickAggregator, 'aggregate').callsFake(dataSets => {
+			return { last };
+		})
+	})
+
+	afterEach(() => {
+		sandbox.restore();
+	})
 
 	function getData() {
 		return marketTickReducer({
@@ -16,7 +28,12 @@ describe('MarketTickReducer', () => {
 			low: currentLow,
 			latestPrice: 0.00080000,
 			interval: 'THIRTY_MINS',
-		}, { data: { last: last } });
+		}, {
+			data: [{ 
+				data: { result: { Last: last } }, 
+				exchange: 'Bittrex' 
+			}]
+		});
 	}
 
 	it('Sets high when price is a new high', () => {

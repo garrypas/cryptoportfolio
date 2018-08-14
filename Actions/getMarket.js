@@ -14,7 +14,6 @@ module.exports = (args = {}, dispatch) => {
             quoteCurrency: args.quoteCurrency,
             intervalKey,
         });
-        console.log(url);
         return axios.get(url).then(resp => {
             const actionArgs = {
                 data: resp.data,

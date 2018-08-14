@@ -2,28 +2,27 @@
 
 import axios from 'axios';
 import RouteFactory from '../routes/RouteFactory';
-import fillHoles from './../utils/FillHoles';
-import _ from 'lodash';
 
-function getTickData(actionArgs, dispatch) {
-    const exchange = 'Bittrex';
-    const route = RouteFactory.create(exchange)('TICK', { 
-        baseCurrency: actionArgs.baseCurrency,
-        quoteCurrency: actionArgs.quoteCurrency,
+module.exports = (args = {}, dispatch) => {
+    const results = [];
+    const promises = args.exchanges.map(exchange => {
+        const route = RouteFactory.create(exchange)('TICK', {
+            baseCurrency: args.baseCurrency,
+            quoteCurrency: args.quoteCurrency,
+        });
+        return axios.get(route).then(resp => {
+            results.push({
+                exchange,
+                data: resp.data,
+                type: 'MarketTick'
+            });
+        });
     });
-    return axios.get(route).then(resp => {
-        const last = resp.data.result.Last;
-        actionArgs.data = { last, exchange };
-        dispatch(actionArgs);
-        return actionArgs;
-    });
-}
 
-module.exports = (state = {}, dispatch) => {
-    let actionArgs = {
-        type: 'MarketTick',
-        market: state && state.market,
-    };
-
-    return getTickData(actionArgs, dispatch);
-}
+    return Promise.all(promises).then(() => {
+        dispatch({
+            data: results,
+            type: 'MarketTick'
+        });
+    })
+};

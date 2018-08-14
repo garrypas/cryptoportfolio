@@ -2,9 +2,13 @@
 
 const _ = require('lodash');
 import MarketString from '../utils/MarketString';
+import MarketTickMapperFactory from './mappers/MarketTickMapperFactory';
 
 module.exports = (state = [], action) => {
-	const latestPrice = action.data.last;
+	const latestPrice = _.mean(action.data.map(dataSet => {
+		const mapper = MarketTickMapperFactory.create(dataSet.exchange)
+		return mapper(dataSet).last;
+	}));
 	let low = state.low;
 	let high = state.high;
 	if(latestPrice > high) {
