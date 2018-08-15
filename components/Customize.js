@@ -9,6 +9,7 @@ import RouterWrapper from '../routes/RouterWrapper';
 import Autocomplete from 'react-native-autocomplete-input';
 import SortableListView from 'react-native-sortable-listview';
 import { SortableListRow } from './common/ListRows.js';
+const images = require('./../images');
 
 export default class Customize extends React.Component {
   constructor(props) {
@@ -16,8 +17,9 @@ export default class Customize extends React.Component {
   }
 
   renderRow(rowData) {
+    const icon = images[rowData.key];
     return (
-      <SortableListRow title={ rowData.title } right={
+      <SortableListRow title={ rowData.title } icon={icon} right={
           <Button 
             title="Remove" 
             onPress={() => this.props.removeMyCurrency({ market: rowData.key }) } 

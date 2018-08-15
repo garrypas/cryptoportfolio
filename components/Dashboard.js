@@ -8,6 +8,7 @@ import styles from './Dashboard.css.js';
 import RouterWrapper from '../routes/RouterWrapper';
 import Ticker from './Ticker';
 import { ClickableListRow } from './common/ListRows';
+const images = require('./../images');
 
 const component = class Dashboard extends React.Component {
     constructor(props) {
@@ -43,8 +44,9 @@ const component = class Dashboard extends React.Component {
         if (currentPrice > previousPrice) {
             direction = 'up';
         }
+        const icon = images[rowData.item.quoteCurrency];
         return (
-            <ClickableListRow title={ rowData.item.title } right={
+            <ClickableListRow icon={icon} title={ rowData.item.title } right={
                 <View style={styles.itemPrice}><Text style={[priceStyle, (direction === 'up' ? styles.itemPriceTextUp : direction === 'down' ? styles.itemPriceTextDown : '')]} >{currentPrice.toFixed(8)}</Text></View>
             }
             onPress={() => this.viewMarket(rowData.item)}

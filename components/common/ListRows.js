@@ -2,7 +2,7 @@
 
 import styles from './ListRows.css';
 import React from 'react';
-import { TouchableHighlight, TouchableOpacity, View, Text } from 'react-native';
+import { TouchableHighlight, TouchableOpacity, View, Text, Image } from 'react-native';
 
 class ListRowBase extends React.Component {
   constructor(props) {
@@ -11,10 +11,13 @@ class ListRowBase extends React.Component {
 
   render() {
     const right = this.props.right ? this.props.right: '';
+    const image = this.props.icon ? <Image source={this.props.icon} style={styles.iconImage} /> : "";
+    
     return(
-        <View style={ { flexDirection: 'row', alignItems: 'center' } }>
-        <Text style={ styles.flatListItemNameText }>{this.props.title}</Text>
-        { right }
+        <View style={ { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', flex: 1 } }>
+          {image}
+          <Text style={ styles.flatListItemNameText }>{this.props.title}</Text>
+          { right }
         </View>
     );
   }
