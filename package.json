@@ -40,7 +40,6 @@
     "react": "16.3.1",
     "react-native": "~0.55.2",
     "react-native-autocomplete-input": "^3.5.0",
-    "react-native-collapsible-list": "^1.0.0",
     "react-native-router-flux": "^4.0.0-beta.31",
     "react-native-sortable-list": "0.0.22",
     "react-native-sortable-listview": "^0.2.8",

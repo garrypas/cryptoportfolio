@@ -17,22 +17,22 @@ describe('MarketsAggregator', () => {
                     { 
                         key: "BTC-LSK", exchangeKey: "BTC-LSK", title: "BTC-LSK",
 			            price: 0.9, quoteCurrency: "LSK", baseCurrency: "BTC", previousPrice: 0.89,
-                        exchanges: ['E1'],
+                        exchanges: [{ exchange: 'E1' }],
                     },
                     { 
                         key: "BTC-ARK", exchangeKey: "BTC-ARK", title: "BTC-ARK",
 			            price: 0.8, quoteCurrency: "ARK", baseCurrency: "BTC", previousPrice: 0.79,
-                        exchanges: ['E1'],
+                        exchanges: [{ exchange: 'E1' }],
                     },
                     { 
                         key: "ETH-STRAT", exchangeKey: "STRATETH", title: "ETH-STRAT",
 			            price: StratPriceInETH, quoteCurrency: "STRAT", baseCurrency: "ETH", previousPrice: 1.24,
-                        exchanges: ['E1'],
+                        exchanges: [{ exchange: 'E1' }],
                     },
                     { 
                         key: "BTC-ETH", exchangeKey: "ETHBTC", title: "BTC-ETH",
 			            price: 0.01, quoteCurrency: "ETH", baseCurrency: "BTC", previousPrice: ETHtoBTC,
-                        exchanges: ['E1'],
+                        exchanges: [{ exchange: 'E1' }],
                     },
                 ],
             },
@@ -41,12 +41,12 @@ describe('MarketsAggregator', () => {
                     { 
                         key: "LSKBTC", exchangeKey: "LSKBTC", title: "BTC-LSK",
 			            price: 0.8, quoteCurrency: "LSK", baseCurrency: "BTC", previousPrice: 0.79,
-                        exchanges: ['E2'],
+                        exchanges: [{ exchange: 'E2' }],
                     },
                     { 
                         key: "STRATBTC", exchangeKey: "STRATBTC", title: "BTC-STRAT",
 			            price: StratPriceInBTC, quoteCurrency: "STRAT", baseCurrency: "BTC", previousPrice: 0.69,
-                        exchanges: ['E2'],
+                        exchanges: [{ exchange: 'E2' }],
                     },
                 ],
             },
@@ -62,9 +62,10 @@ describe('MarketsAggregator', () => {
 
 	it('Exchanges that contributed to aggregate stored in array', () => {
         const aggregated = MarketsAggregator.aggregate(exchangesData);
-        expect(aggregated.markets[0].exchanges).toHaveLength(2);
-        expect(aggregated.markets[0].exchanges).toContain('E1');
-        expect(aggregated.markets[0].exchanges).toContain('E2');
+        const exchanges = aggregated.markets[0].exchanges.map(i => i.exchange);
+        expect(exchanges).toHaveLength(2);
+        expect(exchanges).toContain('E1');
+        expect(exchanges).toContain('E2');
 	});
 
     it('Maps keys', () => {
@@ -108,7 +109,7 @@ describe('MarketsAggregator', () => {
 
     it('Converts non-BTC to BTC', () => {
         const aggregated = MarketsAggregator.aggregate(exchangesData);
-        const expected = (StratPriceInBTC + StratPriceInETH / ETHtoBTC) * 0.5;
+        const expected = (StratPriceInBTC + StratPriceInETH * ETHtoBTC) * 0.5;
         const actual =  _.find(aggregated.markets, item => item.quoteCurrency === 'STRAT').price;
         expect(actual).toBeCloseTo(expected, 8);
 	});

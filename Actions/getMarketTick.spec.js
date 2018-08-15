@@ -8,6 +8,7 @@ import IntervalKeys from '../constants/IntervalKeys';
 
 describe('getMarketTick', () => {
     let axiosStub;
+    const args = { interval: IntervalKeys.ONE_DAY, exchanges: [{ exchange: 'Bittrex', baseCurrency: 'BTC', quoteCurrency: 'ARK' }] };
     beforeEach(() => {
         axiosStub = new AxiosStub();
         axiosStub.stub(tickMock);
@@ -16,7 +17,7 @@ describe('getMarketTick', () => {
     afterEach(() => axiosStub.restore());
 
     it('Dispatches result', done => {
-        getMarketTick({ baseCurrency: 'BTC', quoteCurrency: 'ARK', interval: IntervalKeys.ONE_DAY, exchanges: ['Bittrex'] }, () => done()).catch(console.error);
+        getMarketTick(args, () => done()).catch(console.error);
     });
 
     it('Returns tick data', done => {
@@ -24,7 +25,7 @@ describe('getMarketTick', () => {
             expect(typeof result.data[0].data).toEqual('object');
             done();
         }
-        getMarketTick({ baseCurrency: 'BTC', quoteCurrency: 'ARK', interval: IntervalKeys.ONE_DAY, exchanges: ['Bittrex'] }, dispatch).catch(console.error);
+        getMarketTick(args, dispatch).catch(console.error);
     });
 
     it('Maps exchange name', done => {
@@ -32,7 +33,7 @@ describe('getMarketTick', () => {
             expect(result.data[0].exchange).toEqual('Bittrex');
             done();
         }
-        getMarketTick({ baseCurrency: 'BTC', quoteCurrency: 'ARK', interval: IntervalKeys.ONE_DAY, exchanges: ['Bittrex'] }, dispatch).catch(console.error);
+        getMarketTick(args, dispatch).catch(console.error);
     });
 
     it('Maps type', done => {
@@ -40,6 +41,6 @@ describe('getMarketTick', () => {
             expect(result.type).toEqual('MarketTick');
             done();
         }
-        getMarketTick({ baseCurrency: 'BTC', quoteCurrency: 'ARK', interval: IntervalKeys.ONE_DAY, exchanges: ['Bittrex'] }, dispatch).catch(console.error);
+        getMarketTick(args, dispatch).catch(console.error);
     });
 });

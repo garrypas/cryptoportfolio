@@ -12,17 +12,20 @@ module.exports = (args = {}, dispatch) => {
     }
     const intervalKey = intervalObj.intervalKey;
     const results = [];
-    const promises = args.exchanges.map(exchange => {
-        const url = RouteFactory.create(exchange)('TICKS', { 
-            baseCurrency: args.baseCurrency,
-            quoteCurrency: args.quoteCurrency,
+    console.log(args.exchanges);
+    const promises = args.exchanges.map(exchangeItem => {
+        const url = RouteFactory.create(exchangeItem.exchange)('TICKS', { 
+            baseCurrency: exchangeItem.baseCurrency,
+            quoteCurrency: exchangeItem.quoteCurrency,
             intervalKey,
         });
         return axios.get(url).then(resp => {
             const actionArgs = {
                 data: resp.data,
                 range: intervalObj.range,
-                exchange,
+                exchange: exchangeItem.exchange,
+                baseCurrency: exchangeItem.baseCurrency,
+                quoteCurrency: exchangeItem.quoteCurrency,
                 intervalIndex
             };
             results.push(actionArgs);

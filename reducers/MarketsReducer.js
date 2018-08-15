@@ -13,7 +13,12 @@ function mapMarketItems(exchange, data, previous) {
 
 function mapExchangeData (myCurrencies, thisExchangeData, previous) {
 	let allMarkets = mapMarketItems(thisExchangeData.exchange, thisExchangeData.data, previous);
-	allMarkets.forEach(m => m.exchanges = [ thisExchangeData.exchange ]);
+	allMarkets.forEach(m => m.exchanges = [{ 
+		exchange: thisExchangeData.exchange,
+		quoteCurrency: m.quoteCurrency,
+		baseCurrency: m.baseCurrency,
+	} ]);
+
 	const myMarkets = allMarkets.filter(market => {
 		return myCurrencies.includes(market.quoteCurrency);
 	}).sort((a, b) => {
@@ -24,7 +29,7 @@ function mapExchangeData (myCurrencies, thisExchangeData, previous) {
 		return 0;
 	});
 
-	return { markets: myMarkets, allMarkets, exchange: thisExchangeData.exchange };
+	return { markets: myMarkets, allMarkets };
 }
 
 function getExchangeData(exchangeData, exchange) {
@@ -35,16 +40,39 @@ function getExchangeData(exchangeData, exchange) {
 	if(!match) {
 		return undefined;
 	}
+	
 	return match.markets;
 }
 
 module.exports = (state = {}, action) => {
-	const exchangeData = action.data.map(thisExchangeData => mapExchangeData(action.myCurrencies, thisExchangeData, getExchangeData(state.exchangeData, thisExchangeData.exchange)));
+	const myCurrencies = action.myCurrencies;
+	const exchangeData = action.data.map(thisExchangeData => {
+		const previous = getExchangeData(state.exchangeData, thisExchangeData.exchange);
+		const mapped = mapMarketItems(thisExchangeData.exchange, thisExchangeData.data, previous);
+		mapped.forEach(m => m.exchanges = [{ 
+			exchange: thisExchangeData.exchange,
+			quoteCurrency: m.quoteCurrency,
+			baseCurrency: m.baseCurrency,
+		} ]);
+		return { markets: mapped, exchange: thisExchangeData.exchange };
+	});
+
 	const aggregated = MarketsAggregator.aggregate(exchangeData);
+
+	const myAggregatedMarkets = aggregated.markets.filter(market => {
+		return myCurrencies.includes(market.quoteCurrency);
+	}).sort((a, b) => {
+		let indexA = myCurrencies.indexOf(a.quoteCurrency);
+		let indexB = myCurrencies.indexOf(b.quoteCurrency);
+		if(indexA > indexB) return 1;
+		if(indexA < indexB) return -1;
+		return 0;
+	});
+
 	return {
-		exchangeData: exchangeData,
+		exchangeData,
 		//ToDo: this is only needed for customization, so it could just be market names...
-		allMarkets: exchangeData[0].allMarkets,
-		...aggregated,
+		allMarkets: aggregated,
+		markets: myAggregatedMarkets,
 	};
 }

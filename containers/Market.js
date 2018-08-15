@@ -1,4 +1,4 @@
-import getMarket from './../actions/getMarket';
+import getMarket from './../actions/getMarketWithBaseMarkets';
 import getMarketTick from './../actions/getMarketTick';
 import changeInterval from './../actions/changeInterval';
 import { connect } from 'react-redux';
