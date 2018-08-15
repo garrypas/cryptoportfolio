@@ -5,6 +5,10 @@ const ticksMock = require('../mocks/ticksMock');
 const _ = require('lodash');
 
 describe('MarketsAggregator', () => {
+    const ETHtoBTC = 0.01;
+    const StratPriceInETH = 0.007;
+    const StratPriceInBTC = 0.7;
+
 	let exchangesData;
 	beforeEach(() => {
 		exchangesData = [
@@ -22,7 +26,12 @@ describe('MarketsAggregator', () => {
                     },
                     { 
                         key: "ETH-STRAT", exchangeKey: "STRATETH", title: "ETH-STRAT",
-			            price: 1.2, quoteCurrency: "STRAT", baseCurrency: "ETH", previousPrice: 1.24,
+			            price: StratPriceInETH, quoteCurrency: "STRAT", baseCurrency: "ETH", previousPrice: 1.24,
+                        exchanges: ['E1'],
+                    },
+                    { 
+                        key: "BTC-ETH", exchangeKey: "ETHBTC", title: "BTC-ETH",
+			            price: 0.01, quoteCurrency: "ETH", baseCurrency: "BTC", previousPrice: ETHtoBTC,
                         exchanges: ['E1'],
                     },
                 ],
@@ -36,7 +45,7 @@ describe('MarketsAggregator', () => {
                     },
                     { 
                         key: "STRATBTC", exchangeKey: "STRATBTC", title: "BTC-STRAT",
-			            price: 0.7, quoteCurrency: "STRAT", baseCurrency: "BTC", previousPrice: 0.69,
+			            price: StratPriceInBTC, quoteCurrency: "STRAT", baseCurrency: "BTC", previousPrice: 0.69,
                         exchanges: ['E2'],
                     },
                 ],
@@ -60,24 +69,24 @@ describe('MarketsAggregator', () => {
 
     it('Maps keys', () => {
         const aggregated = MarketsAggregator.aggregate(exchangesData);
-        expect(aggregated.markets[0].key).toEqual('BTC-LSK');
-        expect(aggregated.markets[1].key).toEqual('BTC-ARK');
+        expect(aggregated.markets[0].key).toEqual('LSK');
+        expect(aggregated.markets[1].key).toEqual('ARK');
 	});
 
     it('Maps title', () => {
         const aggregated = MarketsAggregator.aggregate(exchangesData);
-        expect(aggregated.markets[0].title).toEqual('BTC-LSK');
-        expect(aggregated.markets[1].title).toEqual('BTC-ARK');
+        expect(aggregated.markets[0].title).toEqual('LSK');
+        expect(aggregated.markets[1].title).toEqual('ARK');
 	});
 
     it('Averages out price', () => {
         const aggregated = MarketsAggregator.aggregate(exchangesData);
-        expect(aggregated.markets[0].price).toBeCloseTo(0.85, 0.00000001);
+        expect(aggregated.markets[0].price).toBeCloseTo(0.85, 8);
 	});
 
     it('Averages out lastPrice', () => {
         const aggregated = MarketsAggregator.aggregate(exchangesData);
-        expect(aggregated.markets[0].previousPrice).toBeCloseTo(0.84, 0.00000001);
+        expect(aggregated.markets[0].previousPrice).toBeCloseTo(0.84, 8);
 	});
 
     it('Maps quote currency', () => {
@@ -95,5 +104,12 @@ describe('MarketsAggregator', () => {
     it('Does not group items with different base currencies', () => {
         const aggregated = MarketsAggregator.aggregate(exchangesData);
         expect(aggregated.markets).toHaveLength(4);
+	});
+
+    it('Converts non-BTC to BTC', () => {
+        const aggregated = MarketsAggregator.aggregate(exchangesData);
+        const expected = (StratPriceInBTC + StratPriceInETH / ETHtoBTC) * 0.5;
+        const actual =  _.find(aggregated.markets, item => item.quoteCurrency === 'STRAT').price;
+        expect(actual).toBeCloseTo(expected, 8);
 	});
 });

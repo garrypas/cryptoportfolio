@@ -47,6 +47,6 @@ describe('BinanceMarketMapper', () => {
 	it("Volume is total volume for period expressed in BTC",  () => {
 		const data = getData();
 		const expected = 0.31050240;
-		expect(data.volume).toBeCloseTo(expected, 0.00000001);
+		expect(data.volume).toBeCloseTo(expected, 8);
 	});
 });

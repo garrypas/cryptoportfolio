@@ -29,7 +29,6 @@ module.exports = {
 			high: _.mean(dataSets.map(item => item.high)),
 			low: _.mean(dataSets.map(item => item.low)),
 			volume: _.mean(dataSets.map(item => item.volume)),
-			//latestPrice: _.last(historyData).y,
 			historyData,
 		};
 	}
