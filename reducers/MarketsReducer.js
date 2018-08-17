@@ -72,7 +72,7 @@ module.exports = (state = {}, action) => {
 	return {
 		exchangeData,
 		//ToDo: this is only needed for customization, so it could just be market names...
-		allMarkets: aggregated,
+		allMarkets: aggregated.markets.map(m => ({ quoteCurrency: m.quoteCurrency })),
 		markets: myAggregatedMarkets,
 	};
 }
