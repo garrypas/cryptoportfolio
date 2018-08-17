@@ -36,6 +36,22 @@ describe('getMarketTick', () => {
         getMarketTick(args, dispatch).catch(console.error);
     });
 
+    it('Maps base currency', done => {
+        const dispatch = result => {
+            expect(result.data[0].baseCurrency).toEqual('BTC');
+            done();
+        }
+        getMarketTick(args, dispatch).catch(console.error);
+    });
+
+    it('Maps quote currency', done => {
+        const dispatch = result => {
+            expect(result.data[0].quoteCurrency).toEqual('ARK');
+            done();
+        }
+        getMarketTick(args, dispatch).catch(console.error);
+    });
+
     it('Maps type', done => {
         const dispatch = result => {
             expect(result.type).toEqual('MarketTick');

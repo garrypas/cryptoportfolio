@@ -13,6 +13,8 @@ module.exports = (args = {}, dispatch) => {
         return axios.get(route).then(resp => {
             results.push({
                 exchange: exchangeItem.exchange,
+                baseCurrency: exchangeItem.baseCurrency,
+                quoteCurrency: exchangeItem.quoteCurrency,
                 data: resp.data,
                 type: 'MarketTick'
             });

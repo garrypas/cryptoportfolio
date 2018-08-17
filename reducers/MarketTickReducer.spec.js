@@ -3,6 +3,7 @@
 import React from 'react';
 import marketTickReducer from './MarketTickReducer';
 import MarketTickAggregator from './MarketTickAggregator';
+import MarketTickBaseCurrency from './MarketTickBaseCurrency';
 import sinon from 'sinon';
 
 describe('MarketTickReducer', () => {
@@ -10,12 +11,14 @@ describe('MarketTickReducer', () => {
 	const currentLow = 0.00070000;
 	let last = 0.00090000;
 	let sandbox;
+	let marketTickBaseCurrencySpy;
 
 	beforeEach(() => {
 		sandbox = sinon.createSandbox();
 		sandbox.stub(MarketTickAggregator, 'aggregate').callsFake(dataSets => {
 			return { last };
-		})
+		});
+		marketTickBaseCurrencySpy = sandbox.stub(MarketTickBaseCurrency, 'process');
 	})
 
 	afterEach(() => {
@@ -32,7 +35,8 @@ describe('MarketTickReducer', () => {
 			data: [{ 
 				data: { result: { Last: last } }, 
 				exchange: 'Bittrex' 
-			}]
+			}],
+			baseData: { data: [] }
 		});
 	}
 
@@ -70,4 +74,9 @@ describe('MarketTickReducer', () => {
 		const data = getData();
 		expect(data.interval).toEqual('THIRTY_MINS');
 	});
+
+	it('Converts price to base currency', () => {
+		getData();
+		sinon.assert.calledOnce(marketTickBaseCurrencySpy);
+	})
 });

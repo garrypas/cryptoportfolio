@@ -3,21 +3,21 @@
 import marketReducer from './MarketReducer';
 import sinon from 'sinon';
 import MarketAggregator from './MarketAggregator';
-import EnsureBaseCurrency from './EnsureBaseCurrency';
+import MarketBaseCurrency from './MarketBaseCurrency';
 const ticksMock = require('../mocks/ticksMock');
 const _ = require('lodash');
 
 describe('MarketReducer', () => {
 	let market;
 	let sandbox;
-	let ensureBaseCurrencySpy;
+	let marketBaseCurrencySpy;
 	beforeEach(() => {
 		market = "BTC-ARK";
 		sandbox = sinon.createSandbox();
 		sandbox.stub(MarketAggregator, 'aggregate').callsFake(dataSets => {
 			return dataSets[0];
 		});
-		ensureBaseCurrencySpy = sandbox.stub(EnsureBaseCurrency, 'process');
+		marketBaseCurrencySpy = sandbox.stub(MarketBaseCurrency, 'process');
 	});
 
 	afterEach(() => {
@@ -49,6 +49,6 @@ describe('MarketReducer', () => {
 
 	it('Converts all history data to base currency', () => {
 		getData();
-		sinon.assert.calledOnce(ensureBaseCurrencySpy);
+		sinon.assert.calledOnce(marketBaseCurrencySpy);
 	})
 });

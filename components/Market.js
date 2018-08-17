@@ -22,10 +22,10 @@ export default class Market extends React.Component {
       tick: () => this.tick(),
       interval: Intervals["1Day"].interval * 60 * 1000,
     });
-    // this.latestPriceTicker = new Ticker({
-    //   tick: () => this.latestPriceTick(),
-    //   interval: 5000,
-    // });
+    this.latestPriceTicker = new Ticker({
+      tick: () => this.latestPriceTick(),
+      interval: 5000,
+    });
   }
 
   tick() {
@@ -110,11 +110,11 @@ export default class Market extends React.Component {
 
   componentWillMount() {
     this.ticker.tick();
-    // this.latestPriceTicker.tick();
+    this.latestPriceTicker.tick();
   }
 
   componentWillUnmount() {
     this.ticker.stopTick();
-    // this.latestPriceTicker.stopTick();
+    this.latestPriceTicker.stopTick();
   }
 }

@@ -2,12 +2,12 @@
 
 import axios from 'axios';
 import getMyCurrencies from './getMyCurrencies';
-import getMarket from './getMarket';
+import getMarketTick from './getMarketTick';
 import _ from 'lodash';
 
-export default function getMarketWithBaseMarkets(args = {}, dispatch) {
+export default function getMarketTickWithBaseMarkets(args = {}, dispatch) {
     const baseCurrency = 'BTC';
-    return getMarket(args, marketData => {
+    return getMarketTick(args, marketData => {
         const exchanges = _.uniqBy(args.exchanges, i => `${i.baseCurrency}:${baseCurrency}:${i.exchange}`)
             .filter(item => item.baseCurrency !== baseCurrency)
             .map(item => {
@@ -18,14 +18,14 @@ export default function getMarketWithBaseMarkets(args = {}, dispatch) {
                 };
             });
 
-        return getMarket({
+        return getMarketTick({
             ...args,
             exchanges
         }, baseData => {
             dispatch({
                 ...marketData,
                 baseData,
-                type: 'Market',
+                type: 'MarketTick',
             })
         }).catch(console.error);
     });

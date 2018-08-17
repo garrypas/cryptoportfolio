@@ -5,6 +5,7 @@ const ticksMock = require('../../../mocks/ticksMock');
 const _ = require('lodash');
 
 describe('BittrexMarketMapper', () => {
+	const exchange = 'E1';
 	let market;
 	beforeEach(() => {
 		market = "BTC-ARK";
@@ -14,6 +15,7 @@ describe('BittrexMarketMapper', () => {
 		return bittrexMarketMapper({
 			data: ticksMock,
 			market: market,
+			exchange
 		});
 	}
 
@@ -43,5 +45,10 @@ describe('BittrexMarketMapper', () => {
 		const data = getData();
 		const expected = ticksMock.result.map(i => i.BV).reduce((a, b) => a + b, 0);
 		expect(data.volume).toEqual(expected);
+	});
+
+	it('Maps exchange', () => {
+		const data = getData();
+		expect(data.exchange).toEqual(exchange);
 	});
 });

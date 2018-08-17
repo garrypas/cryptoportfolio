@@ -1,5 +1,5 @@
-import getMarket from './../actions/getMarketWithBaseMarkets';
-import getMarketTick from './../actions/getMarketTick';
+import getMarketWithBaseMarkets from './../actions/getMarketWithBaseMarkets';
+import getMarketTickWithBaseMarkets from './../actions/getMarketTickWithBaseMarkets';
 import changeInterval from './../actions/changeInterval';
 import { connect } from 'react-redux';
 import Market from '../components/Market'
@@ -10,8 +10,8 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        getMarket: data => getMarket({ ...data }, dispatch),
-        getMarketTick: data => getMarketTick({ ...data }, dispatch),
+        getMarket: data => getMarketWithBaseMarkets({ ...data }, dispatch),
+        getMarketTick: data => getMarketTickWithBaseMarkets({ ...data }, dispatch),
         changeInterval: data => changeInterval({ ...data }, dispatch),
     };
 };

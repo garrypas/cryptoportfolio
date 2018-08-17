@@ -4,7 +4,7 @@ const _ = require('lodash');
 import MarketString from '../utils/MarketString';
 import MarketMapperFactory from './mappers/MarketMapperFactory';
 import MarketAggregator from './MarketAggregator';
-import EnsureBaseCurrency from './EnsureBaseCurrency';
+import MarketBaseCurrency from './MarketBaseCurrency';
 
 function map(data) {
 	return data.map(data => {
@@ -18,7 +18,7 @@ module.exports = (state = [], action) => {
 	const mapped = map(action.data);
 	const baseMapped = map(action.baseData.data);
 
-	EnsureBaseCurrency.process(mapped, baseMapped, action.baseCurrency);
+	MarketBaseCurrency.process(mapped, baseMapped, action.baseCurrency);
 	
 	const aggregated = MarketAggregator.aggregate(mapped);
 

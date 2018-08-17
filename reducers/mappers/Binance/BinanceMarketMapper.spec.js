@@ -10,6 +10,7 @@ const VOLUME = 5;
 const CLOSE_TIME = 6;
 
 describe('BinanceMarketMapper', () => {
+	const exchange = 'E2';
 	let market;
 	beforeEach(() => {
 		market = "ARKBTC";
@@ -19,6 +20,7 @@ describe('BinanceMarketMapper', () => {
 		return binanceMarketMapper({
 			data: binanceTicksMock,
 			market: market,
+			exchange
 		});
 	}
 
@@ -48,5 +50,10 @@ describe('BinanceMarketMapper', () => {
 		const data = getData();
 		const expected = 0.31050240;
 		expect(data.volume).toBeCloseTo(expected, 8);
+	});
+
+	it('Maps exchange', () => {
+		const data = getData();
+		expect(data.exchange).toEqual(exchange);
 	});
 });

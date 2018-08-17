@@ -37,6 +37,7 @@ module.exports = (toMap) => {
 		high,
 		low,
 		volume,
+		exchange: toMap.exchange,
 	};
 	return result;
 }

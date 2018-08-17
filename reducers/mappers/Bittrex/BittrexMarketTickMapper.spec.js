@@ -13,11 +13,23 @@ describe('BittrexMarketTickMapper', () => {
 		return bittrexMarketTickMapper({
 			data: tickMock,
 			exchange: 'Bittrex',
+			baseCurrency: 'BTC',
+			quoteCurrency: 'ARK',
 		});
 	}
 
 	it('Gets last price', () => {
 		const last = getData().last;
 		expect(last).toEqual(tickMock.result.Last);
+	});
+
+	it('Maps quote currency', () => {
+		const quoteCurrency = getData().quoteCurrency;
+		expect(quoteCurrency).toEqual('ARK');
+	});
+
+	it('Maps base currency', () => {
+		const baseCurrency = getData().baseCurrency;
+		expect(baseCurrency).toEqual('BTC');
 	});
 });
