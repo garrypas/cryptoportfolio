@@ -40,6 +40,29 @@ const css = {
         alignItems: 'stretch',
     },
 
+    breakdown: {
+        flex: 1,
+        flexDirection: 'column',
+        padding: 20,
+    },
+
+    itemBreakdown: {
+        ...styles.flatListStyle,
+        width:'100%',
+        flex: 1,
+        flexDirection: 'row',
+    },
+
+    itemBreakdownExchange: {
+        width:'40%',
+        backgroundColor:'blue',
+    },
+
+    itemBreakdownMarket: {
+        width:'40%',
+        backgroundColor:'pink',
+    },
+
     itemPrice: {
         fontSize: 24,
         textAlign: 'right',

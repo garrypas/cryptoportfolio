@@ -12,27 +12,6 @@ function mapMarketItems(exchange, data, previous) {
 	return mapper(data, previous);
 }
 
-function mapExchangeData (myCurrencies, thisExchangeData, previous) {
-	let allMarkets = mapMarketItems(thisExchangeData.exchange, thisExchangeData.data, previous);
-	allMarkets.forEach(m => m.exchanges = [{ 
-		exchange: thisExchangeData.exchange,
-		quoteCurrency: m.quoteCurrency,
-		baseCurrency: m.baseCurrency,
-	} ]);
-
-	const myMarkets = allMarkets.filter(market => {
-		return myCurrencies.includes(market.quoteCurrency);
-	}).sort((a, b) => {
-		let indexA = myCurrencies.indexOf(a.quoteCurrency);
-		let indexB = myCurrencies.indexOf(b.quoteCurrency);
-		if(indexA > indexB) return 1;
-		if(indexA < indexB) return -1;
-		return 0;
-	});
-
-	return { markets: myMarkets, allMarkets };
-}
-
 function getExchangeData(exchangeData, exchange) {
 	if(!exchangeData) {
 		return undefined;

@@ -37,22 +37,30 @@ describe('MarketBaseCurrency', () => {
 	})
 
 	it('History data converted to base currency (i.e. from ETH to BTC)', () => {
-		MarketBaseCurrency.process(data, baseData, 'BTC');
-		expect(data[0].historyData[0].y).toBeCloseTo(0.00081010, 8);
+		const result = MarketBaseCurrency.process(data, baseData, 'BTC');
+		expect(result[0].historyData[0].y).toBeCloseTo(0.00081010, 8);
+	});
+
+	it('Does not change original data (immutable)', () => {
+		const originalPrice = data[0].historyData[0].y;
+		const result = MarketBaseCurrency.process(data, baseData, 'BTC');
+		expect(data[0].historyData[0].y).toEqual(originalPrice);
+		expect(data[0].baseCurrency).toEqual('ETH');
+		expect(data[0]).not.toEqual(result[0]);
 	});
 
 	it('History data converted when base is smaller than market', () => {
 		_.first(baseData).historyData.shift();
-		MarketBaseCurrency.process(data, baseData, 'BTC');
-		expect(data[0].historyData).toHaveLength(3);
-		expect(data[0].historyData[0].y).toBeCloseTo(0.00081400, 8);
+		const result = MarketBaseCurrency.process(data, baseData, 'BTC');
+		expect(result[0].historyData).toHaveLength(3);
+		expect(result[0].historyData[0].y).toBeCloseTo(0.00081400, 8);
 	});
 
 	it('History data converted when market is smaller than base', () => {
 		data[0].historyData.shift();
-		MarketBaseCurrency.process(data, baseData, 'BTC');
-		expect(data[0].historyData).toHaveLength(3);
-		expect(data[0].historyData[0].y).toBeCloseTo(0.00081400, 8);
+		const result = MarketBaseCurrency.process(data, baseData, 'BTC');
+		expect(result[0].historyData).toHaveLength(3);
+		expect(result[0].historyData[0].y).toBeCloseTo(0.00081400, 8);
 	});
 
 	it('Uses correct exchange base data', () => {
@@ -67,7 +75,7 @@ describe('MarketBaseCurrency', () => {
 			baseCurrency: 'BTC',
 			exchange: 'E2',
 		});
-		MarketBaseCurrency.process(data, baseData, 'BTC');
-		expect(data[0].historyData[0].y).toBeCloseTo(0.00081010, 8);
+		const result = MarketBaseCurrency.process(data, baseData, 'BTC');
+		expect(result[0].historyData[0].y).toBeCloseTo(0.00081010, 8);
 	})
 });

@@ -16,7 +16,7 @@ class ListRowBase extends React.Component {
     return(
         <View style={ { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', flex: 1 } }>
           {image}
-          <Text style={ styles.flatListItemNameText }>{this.props.title}</Text>
+          <Text style={ [styles.flatListItemNameText, { width: '50%' } ] }>{this.props.title}</Text>
           { right }
         </View>
     );

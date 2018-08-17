@@ -26,7 +26,6 @@ export default {
         justifyContent: 'flex-start',
         fontWeight:'bold',
         zIndex: 999,
-        flex: 1,
     },
 
     textButton: {

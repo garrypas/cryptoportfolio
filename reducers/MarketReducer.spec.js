@@ -17,7 +17,7 @@ describe('MarketReducer', () => {
 		sandbox.stub(MarketAggregator, 'aggregate').callsFake(dataSets => {
 			return dataSets[0];
 		});
-		marketBaseCurrencySpy = sandbox.stub(MarketBaseCurrency, 'process');
+		marketBaseCurrencySpy = sandbox.stub(MarketBaseCurrency, 'process').callsFake(d => _.cloneDeep(d));
 	});
 
 	afterEach(() => {

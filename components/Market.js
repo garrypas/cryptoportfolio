@@ -10,6 +10,7 @@ import { VictoryTheme, VictoryChart, VictoryLine, VictoryAxis, VictoryLabel } fr
 import Ticker from './Ticker';
 import DateFormatter from './../utils/DateFormatter';
 import Intervals from '../constants/Intervals'
+import { ClickableListRow } from './common/ListRows';
 
 function renderIntervalButton(key, interval) {
   return (<Button title={interval.title} onPress={() => this.changeInterval(key)} key={"btn" + key} />);
@@ -37,8 +38,8 @@ export default class Market extends React.Component {
   }
 
   render() {
-  let view = (<Text>Loading...</Text>);
-  let viewTop = (<Text></Text>)
+    let view = (<Text>Loading...</Text>);
+    let viewTop = (<Text></Text>)
     const icon = images[this.props.quoteCurrency];
     viewTop = (
       <View style={styles.header}>
@@ -48,8 +49,8 @@ export default class Market extends React.Component {
         <View style={styles.itemPriceContainer}>
           <Text style={styles.itemPrice}>{this.props.latestPrice ? `${this.props.latestPrice.toFixed(8)} ${this.props.units === 'BTC' ? 'Sats' : 'BTC'}` : '---'}</Text>
           <Text style={styles.itemOtherInfo}>
-            High: {this.props.high ? this.props.high.toFixed(8) : '---' } Low: { this.props.low ? this.props.low.toFixed(8) : '---' } {"\n"}
-            Volume: { this.props.volume ? this.props.volume.toFixed(8) : '---' }
+            High: {this.props.high ? this.props.high.toFixed(8) : '---'} Low: {this.props.low ? this.props.low.toFixed(8) : '---'} {"\n"}
+            Volume: {this.props.volume ? this.props.volume.toFixed(8) : '---'}
           </Text>
         </View>
       </View>
@@ -59,18 +60,18 @@ export default class Market extends React.Component {
       view = (
         <View style={styles.body}>
           <VictoryChart padding={{ left: 0, right: 0, top: 0, bottom: 50 }}>
-            <VictoryAxis 
-              tickLabelComponent={<VictoryLabel dx={20} />} 
+            <VictoryAxis
+              tickLabelComponent={<VictoryLabel dx={20} />}
               tickFormat={tick => DateFormatter(this.props.intervalIndex || "1Day", tick)}
-              fixLabelOverlap={true} 
+              fixLabelOverlap={true}
             />
-            <VictoryAxis 
-              dependentAxis 
+            <VictoryAxis
+              dependentAxis
               orientation="right"
-              style={ { borderWidth: 0, axis: { stroke: 'white', strokeWidth: 0 } } }
-              
-              tickLabelComponent={<VictoryLabel textAnchor="end" dx={ -20 }  />}
-              
+              style={{ borderWidth: 0, axis: { stroke: 'white', strokeWidth: 0 } }}
+
+              tickLabelComponent={<VictoryLabel textAnchor="end" dx={-20} />}
+
             />
             <VictoryLine
               style={{
@@ -88,16 +89,32 @@ export default class Market extends React.Component {
     }
 
     let buttons = [];
-    for(let b in Intervals) {
+    for (let b in Intervals) {
       buttons.push(
-          renderIntervalButton.bind(this)(b, Intervals[b])
+        renderIntervalButton.bind(this)(b, Intervals[b])
       );
     }
 
-    let intervals = (<View style={styles.buttons}>{buttons}</View>)
+    let intervals = (<View style={styles.buttons}>{buttons}</View>);
+
+    console.log(this.props);
+
+    let breakDown = (<View style={styles.flatListStyle}>
+
+      {this.props.breakdown && this.props.breakdown.map(i => {
+        return (<View style={styles.flatListItemStyle}>
+          <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', flex: 1 }} key={`${i.baseCurrency}-${i.quoteCurrency}-${i.exchange}`}>
+            <Text style={[styles.flatListItemNameText, { flex: 1, height: '100%' }]}>{i.exchange}</Text>
+            <Text style={[styles.flatListItemNameText, { flex: 1, height: '100%' }]}>{i.baseCurrency} - {i.quoteCurrency}</Text>
+          </View>
+        </View>);
+      })}
+    </View>);
+
+    console.log(this.props.breakdown);
 
     return (
-      <View style={styles.container}>{viewTop} {view} {intervals} </View>
+      <View style={styles.container}>{viewTop} {view} {intervals} {breakDown}</View>
     );
   }
 

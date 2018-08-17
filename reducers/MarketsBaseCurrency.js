@@ -19,7 +19,6 @@ module.exports = {
                     if(rate === null) {
                         return null;
                     }
-                    result.baseCurrency = baseCurrency;
                     result.price *= rate;
                 }
                 return result;
