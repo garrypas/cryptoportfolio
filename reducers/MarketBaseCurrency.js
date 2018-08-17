@@ -8,6 +8,7 @@ function process(data, baseData, baseCurrency) {
 		
 		for(let i = item.historyData.length - 1, j = baseItem.historyData.length - 1; i >= 0 && j >= 0; i--, j--) {
 			item.historyData[i].y *= baseItem.historyData[j].y;
+			item.baseCurrency = baseCurrency;
 		}
 		if(item.historyData.length > baseItem.historyData.length) {
 			item.historyData.splice(0, item.historyData.length - baseItem.historyData.length);

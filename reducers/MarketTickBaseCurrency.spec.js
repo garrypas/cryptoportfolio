@@ -26,8 +26,13 @@ describe('MarketReducer', () => {
 	})
 
 	it('Tick is converted to base currency', () => {
-		MarketTickBaseCurrency.process(data, baseData, 'BTC');
-		expect(data[0].last).toEqual(tickMock.result.Last);
+		const result = MarketTickBaseCurrency.process(data, baseData, 'BTC');
+		expect(result[0].last).toEqual(tickMock.result.Last);
+	});
+
+	it('Does not modify input data (immutable function)', () => {
+		const result = MarketTickBaseCurrency.process(data, baseData, 'BTC');
+		expect(data[0].last).toEqual(tickMock.result.Last / ETHinBTC);
 	});
 
 	it(`Doesn't attempt to convert data already in base currency`, () => {
@@ -37,8 +42,8 @@ describe('MarketReducer', () => {
 			baseCurrency: 'BTC',
 			quoteCurrency: 'ARK',
 		});
-		MarketTickBaseCurrency.process(data, baseData, 'BTC');
-		expect(data[1].last).toEqual(tickMock.result.Last + 0.0001);
+		const result = MarketTickBaseCurrency.process(data, baseData, 'BTC');
+		expect(result[1].last).toEqual(tickMock.result.Last + 0.0001);
 	});
 
 	it('Uses correct exchange base data', () => {
@@ -48,7 +53,7 @@ describe('MarketReducer', () => {
 			baseCurrency: 'BTC',
 			quoteCurrency: 'ETH',
 		})
-		MarketTickBaseCurrency.process(data, baseData, 'BTC');
-		expect(data[0].last).toEqual(tickMock.result.Last);
+		const result = MarketTickBaseCurrency.process(data, baseData, 'BTC');
+		expect(result[0].last).toEqual(tickMock.result.Last);
 	});
 });

@@ -16,8 +16,8 @@ module.exports = (state = [], action) => {
 	const mapped = map(action.data);
 	const baseMapped = map(action.baseData.data);
 	const baseCurrency = 'BTC';
-	MarketTickBaseCurrency.process(mapped, baseMapped, baseCurrency);
-	const latestPrice = _.mean(mapped.map(i => i.last));
+	const converted = MarketTickBaseCurrency.process(mapped, baseMapped, baseCurrency);
+	const latestPrice = _.mean(converted.map(i => i.last));
 	let low = state.low;
 	let high = state.high;
 	if(latestPrice > high) {

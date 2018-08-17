@@ -3,10 +3,14 @@
 import _ from 'lodash';
 
 function process(data, baseData, baseCurrency) {
-	data.filter(item => item.baseCurrency !== baseCurrency).forEach(item => {
-		const baseItem = _.find(baseData, b => b.quoteCurrency === item.baseCurrency && b.exchange === item.exchange);
-		item.last *= baseItem.last;
-	
+	return data.map(item => {
+		const result = _.cloneDeep(item);
+		if(item.baseCurrency !== baseCurrency) {
+			const baseItem = _.find(baseData, b => b.quoteCurrency === item.baseCurrency && b.exchange === item.exchange);
+			result.last *= baseItem.last;
+			result.baseCurrency = baseCurrency;
+		}
+		return result;
 	});
 }
 

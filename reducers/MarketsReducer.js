@@ -5,6 +5,7 @@ import MarketString from '../utils/MarketString';
 import _ from 'lodash';
 import MarketsMapperFactory from './mappers/MarketsMapperFactory';
 import MarketsAggregator from './MarketsAggregator';
+import MarketsBaseCurrency from './MarketsBaseCurrency';
 
 function mapMarketItems(exchange, data, previous) {
 	const mapper = MarketsMapperFactory.create(exchange);
@@ -57,7 +58,14 @@ module.exports = (state = {}, action) => {
 		return { markets: mapped, exchange: thisExchangeData.exchange };
 	});
 
-	const aggregated = MarketsAggregator.aggregate(exchangeData);
+	const flatMarkets = _.chain(exchangeData)
+		.map(e => e.markets)
+		.flatten()
+		.value();
+
+	const converted = MarketsBaseCurrency.process(flatMarkets, 'BTC');
+
+	const aggregated = MarketsAggregator.aggregate(converted);
 
 	const myAggregatedMarkets = aggregated.markets.filter(market => {
 		return myCurrencies.includes(market.quoteCurrency);

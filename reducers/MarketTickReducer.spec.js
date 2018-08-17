@@ -5,6 +5,7 @@ import marketTickReducer from './MarketTickReducer';
 import MarketTickAggregator from './MarketTickAggregator';
 import MarketTickBaseCurrency from './MarketTickBaseCurrency';
 import sinon from 'sinon';
+import _ from 'lodash';
 
 describe('MarketTickReducer', () => {
 	const currentHigh = 0.00090000;
@@ -18,7 +19,7 @@ describe('MarketTickReducer', () => {
 		sandbox.stub(MarketTickAggregator, 'aggregate').callsFake(dataSets => {
 			return { last };
 		});
-		marketTickBaseCurrencySpy = sandbox.stub(MarketTickBaseCurrency, 'process');
+		marketTickBaseCurrencySpy = sandbox.stub(MarketTickBaseCurrency, 'process').callsFake(data => _.cloneDeep(data));
 	})
 
 	afterEach(() => {
