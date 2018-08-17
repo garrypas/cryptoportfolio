@@ -1402,6 +1402,7 @@ images['VEC2'] = require('./images/VEC2.png');
 images['VEE'] = require('./images/VEE.png');
 images['VEN'] = require('./images/VEN.png');
 images['VERI'] = require('./images/VERI.png');
+images['VET'] = require('./images/VET.png');
 images['VIA'] = require('./images/VIA.png');
 images['VIB'] = require('./images/VIB.png');
 images['VIBE'] = require('./images/VIBE.png');

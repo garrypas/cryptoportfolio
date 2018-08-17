@@ -12,7 +12,7 @@
     "sinon": "^6.1.4"
   },
   "scripts": {
-    "images": "echo \"var images = {};\" > ./images.js; find ./images/*.png -not -name '*@*' -type f -maxdepth 1 | sed -e 's,^\\./images/,,' | sed -e 's,\\.png,,' | while read f; do \n IMGKEY=`echo $f | tr 'a-z' 'A-Z'` \n echo \"images['$IMGKEY'] = require('./images/$f.png');\"; done >> ./images.js; echo \"module.exports = images;\" >> ./images.js",
+    "images": "bash images.sh",
     "start": "react-native start",
     "start-debug": "DEBUG=app npm start",
     "android": "react-native run-android",
