@@ -7,9 +7,9 @@
     "debug": "~3.1.0",
     "jest": "^23.4.2",
     "jest-react-native": "^18.0.0",
+    "react-dom": "^16.4.2",
     "react-test-renderer": "16.3.1",
-    "sinon": "^6.1.4",
-    "react-dom": "^16.4.2"
+    "sinon": "^6.1.4"
   },
   "scripts": {
     "images": "echo \"var images = {};\" > ./images.js; find ./images/*.png -not -name '*@*' -type f -maxdepth 1 | sed -e 's,^\\./images/,,' | sed -e 's,\\.png,,' | while read f; do \n IMGKEY=`echo $f | tr 'a-z' 'A-Z'` \n echo \"images['$IMGKEY'] = require('./images/$f.png');\"; done >> ./images.js; echo \"module.exports = images;\" >> ./images.js",

@@ -12,7 +12,6 @@ module.exports = (args = {}, dispatch) => {
     }
     const intervalKey = intervalObj.intervalKey;
     const results = [];
-    console.log(args.exchanges);
     const promises = args.exchanges.map(exchangeItem => {
         const url = RouteFactory.create(exchangeItem.exchange)('TICKS', { 
             baseCurrency: exchangeItem.baseCurrency,

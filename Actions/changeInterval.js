@@ -1,9 +1,9 @@
 "use strict";
 
-import getMarket from './getMarket';
+import getMarketWithBaseMarkets from './getMarketWithBaseMarkets';
 
 export default function (args = {}, dispatch) {
-    getMarket(args, data => {
+    getMarketWithBaseMarkets(args, data => {
         dispatch({
             ...data,
             intervalIndex: args.intervalIndex,

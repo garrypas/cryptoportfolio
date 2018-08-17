@@ -4,7 +4,6 @@ import axios from 'axios';
 import RouteFactory from '../routes/RouteFactory';
 
 module.exports = (args = {}, dispatch) => {
-    console.log(args);
     const results = [];
     const promises = args.exchanges.map(exchangeItem => {
         const route = RouteFactory.create(exchangeItem.exchange)('TICK', {
