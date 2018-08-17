@@ -1,30 +1,11 @@
 "use strict";
 
 import _ from 'lodash';
-// import ExchangeRates from '../utils/ExchangeRates';
 
 module.exports = {
     aggregate: (flatMarkets) => {
-        // const baseCurrency = 'BTC';
-
-        // const flatMarkets = _.chain(exchangesData)
-        //     .map(e => e.markets)
-        //     .flatten()
-        //     .value();
-
         const result = {
             markets: _(flatMarkets)
-                // .map(item => {
-                //     if(item.baseCurrency === baseCurrency) {
-                //         return item;
-                //     }
-                //     const rate = ExchangeRates.getExchangeRate(flatMarkets, baseCurrency, item.baseCurrency)
-                //     if(!rate) {
-                //         return null;
-                //     }
-                //     item.price *= rate;
-                //     return item;
-                // })
                 .filter(i => i) // Remove nulls and undefined
                 .groupBy(item => `${item.quoteCurrency}`)
                 .map((item) => {
