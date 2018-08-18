@@ -11,7 +11,6 @@ module.exports = class Ticker {
         }
         const tickCallback = this.props.tick;
         this.timer = setInterval(tickCallback, this.props.interval);
-        tickCallback();
     }
 
     stopTick() {

@@ -8,11 +8,9 @@ const ticksMock = require('../mocks/ticksMock');
 const _ = require('lodash');
 
 describe('MarketReducer', () => {
-	let market;
 	let sandbox;
 	let marketBaseCurrencySpy;
 	beforeEach(() => {
-		market = "BTC-ARK";
 		sandbox = sinon.createSandbox();
 		sandbox.stub(MarketAggregator, 'aggregate').callsFake(dataSets => {
 			return dataSets[0];
@@ -28,6 +26,8 @@ describe('MarketReducer', () => {
 		const bittrexData = {
 			data: ticksMock,
 			exchange: 'Bittrex',
+			baseCurrency: 'ETH',
+			quoteCurrency: 'LSK',
 		};
 		return marketReducer({}, {
 			data: [ bittrexData ],
@@ -50,5 +50,15 @@ describe('MarketReducer', () => {
 	it('Converts all history data to base currency', () => {
 		getData();
 		sinon.assert.calledOnce(marketBaseCurrencySpy);
-	})
+	});
+
+	it('Allows a breakdown of aggregated data', () => {
+		const data = getData();
+		expect(data.breakdown).toBeTruthy();
+	});
+
+	it('Preserves original base currency in breakdown', () => {
+		const data = getData();
+		expect(data.breakdown[0].baseCurrency).toEqual('ETH');
+	});
 });

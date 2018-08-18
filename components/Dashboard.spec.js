@@ -6,6 +6,7 @@ import renderer from 'react-test-renderer';
 import sinon from 'sinon';
 import Ticker from './Ticker';
 import RouterWrapper from '../routes/RouterWrapper';
+import rootReducer from './../reducers/RootReducer';
 
 describe('Dashboard', () => {
   let tickSpy;
@@ -21,8 +22,10 @@ describe('Dashboard', () => {
     sandbox.restore());
 
   function render() {
-    const dashboard = <Dashboard />;
-    return renderer.create(dashboard).toJSON();
+    const props = { getMarkets: () => { } };
+    const dashboard = <Dashboard {...props} />;
+    const testRenderer = renderer.create(dashboard);
+    return testRenderer.toJSON();
   }
 
   it('renders Dashboard without crashing', () => 

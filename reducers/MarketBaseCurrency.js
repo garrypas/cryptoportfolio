@@ -17,6 +17,9 @@ function process(data, baseData, baseCurrency) {
 		if(result.historyData.length > baseItem.historyData.length) {
 			result.historyData.splice(0, result.historyData.length - baseItem.historyData.length);
 		}
+		result.high = _.maxBy(result.historyData, i => i.y).y;
+		result.low = _.minBy(result.historyData, i => i.y).y;
+		result.volume *= _.last(baseItem.historyData).y;
 		return result;
 	});
 };

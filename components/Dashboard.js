@@ -77,6 +77,12 @@ const component = class Dashboard extends React.Component {
         }
     }
 
+    componentWillMount() {
+        if(RouterWrapper.current() === 'home') {
+            this.tick();
+        }
+    }
+
     componentWillUnmount() {
         if(RouterWrapper.current() === 'home') {
             this.ticker.stopTick();

@@ -32,12 +32,17 @@ describe('MarketTickReducer', () => {
 			low: currentLow,
 			latestPrice: 0.00080000,
 			interval: 'THIRTY_MINS',
+			breakdown: [
+				{ baseCurrency: 'BTC', quoteCurrency: 'LSK', exchange:'Bittrex'  }
+			],
 		}, {
 			data: [{ 
 				data: { result: { Last: last } }, 
-				exchange: 'Bittrex' 
+				exchange: 'Bittrex',
+				baseCurrency: 'BTC', 
+				quoteCurrency: 'LSK'
 			}],
-			baseData: { data: [] }
+			baseData: { data: [] },
 		});
 	}
 
@@ -79,5 +84,10 @@ describe('MarketTickReducer', () => {
 	it('Converts price to base currency', () => {
 		getData();
 		sinon.assert.calledOnce(marketTickBaseCurrencySpy);
+	});
+
+	it('Breakdown returned as an Array', () => {
+		const data = getData();
+		expect(data.breakdown instanceof Array).toBeTruthy();
 	})
 });

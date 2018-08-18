@@ -33,6 +33,9 @@ describe('MarketBaseCurrency', () => {
 			quoteCurrency: 'LSK',
 			baseCurrency: 'ETH',
 			exchange: 'E1',
+			high: 0.081432,
+			low: 0.081010,
+			volume: 5,
 		}, ];
 	})
 
@@ -77,5 +80,20 @@ describe('MarketBaseCurrency', () => {
 		});
 		const result = MarketBaseCurrency.process(data, baseData, 'BTC');
 		expect(result[0].historyData[0].y).toBeCloseTo(0.00081010, 8);
-	})
+	});
+
+	it('Converts high', () => {
+		const result = MarketBaseCurrency.process(data, baseData, 'BTC');
+		expect(result[0].high).toBeCloseTo(0.00081432, 8);
+	});
+
+	it('Converts low', () => {
+		const result = MarketBaseCurrency.process(data, baseData, 'BTC');
+		expect(result[0].low).toBeCloseTo(0.00081010, 8);
+	});
+
+	it('Converts volume', () => {
+		const result = MarketBaseCurrency.process(data, baseData, 'BTC');
+		expect(result[0].volume).toBeCloseTo(0.05, 8);
+	});
 });

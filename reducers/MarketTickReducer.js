@@ -4,6 +4,7 @@ const _ = require('lodash');
 import MarketString from '../utils/MarketString';
 import MarketTickMapperFactory from './mappers/MarketTickMapperFactory';
 import MarketTickBaseCurrency from './MarketTickBaseCurrency';
+import MarketTickAggregator from './MarketTickAggregator';
 
 function map(data) {
 	return data.map(dataSet => {
@@ -12,12 +13,7 @@ function map(data) {
 	});
 }
 
-module.exports = (state = [], action) => {
-	const mapped = map(action.data);
-	const baseMapped = map(action.baseData.data);
-	const baseCurrency = 'BTC';
-	const converted = MarketTickBaseCurrency.process(mapped, baseMapped, baseCurrency);
-	const latestPrice = _.mean(converted.map(i => i.last));
+function createResult(latestPrice, state) {
 	let low = state.low;
 	let high = state.high;
 	if(latestPrice > high) {
@@ -31,4 +27,26 @@ module.exports = (state = [], action) => {
 	result.high = high;
 	result.latestPrice = latestPrice;
 	return result;
+}
+
+module.exports = (state = {}, action) => {
+	const mapped = map(action.data);
+	const baseMapped = map(action.baseData.data);
+	const baseCurrency = 'BTC';
+	const converted = MarketTickBaseCurrency.process(mapped, baseMapped, baseCurrency);
+	const aggregated = MarketTickAggregator.aggregate(converted);
+
+	console.log(state);
+	console.log(mapped);
+
+	const breakdown = mapped.map(i => createResult(i.last, _.find(state.breakdown, 
+			s => s.baseCurrency === i.baseCurrency 
+			  && s.quoteCurrency === i.quoteCurrency 
+			  && s.exchange === i.exchange))
+	);
+
+	return {
+		...createResult(aggregated.last, state),
+		breakdown,
+	};
 }

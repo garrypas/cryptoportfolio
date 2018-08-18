@@ -20,7 +20,6 @@ module.exports = (state = [], action) => {
 
 	const converted = MarketBaseCurrency.process(mapped, baseMapped, action.baseCurrency);
 	const aggregated = MarketAggregator.aggregate(converted);
-
 	return {
 		...state,
 		intervalIndex: action.intervalIndex,

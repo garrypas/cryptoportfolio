@@ -5,7 +5,7 @@ import BinanceMarketString from '../../../utils/BinanceMarketString';
 const HIGH_PRICE = 2;
 const LOW_PRICE = 3;
 const CLOSE_PRICE = 4;
-const VOLUME = 5;
+const VOLUME = 10;
 const CLOSE_TIME = 6;
 
 module.exports = (toMap) => {
@@ -15,7 +15,7 @@ module.exports = (toMap) => {
 		const price = parseFloat(item[CLOSE_PRICE]);
 		return {
 			V: parseFloat(item[VOLUME]),
-			BV: parseFloat(item[VOLUME]) * price,
+			BV: parseFloat(item[VOLUME]),
 			H: parseFloat(item[HIGH_PRICE]),
 			L: parseFloat(item[LOW_PRICE]),
 			T: new Date(item[CLOSE_TIME]).toISOString(),
