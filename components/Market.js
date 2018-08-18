@@ -103,6 +103,7 @@ export default class Market extends React.Component {
 					<View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', flex: 1 }}>
 						<Text style={[styles.flatListItemNameText, { flex: 1, height: '100%' }]}>{i.exchange}</Text>
 						<Text style={[styles.flatListItemNameText, { flex: 1, height: '100%' }]}>{i.baseCurrency} - {i.quoteCurrency}</Text>
+						<Text style={[styles.flatListItemNameText, { flex: 1, height: '100%' }]}>{i.latestPrice ? i.latestPrice.toFixed(8) : '---'}</Text>
 					</View>
 				</View>);
 			})}
