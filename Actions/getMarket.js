@@ -27,7 +27,6 @@ module.exports = (args = {}, dispatch) => {
                 quoteCurrency: exchangeItem.quoteCurrency,
                 intervalIndex
             };
-            console.log(exchangeItem);
             results.push(actionArgs);
             return actionArgs;
         });

@@ -33,11 +33,17 @@ describe('MarketTickReducer', () => {
 			latestPrice: 0.00080000,
 			interval: 'THIRTY_MINS',
 			breakdown: [
-				{ baseCurrency: 'BTC', quoteCurrency: 'LSK', exchange:'Bittrex'  }
+				{ baseCurrency: 'BTC', quoteCurrency: 'LSK', exchange:'Bittrex'  },
+				{ baseCurrency: 'ETH', quoteCurrency: 'LSK', exchange:'Bittrex'  },
 			],
 		}, {
 			data: [{ 
 				data: { result: { Last: last } }, 
+				exchange: 'Bittrex',
+				baseCurrency: 'ETH', 
+				quoteCurrency: 'LSK'
+			}, { 
+				data: { result: { Last: last * 100 } }, 
 				exchange: 'Bittrex',
 				baseCurrency: 'BTC', 
 				quoteCurrency: 'LSK'
@@ -89,5 +95,12 @@ describe('MarketTickReducer', () => {
 	it('Breakdown returned as an Array', () => {
 		const data = getData();
 		expect(data.breakdown instanceof Array).toBeTruthy();
-	})
+		expect(data.breakdown).toHaveLength(2);
+	});
+
+	it('Sorts breakdown result', () => {
+		const data = getData();
+		expect(data.breakdown[0].baseCurrency).toEqual('BTC');
+		expect(data.breakdown[1].baseCurrency).toEqual('ETH');
+	});
 });

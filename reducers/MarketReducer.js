@@ -5,6 +5,7 @@ import MarketString from '../utils/MarketString';
 import MarketMapperFactory from './mappers/MarketMapperFactory';
 import MarketAggregator from './MarketAggregator';
 import MarketBaseCurrency from './MarketBaseCurrency';
+import MarketItemSort from './../utils/MarketItemSort';
 
 function map(data) {
 	return data.map(data => {
@@ -24,7 +25,7 @@ module.exports = (state = [], action) => {
 		...state,
 		intervalIndex: action.intervalIndex,
 		...aggregated,
-		breakdown: mapped,
+		breakdown: MarketItemSort.sort(mapped),
 		quoteCurrency: action.quoteCurrency,
 		baseCurrency: action.baseCurrency,
 	};

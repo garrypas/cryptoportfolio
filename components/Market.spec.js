@@ -19,7 +19,11 @@ describe('Market', () => {
     sandbox.restore());
 
   function render() {
-    const market = <Market />;
+    const props = {
+      getMarket: () => Promise.resolve(),
+      getMarketTick: () => {},
+    };
+    const market = <Market { ...props } />;
     return renderer.create(market).toJSON();
   }
 

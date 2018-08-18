@@ -5,6 +5,7 @@ import sinon from 'sinon';
 import MarketAggregator from './MarketAggregator';
 import MarketBaseCurrency from './MarketBaseCurrency';
 const ticksMock = require('../mocks/ticksMock');
+const binanceTicksMock = require('../mocks/binanceTicksMock');
 const _ = require('lodash');
 
 describe('MarketReducer', () => {
@@ -23,6 +24,12 @@ describe('MarketReducer', () => {
 	})
 
 	function getData() {
+		const binanceData = {
+			data: binanceTicksMock,
+			exchange: 'Binance',
+			baseCurrency: 'ETH',
+			quoteCurrency: 'LSK',
+		};
 		const bittrexData = {
 			data: ticksMock,
 			exchange: 'Bittrex',
@@ -30,7 +37,7 @@ describe('MarketReducer', () => {
 			quoteCurrency: 'LSK',
 		};
 		return marketReducer({}, {
-			data: [ bittrexData ],
+			data: [ bittrexData, binanceData ],
 			baseData: { data: [] },
 			quoteCurrency: 'LSK',
 			baseCurrency: 'BTC',
@@ -55,10 +62,17 @@ describe('MarketReducer', () => {
 	it('Allows a breakdown of aggregated data', () => {
 		const data = getData();
 		expect(data.breakdown).toBeTruthy();
+		expect(data.breakdown).toHaveLength(2);
 	});
 
 	it('Preserves original base currency in breakdown', () => {
 		const data = getData();
-		expect(data.breakdown[0].baseCurrency).toEqual('ETH');
+		expect(_.find(data.breakdown, i => i.exchange === 'Bittrex').baseCurrency).toEqual('ETH');
+	});
+
+	it('Sorts', () => {
+		const data = getData();
+		expect(data.breakdown[0].exchange).toEqual('Binance');
+		expect(data.breakdown[1].exchange).toEqual('Bittrex');
 	});
 });

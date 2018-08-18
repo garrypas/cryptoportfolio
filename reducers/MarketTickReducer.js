@@ -5,6 +5,7 @@ import MarketString from '../utils/MarketString';
 import MarketTickMapperFactory from './mappers/MarketTickMapperFactory';
 import MarketTickBaseCurrency from './MarketTickBaseCurrency';
 import MarketTickAggregator from './MarketTickAggregator';
+import MarketItemSort from './../utils/MarketItemSort';
 
 function map(data) {
 	return data.map(dataSet => {
@@ -36,17 +37,16 @@ module.exports = (state = {}, action) => {
 	const converted = MarketTickBaseCurrency.process(mapped, baseMapped, baseCurrency);
 	const aggregated = MarketTickAggregator.aggregate(converted);
 
-	console.log(state);
-	console.log(mapped);
-
 	const breakdown = mapped.map(i => createResult(i.last, _.find(state.breakdown, 
 			s => s.baseCurrency === i.baseCurrency 
 			  && s.quoteCurrency === i.quoteCurrency 
 			  && s.exchange === i.exchange))
 	);
 
+	
+
 	return {
 		...createResult(aggregated.last, state),
-		breakdown,
+		breakdown: MarketItemSort.sort(breakdown),
 	};
 }
