@@ -10,7 +10,8 @@ class PriceText extends React.Component {
     render() {
         const currentPrice = this.props.price;
         const previousPrice = this.props.previousPrice;
-        const units = this.props.units;
+        console.log(this.props);
+        const units = this.props.units === 'BTC' ? 'Sats' : this.props.units;
         const priceStyle = [styles.itemPriceText];
         let direction = '';
         if (previousPrice > currentPrice) {
@@ -19,8 +20,9 @@ class PriceText extends React.Component {
         if (currentPrice > previousPrice) {
             direction = 'up';
         }
+        const text = `${ currentPrice ? currentPrice.toFixed(8) : '---' }${ units ? ' ' + units : '' }`
         return (
-            <Text style={[this.props.style, (direction === 'up' ? styles.itemPriceTextUp : direction === 'down' ? styles.itemPriceTextDown : '')]} >{currentPrice ? currentPrice.toFixed(8) : '---'}{ units ? ` ${units}` : '' }</Text>
+            <Text style={[this.props.style, (direction === 'up' ? styles.itemPriceTextUp : direction === 'down' ? styles.itemPriceTextDown : '')]} >{ text }</Text>
         );
     }
 }

@@ -48,7 +48,7 @@ export default class Market extends React.Component {
 					<Image source={icon} style={styles.iconImage} />
 				</Text>
 				<View style={styles.itemPriceContainer}>
-					<PriceText style={styles.itemPrice} price={ this.props.latestPrice } previousPrice={ this.props.previousPrice } units={this.props.units} /> 
+					<PriceText style={styles.itemPrice} price={ this.props.latestPrice } previousPrice={ this.props.previousPrice } units={this.props.baseCurrency} /> 
 					<Text style={styles.itemOtherInfo}>
 						High: {this.props.high ? this.props.high.toFixed(8) : '---'} Low: {this.props.low ? this.props.low.toFixed(8) : '---'} {"\n"}
 						Volume: {this.props.volume ? this.props.volume.toFixed(8) : '---'}
