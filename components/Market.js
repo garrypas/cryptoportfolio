@@ -11,6 +11,7 @@ import Ticker from './Ticker';
 import DateFormatter from './../utils/DateFormatter';
 import Intervals from '../constants/Intervals'
 import { ClickableListRow } from './common/ListRows';
+import { PriceText } from './common/PriceText';
 
 function renderIntervalButton(key, interval) {
 	return (<Button title={interval.title} onPress={() => this.changeInterval(key)} key={"btn" + key} />);
@@ -47,7 +48,7 @@ export default class Market extends React.Component {
 					<Image source={icon} style={styles.iconImage} />
 				</Text>
 				<View style={styles.itemPriceContainer}>
-					<Text style={styles.itemPrice}>{this.props.latestPrice ? `${this.props.latestPrice.toFixed(8)} ${this.props.units === 'BTC' ? 'Sats' : 'BTC'}` : '---'}</Text>
+					<PriceText style={styles.itemPrice} price={ this.props.latestPrice } previousPrice={ this.props.previousPrice } units={this.props.units} /> 
 					<Text style={styles.itemOtherInfo}>
 						High: {this.props.high ? this.props.high.toFixed(8) : '---'} Low: {this.props.low ? this.props.low.toFixed(8) : '---'} {"\n"}
 						Volume: {this.props.volume ? this.props.volume.toFixed(8) : '---'}
@@ -103,7 +104,7 @@ export default class Market extends React.Component {
 					<View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', flex: 1 }}>
 						<Text style={[styles.flatListItemNameText, { flex: 1, height: '100%' }]}>{i.exchange}</Text>
 						<Text style={[styles.flatListItemNameText, { flex: 1, height: '100%' }]}>{i.baseCurrency} - {i.quoteCurrency}</Text>
-						<Text style={[styles.flatListItemNameText, { flex: 1, height: '100%' }]}>{i.latestPrice ? i.latestPrice.toFixed(8) : '---'}</Text>
+						<PriceText style={[styles.flatListItemNameText, { flex: 1, height: '100%' }]} price={ i.latestPrice } previousPrice={ i.previousPrice } />
 					</View>
 				</View>);
 			})}

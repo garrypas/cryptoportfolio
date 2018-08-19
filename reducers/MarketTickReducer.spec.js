@@ -13,13 +13,11 @@ describe('MarketTickReducer', () => {
 	let last = 0.00090000;
 	let sandbox;
 	let marketTickBaseCurrencySpy;
+	const previousPrice = 0.00080000;
 
 	beforeEach(() => {
 		sandbox = sinon.createSandbox();
-		sandbox.stub(MarketTickAggregator, 'aggregate').callsFake(dataSets => {
-			return { last };
-		});
-		marketTickBaseCurrencySpy = sandbox.stub(MarketTickBaseCurrency, 'process').callsFake(data => _.cloneDeep(data));
+		marketTickBaseCurrencySpy = sandbox.spy(MarketTickBaseCurrency, 'process');
 	})
 
 	afterEach(() => {
@@ -30,25 +28,28 @@ describe('MarketTickReducer', () => {
 		return marketTickReducer({
 			high: currentHigh,
 			low: currentLow,
-			latestPrice: 0.00080000,
+			latestPrice: previousPrice,
 			interval: 'THIRTY_MINS',
 			breakdown: [
-				{ baseCurrency: 'BTC', quoteCurrency: 'LSK', exchange:'Bittrex'  },
-				{ baseCurrency: 'ETH', quoteCurrency: 'LSK', exchange:'Bittrex'  },
+				{ baseCurrency: 'BTC', quoteCurrency: 'LSK', exchange:'Bittrex', latestPrice: previousPrice, },
+				{ baseCurrency: 'ETH', quoteCurrency: 'LSK', exchange:'Bittrex', latestPrice: previousPrice * 100, },
 			],
 		}, {
 			data: [{ 
-				data: { result: { Last: last } }, 
+				data: { result: { Last: last * 100 } }, 
 				exchange: 'Bittrex',
 				baseCurrency: 'ETH', 
 				quoteCurrency: 'LSK'
 			}, { 
-				data: { result: { Last: last * 100 } }, 
+				data: { result: { Last: last } }, 
 				exchange: 'Bittrex',
 				baseCurrency: 'BTC', 
 				quoteCurrency: 'LSK'
 			}],
-			baseData: { data: [] },
+			baseData: { data: [{
+				data: { result: { Last: 0.01 } },
+				baseCurrency: 'BTC', quoteCurrency: 'ETH', exchange: 'Bittrex',
+			}] },
 		});
 	}
 
@@ -79,7 +80,7 @@ describe('MarketTickReducer', () => {
 	it('Updates latest price', () => {
 		last = 0.00080001;
 		const data = getData();
-		expect(data.latestPrice).toEqual(last);
+		expect(data.latestPrice).toBeCloseTo(last, 8);
 	});
 
 	it('Copies existing state', () => {
@@ -102,5 +103,10 @@ describe('MarketTickReducer', () => {
 		const data = getData();
 		expect(data.breakdown[0].baseCurrency).toEqual('BTC');
 		expect(data.breakdown[1].baseCurrency).toEqual('ETH');
+	});
+
+	it('Maps previous price', () => {
+		const data = getData();
+		expect(data.previousPrice).toEqual(previousPrice);
 	});
 });

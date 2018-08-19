@@ -1,10 +1,12 @@
 "use strict";
 
-module.exports = (toMap) => {
+module.exports = (toMap, previous = undefined) => {
+	const last = parseFloat(toMap.data.price);
 	return {
-		last: parseFloat(toMap.data.price),
+		last,
 		exchange: toMap.exchange,
 		baseCurrency: toMap.baseCurrency,
 		quoteCurrency: toMap.quoteCurrency,
+		previousPrice: previous ? previous.latestPrice : last,
 	};
 }

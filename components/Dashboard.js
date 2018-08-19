@@ -9,6 +9,7 @@ import RouterWrapper from '../routes/RouterWrapper';
 import Ticker from './Ticker';
 import { ClickableListRow } from './common/ListRows';
 const images = require('./../images');
+import { PriceText } from './common/PriceText';
 
 const component = class Dashboard extends React.Component {
     constructor(props) {
@@ -23,7 +24,7 @@ const component = class Dashboard extends React.Component {
     }
 
     tick() {
-        if(RouterWrapper.current() === 'home') {
+        if (RouterWrapper.current() === 'home') {
             this.props.getMarkets();
         }
     }
@@ -34,24 +35,13 @@ const component = class Dashboard extends React.Component {
     }
 
     renderRow(rowData, sectionID) {
-        console.log(rowData.item);
-        const currentPrice = rowData.item.price;
-        const previousPrice = rowData.item.previousPrice;
-        const priceStyle = [styles.itemPriceText];
-        let direction = '';
-        if (previousPrice > currentPrice) {
-            direction = 'down';
-        }
-        if (currentPrice > previousPrice) {
-            direction = 'up';
-        }
         const icon = images[rowData.item.quoteCurrency];
         return (
-            <ClickableListRow icon={icon} title={ rowData.item.title } right={
-                <View style={styles.itemPrice}><Text style={[priceStyle, (direction === 'up' ? styles.itemPriceTextUp : direction === 'down' ? styles.itemPriceTextDown : '')]} >{currentPrice.toFixed(8)}</Text></View>
+            <ClickableListRow icon={icon} title={rowData.item.title} right={
+                <View style={styles.itemPrice}><PriceText style={styles.itemPriceText} price={rowData.item.price} previousPrice={rowData.item.previousPrice} /></View>
             }
-            onPress={() => this.viewMarket(rowData.item)}
-             />
+                onPress={() => this.viewMarket(rowData.item)}
+            />
         );
     }
 
@@ -73,19 +63,19 @@ const component = class Dashboard extends React.Component {
     }
 
     componentDidMount() {
-        if(RouterWrapper.current() === 'home') {
+        if (RouterWrapper.current() === 'home') {
             this.ticker.tick();
         }
     }
 
     componentWillMount() {
-        if(RouterWrapper.current() === 'home') {
+        if (RouterWrapper.current() === 'home') {
             this.tick();
         }
     }
 
     componentWillUnmount() {
-        if(RouterWrapper.current() === 'home') {
+        if (RouterWrapper.current() === 'home') {
             this.ticker.stopTick();
         }
     }

@@ -5,7 +5,8 @@ import _ from 'lodash';
 module.exports = {
     aggregate: (dataSets) => {
         return {
-            last: _.mean(dataSets.map(d => d.last))
+            last: _.mean(dataSets.map(d => d.last)),
+            previousPrice: _.mean(dataSets.map(d => d.previousPrice)),
         };
     }
 };

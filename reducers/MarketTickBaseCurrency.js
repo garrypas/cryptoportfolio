@@ -8,6 +8,7 @@ function process(data, baseData, baseCurrency) {
 		if(item.baseCurrency !== baseCurrency) {
 			const baseItem = _.find(baseData, b => b.quoteCurrency === item.baseCurrency && b.exchange === item.exchange);
 			result.last *= baseItem.last;
+			result.previousPrice *= baseItem.last;
 			result.baseCurrency = baseCurrency;
 		}
 		return result;

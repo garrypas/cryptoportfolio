@@ -19,7 +19,4 @@ let css = {
     }
 };
 
-css.itemPriceTextUp = {  color: 'green', fontWeight: 'bold' };
-css.itemPriceTextDown = { color: 'red', fontWeight: 'bold' };
-
 export default css;

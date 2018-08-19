@@ -15,6 +15,8 @@ describe('BinanceMarketTickMapper', () => {
 			exchange: 'Binance',
 			baseCurrency: 'BTC',
 			quoteCurrency: 'ARK',
+		}, {
+			latestPrice: 0.0001
 		});
 	}
 
@@ -32,5 +34,10 @@ describe('BinanceMarketTickMapper', () => {
 	it('Maps base currency', () => {
 		const baseCurrency = getData().baseCurrency;
 		expect(baseCurrency).toEqual('BTC');
+	});
+
+	it('Maps previous price', () => {
+		const previousPrice = getData().previousPrice;
+		expect(previousPrice).toEqual(0.00010000);
 	});
 });
