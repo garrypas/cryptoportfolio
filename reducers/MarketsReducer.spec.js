@@ -89,4 +89,10 @@ describe('MarketsReducer', () => {
 		const data = getData();		
 		expect(data.exchangeData[0].markets[0].exchanges.map(e => e.exchange)).toContain('EX')
 	});
+
+	it("myCurrencies is null/undefined then does not crash", () => {
+		myCurrencies = null;
+		const data = getData();
+		expect(data.markets).toHaveLength(0);
+	})
 });

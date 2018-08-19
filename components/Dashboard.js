@@ -45,15 +45,24 @@ const component = class Dashboard extends React.Component {
         );
     }
 
-    render() {
-        let markets = this.props.markets;
-        const items = markets
-            ? (
-                <FlatList style={styles.flatListStyle}
+    renderItems(markets) {
+        if(markets) {
+            if(markets.length) {
+                return (<FlatList style={styles.flatListStyle}
                     data={markets}
                     renderItem={this.renderRow}
-                />)
-            : <Text>Loading...</Text>;
+                />);
+            } else {
+                return (<Text style={styles.textCenter}>Click "Customize" to choose some currencies to track</Text>);
+            }
+        } else {
+            return (<Text style={styles.textCenter}>Loading...</Text>);
+        }
+    }
+
+    render() {
+        let markets = this.props.markets;
+        const items = this.renderItems(markets);
 
         return (
             <View style={styles.container}>

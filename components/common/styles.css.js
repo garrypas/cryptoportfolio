@@ -30,5 +30,9 @@ export default {
 
     textButton: {
         padding: 0,
-    }
+    },
+
+    textCenter: {
+        textAlign: 'center',
+    },
 };

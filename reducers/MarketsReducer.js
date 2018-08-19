@@ -25,7 +25,7 @@ function getExchangeData(exchangeData, exchange) {
 }
 
 module.exports = (state = {}, action) => {
-	const myCurrencies = action.myCurrencies;
+	const myCurrencies = action.myCurrencies || [];
 	const exchangeData = action.data.map(thisExchangeData => {
 		const previous = getExchangeData(state.exchangeData, thisExchangeData.exchange);
 		const mapped = mapMarketItems(thisExchangeData.exchange, thisExchangeData.data, previous);
