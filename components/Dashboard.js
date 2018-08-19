@@ -34,6 +34,7 @@ const component = class Dashboard extends React.Component {
     }
 
     renderRow(rowData, sectionID) {
+        console.log(rowData.item);
         const currentPrice = rowData.item.price;
         const previousPrice = rowData.item.previousPrice;
         const priceStyle = [styles.itemPriceText];

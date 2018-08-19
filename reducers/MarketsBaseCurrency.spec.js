@@ -7,7 +7,7 @@ describe('MarketsBaseCurrency', () => {
     beforeEach(() => {
         data = [
             { baseCurrency: 'BTC', quoteCurrency: 'ETH', price: 0.01 },
-            { baseCurrency: 'ETH', quoteCurrency: 'LSK', price: 0.1 },
+            { baseCurrency: 'ETH', quoteCurrency: 'LSK', price: 0.1, previousPrice: 0.09999999 },
             { baseCurrency: 'BTC', quoteCurrency: 'LSK', price: 0.00999 },
             { baseCurrency: 'BTC', quoteCurrency: 'STRAT' },
         ]
@@ -16,6 +16,11 @@ describe('MarketsBaseCurrency', () => {
     it('Converts to base currency', () => {
         const result = MarketsBaseCurrency.process(data, 'BTC');
         expect(result[1].price).toBeCloseTo(0.001, 8);
+    });
+
+    it('Converts previous price to base currency', () => {
+        const result = MarketsBaseCurrency.process(data, 'BTC');
+        expect(result[1].previousPrice).toBeCloseTo(0.000999999, 8);
     });
 
     it(`Removes items that cannot be converted to the base currency`, () => {

@@ -20,6 +20,7 @@ module.exports = {
                         return null;
                     }
                     result.price *= rate;
+                    result.previousPrice *= rate;
                 }
                 return result;
             }).filter(i => i);
