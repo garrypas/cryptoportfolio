@@ -10,7 +10,6 @@ class PriceText extends React.Component {
     render() {
         const currentPrice = this.props.price;
         const previousPrice = this.props.previousPrice;
-        console.log(this.props);
         const units = this.props.units === 'BTC' ? 'Sats' : this.props.units;
         const priceStyle = [styles.itemPriceText];
         let direction = '';

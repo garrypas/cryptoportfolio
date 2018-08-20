@@ -1,14 +1,15 @@
 "use strict";
 
 import _ from 'lodash';
+import currenciesAreEqual from './../utils/CurrenciesAreEqual';
 
 function process(data, baseData, baseCurrency) {
 	return data.map(item => {
 		const result = _.cloneDeep(item);
-		if(item.baseCurrency === baseCurrency) {
+		if(currenciesAreEqual(item.baseCurrency, baseCurrency)) {
 			return result;
 		}
-		const baseItem = _.find(baseData, b => b.quoteCurrency === result.baseCurrency && b.exchange === result.exchange);
+		const baseItem = _.find(baseData, b => currenciesAreEqual(b.quoteCurrency, result.baseCurrency) && b.exchange === result.exchange);
 		
 		for(let i = result.historyData.length - 1, j = baseItem.historyData.length - 1; i >= 0 && j >= 0; i--, j--) {
 			result.historyData[i].y *= baseItem.historyData[j].y;

@@ -46,10 +46,14 @@ describe('MarketTickReducer', () => {
 				baseCurrency: 'BTC', 
 				quoteCurrency: 'LSK'
 			}],
-			baseData: { data: [{
-				data: { result: { Last: 0.01 } },
-				baseCurrency: 'BTC', quoteCurrency: 'ETH', exchange: 'Bittrex',
-			}] },
+			baseData: { data: [
+				{
+					data: { result: { Last: 0.01 } },
+					baseCurrency: 'BTC', quoteCurrency: 'ETH', exchange: 'Bittrex',
+				},
+			] },
+			baseCurrency: 'BTC',
+			quoteCurrency: 'LSK',
 		});
 	}
 

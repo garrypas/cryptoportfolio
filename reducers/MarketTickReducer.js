@@ -6,12 +6,13 @@ import MarketTickMapperFactory from './mappers/MarketTickMapperFactory';
 import MarketTickBaseCurrency from './MarketTickBaseCurrency';
 import MarketTickAggregator from './MarketTickAggregator';
 import MarketItemSort from './../utils/MarketItemSort';
+import currenciesAreEqual from './../utils/CurrenciesAreEqual';
 
 function map(data, previous) {
 	return data.map(dataSet => {
 		const mapper = MarketTickMapperFactory.create(dataSet.exchange);
-		const prev = _.find(previous, i => i.baseCurrency === dataSet.baseCurrency
-			&& i.quoteCurrency === dataSet.quoteCurrency
+		const prev = _.find(previous, i => currenciesAreEqual(i.baseCurrency, dataSet.baseCurrency)
+			&& currenciesAreEqual(i.quoteCurrency, dataSet.quoteCurrency)
 			&& i.exchange === dataSet.exchange);
 		return mapper(dataSet, prev);
 	});
@@ -43,8 +44,8 @@ module.exports = (state = {}, action) => {
 	const baseCurrency = action.baseCurrency;
 	const converted = MarketTickBaseCurrency.process(mapped, baseMapped, baseCurrency);
 	const aggregated = MarketTickAggregator.aggregate(converted);
-	const breakdown = mapped.map(i => createResult(i, _.find(state.breakdown, s => s.baseCurrency === i.baseCurrency 
-			  && s.quoteCurrency === i.quoteCurrency 
+	const breakdown = mapped.map(i => createResult(i, _.find(state.breakdown, s => currenciesAreEqual(s.baseCurrency, i.baseCurrency) 
+			  && currenciesAreEqual(s.quoteCurrency, i.quoteCurrency) 
 			  && s.exchange === i.exchange)));
 
 	return {

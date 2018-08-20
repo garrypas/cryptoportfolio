@@ -6,6 +6,7 @@ import _ from 'lodash';
 import MarketsMapperFactory from './mappers/MarketsMapperFactory';
 import MarketsAggregator from './MarketsAggregator';
 import MarketsBaseCurrency from './MarketsBaseCurrency';
+import currenciesAreEqual from './../utils/CurrenciesAreEqual';
 
 function mapMarketItems(exchange, data, previous) {
 	const mapper = MarketsMapperFactory.create(exchange);
@@ -25,6 +26,7 @@ function getExchangeData(exchangeData, exchange) {
 }
 
 module.exports = (state = {}, action) => {
+	const baseCurrency = 'BTC';
 	const myCurrencies = action.myCurrencies || [];
 	const exchangeData = action.data.map(thisExchangeData => {
 		const previous = getExchangeData(state.exchangeData, thisExchangeData.exchange);
@@ -42,8 +44,8 @@ module.exports = (state = {}, action) => {
 		.flatten()
 		.value();
 
-	const converted = MarketsBaseCurrency.process(flatMarkets, 'BTC').concat(
-		MarketsBaseCurrency.process(flatMarkets.filter(i => i.quoteCurrency === 'BTC'), 'USDT')
+	const converted = MarketsBaseCurrency.process(flatMarkets, baseCurrency).concat(
+		MarketsBaseCurrency.process(flatMarkets.filter(i => currenciesAreEqual(i.quoteCurrency, baseCurrency)), 'USDT')
 	);
 
 	const aggregated = MarketsAggregator.aggregate(converted);
@@ -60,7 +62,6 @@ module.exports = (state = {}, action) => {
 
 	return {
 		exchangeData,
-		//ToDo: this is only needed for customization, so it could just be market names...
 		allMarkets: aggregated.markets.map(m => ({ quoteCurrency: m.quoteCurrency })),
 		markets: myAggregatedMarkets,
 	};

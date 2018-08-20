@@ -1,9 +1,11 @@
 "use strict";
 
 import _ from 'lodash';
+import currenciesAreEqual from './../utils/CurrenciesAreEqual';
 
 function getExchangeRate(exchangeRates, baseCurrency, quoteCurrency) {
-    const market = _.find(exchangeRates, m => m.baseCurrency === baseCurrency && m.quoteCurrency === quoteCurrency);
+    const market = _.find(exchangeRates, m => currenciesAreEqual(m.baseCurrency, baseCurrency) 
+        && currenciesAreEqual(m.quoteCurrency, quoteCurrency));
     if (!market) {
         return null;
     }
