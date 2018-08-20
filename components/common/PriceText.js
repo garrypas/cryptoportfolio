@@ -28,6 +28,7 @@ class PriceText extends React.Component {
     getSymbol() {
         switch(this.props.units) {
             case 'USDT':
+            case 'USD':
                 return '$';
             case 'BTC':
                 return '฿';
@@ -39,7 +40,7 @@ class PriceText extends React.Component {
     }
 
     getFormatPrice() {
-        const dp = this.props.units === 'USDT' ? 2 : 8;
+        const dp = ['USDT', 'USD'].includes(this.props.units) ? 2 : 8;
         const symbol =  this.getSymbol();
         return `${symbol || ""}${ this.props.price ? this.props.price.toFixed(dp) : '---' }${ this.props.units && !symbol ? ' ' + this.props.units : '' }`;
     }

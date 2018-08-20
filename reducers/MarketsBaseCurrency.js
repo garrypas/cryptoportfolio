@@ -15,7 +15,7 @@ function getExchangeRate(exchangeRates, baseCurrency, quoteCurrency) {
 function process(data, baseCurrency) {
     const items = data.map(item => {
         const result = _.cloneDeep(item);
-        if (item.baseCurrency !== baseCurrency) {
+        if (!currenciesAreEqual(item.baseCurrency, baseCurrency)) {
             const rate = getExchangeRate(data, baseCurrency, item.baseCurrency);
             if (rate === null) {
                 return null;

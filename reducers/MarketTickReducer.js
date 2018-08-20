@@ -44,10 +44,9 @@ module.exports = (state = {}, action) => {
 	const baseCurrency = action.baseCurrency;
 	const converted = MarketTickBaseCurrency.process(mapped, baseMapped, baseCurrency);
 	const aggregated = MarketTickAggregator.aggregate(converted);
-	const breakdown = mapped.map(i => createResult(i, _.find(state.breakdown, s => currenciesAreEqual(s.baseCurrency, i.baseCurrency) 
-			  && currenciesAreEqual(s.quoteCurrency, i.quoteCurrency) 
+	const breakdown = mapped.map(i => createResult(i, _.find(state.breakdown, s => s.baseCurrency === i.baseCurrency // note, don't use currenciesAreEqual here, we need the correct market
+			  && s.quoteCurrency === i.quoteCurrency 
 			  && s.exchange === i.exchange)));
-
 	return {
 		...createResult(aggregated, state),
 		breakdown: MarketItemSort.sort(breakdown),
