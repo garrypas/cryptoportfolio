@@ -18,7 +18,6 @@ function map(data) {
 module.exports = (state = [], action) => {
 	const mapped = map(action.data);
 	const baseMapped = map(action.baseData.data);
-
 	const converted = MarketBaseCurrency.process(mapped, baseMapped, action.baseCurrency);
 	const aggregated = MarketAggregator.aggregate(converted);
 	return {

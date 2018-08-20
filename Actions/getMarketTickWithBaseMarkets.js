@@ -6,7 +6,7 @@ import getMarketTick from './getMarketTick';
 import _ from 'lodash';
 
 export default function getMarketTickWithBaseMarkets(args = {}, dispatch) {
-    const baseCurrency = 'BTC';
+    const baseCurrency = args.baseCurrency;
     return getMarketTick(args, marketData => {
         const exchanges = _.uniqBy(args.exchanges, i => `${i.baseCurrency}:${baseCurrency}:${i.exchange}`)
             .filter(item => item.baseCurrency !== baseCurrency)
@@ -26,6 +26,7 @@ export default function getMarketTickWithBaseMarkets(args = {}, dispatch) {
                 ...marketData,
                 baseData,
                 type: 'MarketTick',
+                baseCurrency,
             })
         }).catch(console.error);
     });

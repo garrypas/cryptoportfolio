@@ -40,7 +40,7 @@ function createResult(tickItem, state) {
 module.exports = (state = {}, action) => {
 	const mapped = map(action.data, state.breakdown);
 	const baseMapped = map(action.baseData.data);
-	const baseCurrency = 'BTC';
+	const baseCurrency = action.baseCurrency;
 	const converted = MarketTickBaseCurrency.process(mapped, baseMapped, baseCurrency);
 	const aggregated = MarketTickAggregator.aggregate(converted);
 	const breakdown = mapped.map(i => createResult(i, _.find(state.breakdown, s => s.baseCurrency === i.baseCurrency 

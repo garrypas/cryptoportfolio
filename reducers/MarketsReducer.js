@@ -42,7 +42,9 @@ module.exports = (state = {}, action) => {
 		.flatten()
 		.value();
 
-	const converted = MarketsBaseCurrency.process(flatMarkets, 'BTC');
+	const converted = MarketsBaseCurrency.process(flatMarkets, 'BTC').concat(
+		MarketsBaseCurrency.process(flatMarkets.filter(i => i.quoteCurrency === 'BTC'), 'USDT')
+	);
 
 	const aggregated = MarketsAggregator.aggregate(converted);
 

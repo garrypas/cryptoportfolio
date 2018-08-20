@@ -6,7 +6,7 @@ import getMarket from './getMarket';
 import _ from 'lodash';
 
 export default function getMarketWithBaseMarkets(args = {}, dispatch) {
-    const baseCurrency = 'BTC';
+    const baseCurrency = args.baseCurrency;
     return getMarket(args, marketData => {
         const exchanges = _.uniqBy(args.exchanges, i => `${i.baseCurrency}:${baseCurrency}:${i.exchange}`)
             .filter(item => item.baseCurrency !== baseCurrency)
@@ -26,6 +26,7 @@ export default function getMarketWithBaseMarkets(args = {}, dispatch) {
                 ...marketData,
                 baseData,
                 type: 'Market',
+                baseCurrency,
             })
         }).catch(console.error);
     });
