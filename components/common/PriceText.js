@@ -20,10 +20,29 @@ class PriceText extends React.Component {
         if (currentPrice > previousPrice) {
             direction = 'up';
         }
-        const text = `${ currentPrice ? currentPrice.toFixed(8) : '---' }${ units ? ' ' + units : '' }`
+        const text = this.getFormatPrice();
         return (
             <Text style={[this.props.style, (direction === 'up' ? styles.itemPriceTextUp : direction === 'down' ? styles.itemPriceTextDown : '')]} >{ text }</Text>
         );
+    }
+
+    getSymbol() {
+        switch(this.props.units) {
+            case 'USDT':
+                return '$';
+            case 'BTC':
+                return '฿';
+            case 'ETH':
+                return 'Ξ';
+            default:
+                return null;
+        }
+    }
+
+    getFormatPrice() {
+        const dp = this.props.units === 'USDT' ? 2 : 8;
+        const symbol =  this.getSymbol();
+        return `${symbol || ""}${ this.props.price ? this.props.price.toFixed(dp) : '---' }${ this.props.units && !symbol ? ' ' + this.props.units : '' }`;
     }
 }
 

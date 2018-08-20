@@ -6,7 +6,11 @@ module.exports = {
         if(market.length <= 3) {
             return "";
         }
-        return market.substring(0, market.length - 3);
+        let baseLength = 3;
+        if(market.match(/USDT$/)) {
+            baseLength = 4;
+        }
+        return market.substring(0, market.length - baseLength);
     },
 
     getBaseCurrency: market => {
@@ -15,6 +19,9 @@ module.exports = {
         }
         if(market.length <= 3) {
             return "";
+        }
+        if(market.match(/USDT$/)) {
+            return "USDT";
         }
         return market.substring(market.length - 3);
     },

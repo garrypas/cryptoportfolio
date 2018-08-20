@@ -38,7 +38,7 @@ const component = class Dashboard extends React.Component {
         const icon = images[rowData.item.quoteCurrency];
         return (
             <ClickableListRow icon={icon} title={rowData.item.title} right={
-                <View style={styles.itemPrice}><PriceText style={styles.itemPriceText} price={rowData.item.price} previousPrice={rowData.item.previousPrice} /></View>
+                <View style={styles.itemPrice}><PriceText style={styles.itemPriceText} price={rowData.item.price} previousPrice={rowData.item.previousPrice} units={rowData.item.baseCurrency} /></View>
             }
                 onPress={() => this.viewMarket(rowData.item)}
             />
