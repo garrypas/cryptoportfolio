@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react';
-import { Text, View, Image, Button } from 'react-native';
+import { Text, View, Image, Button, ScrollView } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import styles from './Market.css.js';
@@ -111,7 +111,11 @@ export default class Market extends React.Component {
 		</View>);
 
 		return (
-			<View style={styles.container}>{viewTop} {view} {intervals} {breakDown}</View>
+			<View style={styles.container}>
+				<ScrollView>
+				{viewTop} {view} {intervals} {breakDown}
+				</ScrollView>
+			</View>
 		);
 	}
 

@@ -17,4 +17,9 @@ describe('CurrenciesAreEqual', () => {
 		const areEqual = currenciesAreEqual('usDt', 'usD');
         expect(areEqual).toBeTruthy();
 	});
+
+	it('BCC and BCH are equal', () => {
+		const areEqual = currenciesAreEqual('bCc', 'BCh');
+        expect(areEqual).toBeTruthy();
+	});
 });

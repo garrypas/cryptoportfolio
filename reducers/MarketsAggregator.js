@@ -1,13 +1,14 @@
 "use strict";
 
 import _ from 'lodash';
+import cleanCurrency from './../utils/CleanCurrency';
 
 module.exports = {
     aggregate: (flatMarkets) => {
         const result = {
             markets: _(flatMarkets)
                 .filter(i => i) // Remove nulls and undefined
-                .groupBy(item => `${item.quoteCurrency}`)
+                .groupBy(item => `${cleanCurrency(item.quoteCurrency)}`)
                 .map((item) => {
                     const quoteCurrency =  _.first(item).quoteCurrency;
                     const baseCurrency =  _.first(item).baseCurrency;

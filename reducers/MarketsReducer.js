@@ -7,6 +7,7 @@ import MarketsMapperFactory from './mappers/MarketsMapperFactory';
 import MarketsAggregator from './MarketsAggregator';
 import MarketsBaseCurrency from './MarketsBaseCurrency';
 import currenciesAreEqual from './../utils/CurrenciesAreEqual';
+import cleanCurrency from './../utils/CleanCurrency';
 
 function mapMarketItems(exchange, data, previous) {
 	const mapper = MarketsMapperFactory.create(exchange);
@@ -51,10 +52,10 @@ module.exports = (state = {}, action) => {
 	const aggregated = MarketsAggregator.aggregate(converted);
 
 	const myAggregatedMarkets = aggregated.markets.filter(market => {
-		return myCurrencies.includes(market.quoteCurrency);
+		return _.some(myCurrencies, cur => currenciesAreEqual(market.quoteCurrency, cur) );
 	}).sort((a, b) => {
-		let indexA = myCurrencies.indexOf(a.quoteCurrency);
-		let indexB = myCurrencies.indexOf(b.quoteCurrency);
+		let indexA = myCurrencies.indexOf(cleanCurrency(a.quoteCurrency));
+		let indexB = myCurrencies.indexOf(cleanCurrency(b.quoteCurrency));
 		if(indexA > indexB) return 1;
 		if(indexA < indexB) return -1;
 		return 0;

@@ -1,21 +1,12 @@
 "use strict";
 
-function cleanTether(currency) {
-    return currency.toUpperCase() === "USDT" ? "USD" : currency;
-}
+import cleanCurrency from './CleanCurrency';
 
-function fixCase(currency) {
-    return currency.toUpperCase();
-}
-
-function clean(currency) {
-    currency = cleanTether(currency);
-    currency = fixCase(currency);
-    return currency;
-}
-
-export default function(currencyX = "", currencyY = "") {
-    currencyX = clean(currencyX);
-    currencyY = clean(currencyY);
-    return currencyX == currencyY;
-};
+/**
+ * Compares two ticker symbols for equality. Returns true for different symbols representing the same
+ * currency - for example BCC and BCH are both used to represent Bitcoin Cash.
+ * @param {*} currencyX a currency symbol
+ * @param {*} currencyY a second currency symbol
+ */
+export default (currencyX = "", currencyY = "") => 
+    cleanCurrency(currencyX) === cleanCurrency(currencyY);
