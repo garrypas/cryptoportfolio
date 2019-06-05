@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@icon/cryptocurrency-icons": "0.0.1-4",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "babel-preset-react-native-stage-0": "^1.0.1",
     "coinmarketcap-icons": "^1.0.0",
     "cryptocurrencies": "git+https://github.com/crypti/cryptocurrencies.git",
