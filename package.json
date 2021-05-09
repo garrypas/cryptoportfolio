@@ -34,7 +34,7 @@
     "babel-preset-react-native-stage-0": "^1.0.1",
     "coinmarketcap-icons": "^1.0.0",
     "cryptocurrencies": "git+https://github.com/crypti/cryptocurrencies.git",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "mobx-react": "^5.2.3",
     "moment": "^2.22.2",
     "react": "16.3.1",
