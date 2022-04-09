@@ -36,7 +36,7 @@
     "cryptocurrencies": "git+https://github.com/crypti/cryptocurrencies.git",
     "lodash": "^4.17.19",
     "mobx-react": "^5.2.3",
-    "moment": "^2.22.2",
+    "moment": "^2.29.2",
     "react": "16.3.1",
     "react-native": "^0.62.1",
     "react-native-autocomplete-input": "^3.5.0",
