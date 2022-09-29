@@ -48,6 +48,6 @@
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "string-format": "^2.0.0",
-    "victory-native": "^30.1.0"
+    "victory-native": "^36.6.8"
   }
 }
